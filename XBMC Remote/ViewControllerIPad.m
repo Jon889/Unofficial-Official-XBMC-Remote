@@ -21,7 +21,7 @@
 #define CONNECTION_TIMEOUT 240.0f
 #define SERVER_TIMEOUT 2.0f
 
-@interface ViewControllerIPad (){
+@interface ViewControllerIPad () {
     NSMutableArray *mainMenu;
 }
 @end
@@ -80,7 +80,7 @@
 @synthesize appInfoPopover = _appInfoPopover;
 @synthesize tcpJSONRPCconnection;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -90,7 +90,7 @@
 
 #pragma mark - ServerManagement
 
--(void)selectServerAtIndexPath:(NSIndexPath *)indexPath{
+-(void)selectServerAtIndexPath:(NSIndexPath *)indexPath {
     storeServerSelection = indexPath;
     NSDictionary *item = ([AppDelegate instance].arrayServerList)[indexPath.row];
     [AppDelegate instance].obj.serverDescription = item[@"serverDescription"];
@@ -101,12 +101,12 @@
     [AppDelegate instance].obj.tcpPort = [item[@"tcpPort"] intValue];
 }
 
--(void)wakeUp:(NSString *)macAddress{
+-(void)wakeUp:(NSString *)macAddress {
     [[AppDelegate instance] wake:macAddress];
 }
 
--(void)changeServerStatus:(BOOL)status infoText:(NSString *)infoText{
-    if (status == YES){
+-(void)changeServerStatus:(BOOL)status infoText:(NSString *)infoText {
+    if (status == YES) {
         [self.tcpJSONRPCconnection startNetworkCommunicationWithServer:[AppDelegate instance].obj.serverIP serverPort:[AppDelegate instance].obj.tcpPort];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionSuccess" object: nil];
         [AppDelegate instance].serverOnLine = YES;
@@ -118,9 +118,9 @@
         [icon setImage:[UIImage imageNamed:@"connection_on"]];
         [xbmcInfo setTitle:infoText forState:UIControlStateNormal];
         int n = [menuViewController.tableView numberOfRowsInSection:0];
-        for (int i = 1;i < n;i++){
+        for (int i = 1;i < n;i++) {
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            if (cell != nil){
+            if (cell != nil) {
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
@@ -131,7 +131,7 @@
             }
         }
     }
-    else{
+    else {
         [self.tcpJSONRPCconnection stopNetworkCommunication];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionFailed" object:nil userInfo:nil];
         [AppDelegate instance].serverOnLine = NO;
@@ -142,9 +142,9 @@
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
         [xbmcInfo setTitle:infoText forState:UIControlStateNormal];
         int n = [menuViewController.tableView numberOfRowsInSection:0];
-        for (int i = 1;i < n;i++){
+        for (int i = 1;i < n;i++) {
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            if (cell != nil){
+            if (cell != nil) {
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
@@ -160,11 +160,11 @@
     }
 }
 
--(void) offStackView{
-    if (![AppDelegate instance].serverOnLine){
+-(void) offStackView {
+    if (![AppDelegate instance].serverOnLine) {
         [[AppDelegate instance].windowController.stackScrollViewController offView];
         NSIndexPath *selection = [menuViewController.tableView indexPathForSelectedRow];
-        if (selection){
+        if (selection) {
             [menuViewController.tableView deselectRowAtIndexPath:selection animated:YES];
             [menuViewController setLastSelected:-1];
         }
@@ -182,7 +182,7 @@
     int actualPosY = view.frame.origin.y;
     CGRect frame;
 	frame = [view frame];
-    if (actualPosY < 667 || hide){
+    if (actualPosY < 667 || hide) {
         Y = self.view.frame.size.height;
     }
     view.alpha = alphavalue;
@@ -191,17 +191,17 @@
     [UIView commitAnimations];
 }
 
-- (void)toggleVolume{
+- (void)toggleVolume {
     [self toggleViewToolBar:volumeSliderView AnimDuration:0.3 Alpha:1.0 YPos:volumeSliderView.frame.origin.y - volumeSliderView.frame.size.height - 42 forceHide:FALSE];
 }
 
--(void)initHostManagemetPopOver{
+-(void)initHostManagemetPopOver {
     self.hostPickerViewController = [[HostManagementViewController alloc] initWithNibName:@"HostManagementViewController" bundle:nil];
     [AppDelegate instance].navigationController = [[UINavigationController alloc] initWithRootViewController:_hostPickerViewController];
     self.serverPickerPopover = [[UIPopoverController alloc]
                                 initWithContentViewController:[AppDelegate instance].navigationController];
     self.serverPickerPopover.delegate = self;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [self.serverPickerPopover setBackgroundColor:[UIColor clearColor]];
     }
     [self.serverPickerPopover setPopoverContentSize:CGSizeMake(320, 436)];
@@ -214,14 +214,14 @@
     [self.serverPickerPopover presentPopoverFromRect:xbmcInfo.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
--(void) showSetup:(BOOL)show{
+-(void) showSetup:(BOOL)show {
     firstRun = NO;
     if ([self.serverPickerPopover isPopoverVisible]) {
         if (show == NO)
             [self.serverPickerPopover dismissPopoverAnimated:YES];
     }
-    else{
-        if (show == YES){
+    else {
+        if (show == YES) {
             [self toggleSetup];
         }
     }
@@ -240,23 +240,23 @@
 }
 #pragma mark - power control action sheet
 
--(void)powerControl{
-    if ([[AppDelegate instance].obj.serverIP length] == 0){
+-(void)powerControl {
+    if ([[AppDelegate instance].obj.serverIP length] == 0) {
         [self toggleSetup];
         return;
     }
     NSString *title = [NSString stringWithFormat:@"%@\n%@", [AppDelegate instance].obj.serverDescription, [AppDelegate instance].obj.serverIP];
     NSString *destructive = nil;
     NSArray *sheetActions = nil;
-    if (![AppDelegate instance].serverOnLine){
+    if (![AppDelegate instance].serverOnLine) {
         sheetActions = @[NSLocalizedString(@"Wake On Lan", nil)];
     }
-    else{
+    else {
         destructive = NSLocalizedString(@"Power off System", nil);
         sheetActions = @[NSLocalizedString(@"Hibernate", nil), NSLocalizedString(@"Suspend", nil), NSLocalizedString(@"Reboot", nil), NSLocalizedString(@"Quit XBMC application", nil), NSLocalizedString(@"Update Audio Library", nil), NSLocalizedString(@"Update Video Library", nil)];
     }
     int numActions = [sheetActions count];
-    if (numActions){
+    if (numActions) {
         actionSheetPower = [[UIActionSheet alloc] initWithTitle:title
                                                             delegate:self
                                                    cancelButtonTitle:nil
@@ -271,56 +271,56 @@
     }
 }
 
--(void)powerAction:(NSString *)action params:(NSDictionary *)params{
+-(void)powerAction:(NSString *)action params:(NSDictionary *)params {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
     NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (methodError == nil && error == nil){
+        if (methodError == nil && error == nil) {
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Command executed", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alertView show];
         }
-        else{
+        else {
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot do that", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
             [alertView show];
         }
     }];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    if (buttonIndex != actionSheet.cancelButtonIndex){
-        if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Wake On Lan", nil)]){
-            if ([AppDelegate instance].obj.serverHWAddr != nil){
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Wake On Lan", nil)]) {
+            if ([AppDelegate instance].obj.serverHWAddr != nil) {
                 [self wakeUp:[AppDelegate instance].obj.serverHWAddr];
                 UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Command executed", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
                 [alertView show];
             }
-            else{
+            else {
                 UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning", nil) message:NSLocalizedString(@"No server MAC address defined", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
                 [alertView show];
             }
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Power off System", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Power off System", nil)]) {
             [self powerAction:@"System.Shutdown" params:@{}];
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Quit XBMC application", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Quit XBMC application", nil)]) {
             [self powerAction:@"Application.Quit" params:@{}];
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Hibernate", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Hibernate", nil)]) {
             [self powerAction:@"System.Hibernate" params:@{}];
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Suspend", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Suspend", nil)]) {
             [self powerAction:@"System.Suspend" params:@{}];
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Reboot", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Reboot", nil)]) {
             [self powerAction:@"System.Reboot" params:@{}];
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Update Audio Library", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Update Audio Library", nil)]) {
             [self powerAction:@"AudioLibrary.Scan" params:@{}];
         }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Update Video Library", nil)]){
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Update Video Library", nil)]) {
             [self powerAction:@"VideoLibrary.Scan" params:@{}];
         }
     }
@@ -347,18 +347,18 @@
 
 #pragma mark - App clear disk cache methods
 
--(void)startClearAppDiskCache:(ClearCacheView *)clearView{
+-(void)startClearAppDiskCache:(ClearCacheView *)clearView {
     [[AppDelegate instance] clearAppDiskCache];
     [self performSelectorOnMainThread:@selector(clearAppDiskCacheFinished:) withObject:clearView waitUntilDone:YES];
 }
 
--(void)clearAppDiskCacheFinished:(ClearCacheView *)clearView{
+-(void)clearAppDiskCacheFinished:(ClearCacheView *)clearView {
     [UIView animateWithDuration:0.3
-                     animations:^{
+                     animations:^ {
                          [clearView stopActivityIndicator];
                          clearView.alpha = 0;
                      }
-                     completion:^(BOOL finished){
+                     completion:^(BOOL finished) {
                          [clearView stopActivityIndicator];
                          [clearView removeFromSuperview];
                          NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -369,14 +369,14 @@
 
 #pragma mark - Lifecycle
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+-(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     int deltaY = 0;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [self setNeedsStatusBarAppearanceUpdate];
         deltaY = 22;
         self.view.tintColor = APP_TINT_COLOR;
@@ -491,7 +491,7 @@
     [xbmcInfo addTarget:self action:@selector(toggleSetup) forControlEvents:UIControlEventTouchUpInside];
     
     powerButton = [[UIButton alloc] initWithFrame:CGRectMake(620, 966, 42, 33)]; //225
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         xbmcInfo.titleLabel.font = [UIFont systemFontOfSize:13];
         xbmcInfo.titleEdgeInsets = UIEdgeInsetsZero;
         xbmcInfo.titleLabel.shadowOffset = CGSizeZero;
@@ -500,7 +500,7 @@
         [menuViewController.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
 
     }
-    else{
+    else {
         [xbmcInfo setBackgroundImage:[[UIImage imageNamed: @"now_playing_empty_up"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6, 0, 6)] forState:UIControlStateNormal];
         [powerButton setBackgroundImage:[[UIImage imageNamed: @"now_playing_empty_up"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6, 0, 6)] forState:UIControlStateNormal];
     }
@@ -520,7 +520,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     BOOL clearCache = [[userDefaults objectForKey:@"clearcache_preference"] boolValue];
-    if (clearCache == YES){
+    if (clearCache == YES) {
         ClearCacheView *clearView = [[ClearCacheView alloc] initWithFrame:self.view.frame];
         [clearView startActivityIndicator];
         [self.view addSubview:clearView];
@@ -576,40 +576,40 @@
     [self initHostManagemetPopOver];
 }
 
--(void)handleStackScrollFullScreenEnabled:(NSNotification *)sender{
+-(void)handleStackScrollFullScreenEnabled:(NSNotification *)sender {
     stackScrollIsFullscreen = YES;
 }
 
--(void)handleStackScrollFullScreenDisabled:(NSNotification *)sender{
+-(void)handleStackScrollFullScreenDisabled:(NSNotification *)sender {
     stackScrollIsFullscreen = NO;
 }
 
--(void)handleTcpJSONRPCShowSetup:(NSNotification *)sender{
+-(void)handleTcpJSONRPCShowSetup:(NSNotification *)sender {
     BOOL showValue = [[[sender userInfo] valueForKey:@"showSetup"] boolValue];
-    if ((showValue && firstRun) || !showValue){
+    if ((showValue && firstRun) || !showValue) {
         [self showSetup:showValue];
     }
 }
 
--(void)handleTcpJSONRPCChangeServerStatus:(NSNotification*) sender{
+-(void)handleTcpJSONRPCChangeServerStatus:(NSNotification*) sender {
     BOOL statusValue = [[[sender userInfo] valueForKey:@"status"] boolValue];
     NSString *message = [[sender userInfo] valueForKey:@"message"];
     [self changeServerStatus:statusValue infoText:message];
 }
 
-- (void)handleStackScrollOnScreen: (NSNotification*) sender{
+- (void)handleStackScrollOnScreen: (NSNotification*) sender {
     [self.view insertSubview:self.nowPlayingController.ProgressSlider belowSubview:rootView];    
 }
 
-- (void)handleStackScrollOffScreen: (NSNotification*) sender{
+- (void)handleStackScrollOffScreen: (NSNotification*) sender {
     stackScrollIsFullscreen = NO;
     [self.view insertSubview:self.nowPlayingController.ProgressSlider aboveSubview:rootView];
 }
 
-- (void) handleXBMCServerHasChanged: (NSNotification*) sender{
+- (void) handleXBMCServerHasChanged: (NSNotification*) sender {
     int thumbWidth = PAD_TV_SHOWS_BANNER_WIDTH;
     int tvshowHeight = PAD_TV_SHOWS_BANNER_HEIGHT;
-    if ([AppDelegate instance].obj.preferTVPosters == YES){
+    if ([AppDelegate instance].obj.preferTVPosters == YES) {
         thumbWidth = PAD_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PAD_TV_SHOWS_POSTER_HEIGHT;
     }
@@ -618,7 +618,7 @@
     menuItem.rowHeight = tvshowHeight;
     [[AppDelegate instance].windowController.stackScrollViewController offView];
     NSIndexPath *selection = [menuViewController.tableView indexPathForSelectedRow];
-    if (selection){
+    if (selection) {
         [menuViewController.tableView deselectRowAtIndexPath:selection animated:YES];
         [menuViewController setLastSelected:-1];
     }
@@ -626,24 +626,24 @@
     [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
 }
 
-- (void) handleWillResignActive: (NSNotification*) sender{
+- (void) handleWillResignActive: (NSNotification*) sender {
     [self.tcpJSONRPCconnection stopNetworkCommunication];
 }
 
-- (void) handleDidEnterBackground: (NSNotification*) sender{
+- (void) handleDidEnterBackground: (NSNotification*) sender {
     [self.tcpJSONRPCconnection stopNetworkCommunication];
 }
 
-- (void) handleEnterForeground: (NSNotification*) sender{
-    if ([AppDelegate instance].serverOnLine == YES){
-        if (self.tcpJSONRPCconnection == nil){
+- (void) handleEnterForeground: (NSNotification*) sender {
+    if ([AppDelegate instance].serverOnLine == YES) {
+        if (self.tcpJSONRPCconnection == nil) {
             self.tcpJSONRPCconnection = [[tcpJSONRPC alloc] init];
         }
         [self.tcpJSONRPCconnection startNetworkCommunicationWithServer:[AppDelegate instance].obj.serverIP serverPort:[AppDelegate instance].obj.tcpPort];
     }
 }
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     [super viewDidUnload];
     self.tcpJSONRPCconnection = nil;
     [[NSNotificationCenter defaultCenter] removeObserver: self];
@@ -662,13 +662,13 @@
         [self.appInfoPopover dismissPopoverAnimated:NO];
         [self toggleInfoView];
     }
-    if (showActionPower){
+    if (showActionPower) {
         [actionSheetPower showFromRect:CGRectMake(powerButton.frame.origin.x + powerButton.frame.size.width/2, powerButton.frame.origin.y, 1, 1) inView:self.view animated:YES];
         showActionPower = NO;
     }
 }
 
-- (void)viewWillLayoutSubviews{
+- (void)viewWillLayoutSubviews {
     UIInterfaceOrientation toInterfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if (toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         CGRect frame = self.nowPlayingController.ProgressSlider.frame;
@@ -676,7 +676,7 @@
         self.nowPlayingController.ProgressSlider.frame = frame;
         [nowPlayingController setToolbarWidth:768 height:610 YPOS:YPOS playBarWidth:426 portrait:TRUE];
 	}
-	else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight){
+	else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
         CGRect frame = self.nowPlayingController.ProgressSlider.frame;
         frame.origin.y = 600;
         self.nowPlayingController.ProgressSlider.frame = frame;
@@ -684,21 +684,21 @@
 	}
 }
 
--(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+-(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[menuViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 	[stackScrollViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     showActionPower = NO;
-    if (actionSheetPower.window != nil){
+    if (actionSheetPower.window != nil) {
         showActionPower = YES;
         [actionSheetPower dismissWithClickedButtonIndex:actionSheetPower.cancelButtonIndex animated:YES];
     }
 }	
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
 }
 
--(BOOL)shouldAutorotate{
+-(BOOL)shouldAutorotate {
     return !stackScrollIsFullscreen;
 }
 

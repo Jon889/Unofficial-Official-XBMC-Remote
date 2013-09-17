@@ -28,13 +28,13 @@
 
 #pragma mark - PlayBack
 
--(void) createPlayback{
+-(void) createPlayback {
     NSDictionary *item = self.detailItem;
     NSLog(@"%@", item);
  
     [jsonRPC callMethod:@"Files.PrepareDownload" withParameters:@{@"path": item[@"file"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error == nil && methodError == nil){
-            if ( [methodResult count] > 0){
+        if (error == nil && methodError == nil) {
+            if ( [methodResult count] > 0) {
                 GlobalData *obj = [GlobalData getInstance];     
                 //NSDictionary *itemid = [methodResult objectForKey:@"details"]; 
 
@@ -54,7 +54,7 @@
 
 #pragma mark - Life Cycle
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     
     
     GlobalData *obj = [GlobalData getInstance];     
@@ -73,11 +73,11 @@
     // e.g. self.myOutlet = nil;
 }
 
--(void)dealloc{
+-(void)dealloc {
     jsonRPC = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 

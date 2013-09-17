@@ -13,7 +13,7 @@
 
 @synthesize tableView = _tableView;
 
-- (id)initWithFrame:(CGRect)frame mainMenu:(NSMutableArray *)menu{
+- (id)initWithFrame:(CGRect)frame mainMenu:(NSMutableArray *)menu {
     if (self = [super init]) {
         cellLabelOffset = 50;
 		[self.view setFrame:frame];
@@ -25,7 +25,7 @@
         mainMenuItems = menu;
         UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
 		_tableView.tableFooterView = footerView;
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             [_tableView setSeparatorInset:UIEdgeInsetsMake(0, cellLabelOffset, 0, 0)];
         }
 		[self.view addSubview:_tableView];
@@ -35,7 +35,7 @@
 #pragma mark -
 #pragma mark Table view data source
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    return 64;
 //}
 
@@ -70,7 +70,7 @@
     NSDictionary *item = mainMenuItems[indexPath.row];
     [cellLabel setText:item[@"label"]];
     [cell.contentView addSubview:cellLabel];
-    if (![item[@"icon"] isEqualToString:@""]){
+    if (![item[@"icon"] isEqualToString:@""]) {
         CGRect iconImageViewRect = CGRectMake(8.0f, 6.0f, 34.0f, 30.0f);
         UIImageView *iconImage = [[UIImageView alloc] initWithFrame:iconImageViewRect];
         [iconImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_black", item[@"icon"]]]];
@@ -90,23 +90,23 @@
 
 #pragma mark - LifeCycle
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(BOOL)shouldAutorotate{
+-(BOOL)shouldAutorotate {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

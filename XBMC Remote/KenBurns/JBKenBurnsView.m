@@ -47,7 +47,7 @@
 @synthesize imagesArray, timeTransition, isLoop, isLandscape;
 @synthesize animationInCurse, currentImage, delegate;
 
--(id)init{
+-(id)init {
     self = [super init];
     if (self) {
         self.layer.masksToBounds = YES;
@@ -64,7 +64,7 @@
     return self;
 }
 
-- (void) stopAnimation{
+- (void) stopAnimation {
     self.isLoop = NO;
 }
 
@@ -78,7 +78,7 @@
     self.layer.masksToBounds = YES;
     
     newEnlargeRatio = 1.0;
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 //        newEnlargeRatio = 1.0;
 //    }
     
@@ -104,7 +104,7 @@
     self.layer.masksToBounds = YES;
     
     newEnlargeRatio = 1.2;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         newEnlargeRatio = 2.2;
     }
     
@@ -126,12 +126,12 @@
     }
 }
 
-- (UIImage *) _downloadImageFrom:(NSString *) url{
+- (UIImage *) _downloadImageFrom:(NSString *) url {
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
     return image;
 }
 
-- (void) _startInternetAnimations:(NSArray *)urls{
+- (void) _startInternetAnimations:(NSArray *)urls {
     BOOL wrapping = NO;
     int bufferIndex = 0;
     
@@ -158,7 +158,7 @@
     }
 }
 
-- (void) _animate:(NSNumber*)num{
+- (void) _animate:(NSNumber*)num {
     UIImage* image = (self.imagesArray)[[num intValue]];
     UIImageView *imageView;
     
@@ -175,7 +175,7 @@
     float frameHeight   = isLandscape? self.frame.size.height : self.frame.size.width;
     
     // Widder than screen 
-    if (image.size.width > frameWidth){
+    if (image.size.width > frameWidth) {
         widthDiff  = image.size.width - frameWidth;
         
         // Higher than screen
@@ -299,7 +299,7 @@
     [[self layer] addAnimation:animation forKey:nil];
     
     // Remove the previous view
-    if ([[self subviews] count] > 0){
+    if ([[self subviews] count] > 0) {
         [[self subviews][0] removeFromSuperview];
     }
     
@@ -320,9 +320,9 @@
     [self performSelector:@selector(_notifyDelegate:) withObject:num afterDelay:self.timeTransition];
 }
 
-- (void) _notifyDelegate: (NSNumber *)imageIndex{
+- (void) _notifyDelegate: (NSNumber *)imageIndex {
     if (delegate) {
-        if ([self.delegate respondsToSelector:@selector(didShowImageAtIndex:)]){
+        if ([self.delegate respondsToSelector:@selector(didShowImageAtIndex:)]) {
             [self.delegate didShowImageAtIndex:[imageIndex intValue]];
         }      
         

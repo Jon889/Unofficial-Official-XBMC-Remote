@@ -235,14 +235,14 @@ static char UIScrollViewPullToRefreshView;
         CGFloat totalMaxWidth = leftViewWidth + margin + maxLabelWidth;
         CGFloat labelX = (self.bounds.size.width / 2) - (totalMaxWidth / 2) + leftViewWidth + margin;
         
-        if (subtitleSize.height > 0){
+        if (subtitleSize.height > 0) {
             CGFloat totalHeight = titleSize.height + subtitleSize.height + marginY;
             CGFloat minY = (self.bounds.size.height / 2)  - (totalHeight / 2);
             
             CGFloat titleY = minY;
             self.titleLabel.frame = CGRectIntegral(CGRectMake(labelX, titleY, titleSize.width, titleSize.height));
             self.subtitleLabel.frame = CGRectIntegral(CGRectMake(labelX, titleY + titleSize.height + marginY, subtitleSize.width, subtitleSize.height));
-        }else{
+        }else {
             CGFloat totalHeight = titleSize.height;
             CGFloat minY = (self.bounds.size.height / 2)  - (totalHeight / 2);
             
@@ -279,7 +279,7 @@ static char UIScrollViewPullToRefreshView;
     [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
+                     animations:^ {
                          self.scrollView.contentInset = contentInset;
                      }
                      completion:NULL];
@@ -460,7 +460,7 @@ static char UIScrollViewPullToRefreshView;
     [self.scrollView triggerPullToRefresh];
 }
 
-- (void)startAnimating{
+- (void)startAnimating {
     if (fequalzero(self.scrollView.contentOffset.y)) {
         [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x, -self.frame.size.height) animated:YES];
         self.wasTriggeredByUser = NO;
@@ -507,7 +507,7 @@ static char UIScrollViewPullToRefreshView;
 }
 
 - (void)rotateArrow:(float)degrees hide:(BOOL)hide {
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^ {
         self.arrow.layer.transform = CATransform3DMakeRotation(degrees, 0, 0, 1);
         self.arrow.layer.opacity = !hide;
         //[self.arrow setNeedsDisplay];//ios 4
@@ -553,15 +553,15 @@ static char UIScrollViewPullToRefreshView;
 	CGFloat alphaGradientLocations[] = {0, 0.8f};
     
 	CGGradientRef alphaGradient = nil;
-    if ([[[UIDevice currentDevice] systemVersion]floatValue] >= 5){
+    if ([[[UIDevice currentDevice] systemVersion]floatValue] >= 5) {
         NSArray* alphaGradientColors = @[(id)[self.arrowColor colorWithAlphaComponent:0].CGColor,
                                         (id)[self.arrowColor colorWithAlphaComponent:1].CGColor];
         alphaGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)alphaGradientColors, alphaGradientLocations);
-    }else{
+    }else {
         const CGFloat * components = CGColorGetComponents([self.arrowColor CGColor]);
         int numComponents = (int)CGColorGetNumberOfComponents([self.arrowColor CGColor]);
         CGFloat colors[8];
-        switch(numComponents){
+        switch(numComponents) {
             case 2:{
                 colors[0] = colors[4] = components[0];
                 colors[1] = colors[5] = components[0];

@@ -87,9 +87,9 @@
     return self;
 }
 
--(void)setOverlayWatched:(BOOL)enable{
-    if (enable == YES){
-        if (overlayWatched == nil){
+-(void)setOverlayWatched:(BOOL)enable {
+    if (enable == YES) {
+        if (overlayWatched == nil) {
             overlayWatched = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OverlayWatched"]];
             [overlayWatched setAutoresizingMask: UIViewAutoresizingFlexibleLeftMargin  | UIViewAutoresizingFlexibleBottomMargin];
             overlayWatched.frame = CGRectMake(self.contentView.frame.size.width - overlayWatched.frame.size.width - 4,
@@ -100,7 +100,7 @@
         }
         overlayWatched.hidden = NO;
     }
-    else{
+    else {
         overlayWatched.hidden = YES;
     }
 }

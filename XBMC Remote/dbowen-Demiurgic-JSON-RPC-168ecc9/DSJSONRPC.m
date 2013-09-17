@@ -96,7 +96,7 @@
     return [self callMethod:methodName withParameters:nil onCompletion:completionHandler];
 }
 
-- (NSInteger)callMethod:(NSString *)methodName withParameters:(id)methodParams onCompletion:(DSJSONRPCCompletionHandler)completionHandler{
+- (NSInteger)callMethod:(NSString *)methodName withParameters:(id)methodParams onCompletion:(DSJSONRPCCompletionHandler)completionHandler {
     return [self callMethod:methodName withParameters:methodParams withTimeout:0 onCompletion:completionHandler];
 }
 
@@ -168,7 +168,7 @@
     NSURLConnection *aConnection = [[NSURLConnection alloc] initWithRequest:serviceRequest delegate:self];
     (self._activeConnections)[@((int)aConnection)] = connectionInfo;
     
-    if (timeout){
+    if (timeout) {
         timer = [NSTimer scheduledTimerWithTimeInterval:timeout 
                                                  target:self 
                                                selector:@selector(cancelRequest:) 

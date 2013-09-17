@@ -101,12 +101,12 @@
         switch (self.direction) {
             case BDKCollectionIndexViewDirectionHorizontal:
                 labelSize.width = otherDimension;
-                label.frame = (CGRect){ { cumulativeLength, 0 }, labelSize };
+                label.frame = (CGRect) { { cumulativeLength, 0 }, labelSize };
                 cumulativeLength += CGRectGetWidth(label.frame);
                 break;
             case BDKCollectionIndexViewDirectionVertical:
                 labelSize.height = otherDimension;
-                label.frame = (CGRect){ { 0, cumulativeLength + 4 }, labelSize };
+                label.frame = (CGRect) { { 0, cumulativeLength + 4 }, labelSize };
                 cumulativeLength += CGRectGetHeight(label.frame);
                 break;
         }
@@ -183,12 +183,12 @@
 #pragma mark - Gestures
 
 - (void)handleTap:(UILongPressGestureRecognizer *)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateEnded){
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
         [self setBackgroundVisibility:FALSE];
         self.alpha = DEFAULT_ALPHA;
         [[NSNotificationCenter defaultCenter] postNotificationName: @"BDKCollectionIndexViewGestureRecognizerStateEnded" object: nil];
     }
-    else{
+    else {
         [self setBackgroundVisibility:TRUE];
         self.alpha = 1.0f;
         [[NSNotificationCenter defaultCenter] postNotificationName: @"BDKCollectionIndexViewGestureRecognizerStateBegin" object: nil];

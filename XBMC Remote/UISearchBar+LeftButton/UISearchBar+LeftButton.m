@@ -14,7 +14,7 @@
 
 static CGRect initialTextFieldFrame;
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self configureView];
@@ -22,15 +22,15 @@ static CGRect initialTextFieldFrame;
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    if (self){
+    if (self) {
         [self configureView];
     }
     return self;
 }
 
--(void)configureView{
+-(void)configureView {
     self.isVisible = YES;
     self.leftPadding = 0;
     self.rightPadding = 0;
@@ -58,22 +58,22 @@ static CGRect initialTextFieldFrame;
     [super layoutSubviews];
     if (!self.isVisible) return;
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    dispatch_once(&onceToken, ^ {
         initialTextFieldFrame = self.textField.frame;
     });
     self.leftButton.alpha = 0;
     self.viewLabel.alpha = 0;
-    if (self.showsCancelButton == YES){
+    if (self.showsCancelButton == YES) {
         cancelButtonWidth = CANCEL_BUTTON_DEFAULT_WIDTH;
         for (UIView *view in self.subviews) {
-            if ([view isKindOfClass: [UIButton class]]){
+            if ([view isKindOfClass: [UIButton class]]) {
                 cancelButtonWidth = view.frame.size.width;
             }
         }
         [self updateTextFieldFrame:cancelButtonWidth + CANCEL_BUTTON_PADDING leftPadding:0];
     }
-    else{
-        if (self.leftPadding){
+    else {
+        if (self.leftPadding) {
             self.leftButton.alpha = 1;
             self.viewLabel.alpha = 1;
 
@@ -95,14 +95,14 @@ static CGRect initialTextFieldFrame;
     self.frame = newFrame;
 }
 
--(UITextField *)textField{
+-(UITextField *)textField {
     for (UIView *view in self.subviews) {
-        if ([view isKindOfClass: [UITextField class]]){
+        if ([view isKindOfClass: [UITextField class]]) {
             return (UITextField *)view;
         }
-        else if ([view isKindOfClass:[UIView class]]){
+        else if ([view isKindOfClass:[UIView class]]) {
             for (UIView *view2 in view.subviews) {
-                if ([view2 isKindOfClass: [UITextField class]]){
+                if ([view2 isKindOfClass: [UITextField class]]) {
                     return (UITextField *)view2;
                 }
             }
@@ -111,9 +111,9 @@ static CGRect initialTextFieldFrame;
     return nil;
 }
 
-- (void)drawRect:(CGRect)rect{
+- (void)drawRect:(CGRect)rect {
     SEL selector = NSSelectorFromString(@"handleChangeLibraryView");
-    if ([self.delegate respondsToSelector:selector]){
+    if ([self.delegate respondsToSelector:selector]) {
         [self.leftButton addTarget:self.delegate action:selector forControlEvents:UIControlEventTouchUpInside];
     }
 }

@@ -24,7 +24,7 @@
 @synthesize urlRequest;
 @synthesize detailViewController;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -44,10 +44,10 @@
 #pragma mark -	
 #pragma mark actionSheet delegate methods;
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	switch (actionSheet.tag) {
         case 30:
-            if (buttonIndex == 0){
+            if (buttonIndex == 0) {
                 [[UIApplication sharedApplication] openURL:[Twitterweb.request URL]];
             }
             break;
@@ -63,7 +63,7 @@
     return YES;
 }
 
-- (void)webViewDidStartLoad: (UIWebView *)webView{
+- (void)webViewDidStartLoad: (UIWebView *)webView {
     [TwitterwebLoadIndicator startAnimating];
     [self fade:topNavigationLabel AnimDuration:0.2 startAlpha:1 endAlpha:0];
 }
@@ -101,15 +101,15 @@
     }
 }
 
--(IBAction)TwitterWebBackButton:(id)sender{
+-(IBAction)TwitterWebBackButton:(id)sender {
     [Twitterweb goBack];
 }
 
--(IBAction)TwitterWebForwardButton:(id)sender{
+-(IBAction)TwitterWebForwardButton:(id)sender {
     [Twitterweb goForward];
 }
 
--(IBAction)TwitterWebActionButton:(id)sender{
+-(IBAction)TwitterWebActionButton:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
@@ -126,7 +126,7 @@
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i < numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2) {
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -135,38 +135,38 @@
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i < numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2) {
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSMutableDictionary *)mutableDictionary;
 }
 
--(void)showContent:(id)sender{
+-(void)showContent:(id)sender {
     NSDictionary *item = self.detailItem;
     mainMenu *MenuItem = nil;
     int choosedTab = 0;
     NSString *notificationName = nil;
-    if ([item[@"family"] isEqualToString:@"albumid"]){
+    if ([item[@"family"] isEqualToString:@"albumid"]) {
         notificationName = @"UIApplicationEnableMusicSection";
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
     }
-    else if ([item[@"family"] isEqualToString:@"artistid"]){
+    else if ([item[@"family"] isEqualToString:@"artistid"]) {
         notificationName = @"UIApplicationEnableMusicSection";
         choosedTab = 1;
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
     }
     MenuItem.subItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
     NSDictionary *methods = [self indexKeyedDictionaryFromArray:[MenuItem.subItem mainMethod][choosedTab]];
-    if (methods[@"method"] != nil){ // THERE IS A CHILD
+    if (methods[@"method"] != nil) { // THERE IS A CHILD
         NSDictionary *mainFields = [MenuItem mainFields][choosedTab];
         NSMutableDictionary *parameters = [self indexKeyedMutableDictionaryFromArray:[MenuItem.subItem mainParameters][choosedTab]];
         NSString *key = @"null";
-        if (item[mainFields[@"row15"]] != nil){
+        if (item[mainFields[@"row15"]] != nil) {
             key = mainFields[@"row15"];
         }
         id obj = @([item[mainFields[@"row6"]] intValue]);
         id objKey = mainFields[@"row6"];
-        if ([AppDelegate instance].serverVersion > 11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE){
+        if ([AppDelegate instance].serverVersion > 11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE) {
             obj = @{mainFields[@"row6"]: @([item[mainFields[@"row6"]] intValue])};
             objKey = @"filter";
         }
@@ -180,15 +180,15 @@
                                        nil];
         [MenuItem.subItem mainParameters][choosedTab] = newParameters;
         MenuItem.subItem.chooseTab = choosedTab;
-        if (![item[@"disableNowPlaying"] boolValue]){
+        if (![item[@"disableNowPlaying"] boolValue]) {
             MenuItem.subItem.disableNowPlaying = NO;
         }
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
             self.detailViewController.detailItem = MenuItem.subItem;
             [self.navigationController pushViewController:self.detailViewController animated:YES];
         }
-        else{
+        else {
             DetailViewController *iPadDetailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" withItem:MenuItem.subItem withFrame:CGRectMake(0, 0, STACKSCROLL_WIDTH, self.view.frame.size.height) bundle:nil];
             [[AppDelegate instance].windowController.stackScrollViewController addViewInSlider:iPadDetailViewController invokeByController:self isStackStartView:FALSE];
             [[AppDelegate instance].windowController.stackScrollViewController enablePanGestureRecognizer];
@@ -199,11 +199,11 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [bottomToolbar setTintColor:TINT_COLOR];
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
             float iOSYDelta = - [[UIApplication sharedApplication] statusBarFrame].size.height;
             tableViewInsets.top = 44 + fabs(iOSYDelta);
@@ -211,18 +211,18 @@
             Twitterweb.scrollView.scrollIndicatorInsets = tableViewInsets;
         }
     }
-    else{
+    else {
         [bottomToolbar setBackgroundImage:[UIImage imageNamed:@"st_background"] forToolbarPosition:0 barMetrics:0];
     }
     NSDictionary *item = self.detailItem;
     UIBarButtonItem *extraButton = nil;
     int titleWidth = 310;
-    if ([item[@"family"] isEqualToString:@"albumid"]){
+    if ([item[@"family"] isEqualToString:@"albumid"]) {
         UIImage* extraButtonImg = [UIImage imageNamed:@"st_song_icon"];
         extraButton = [[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         titleWidth = 254;
     }
-    else if ([item[@"family"] isEqualToString:@"artistid"]){
+    else if ([item[@"family"] isEqualToString:@"artistid"]) {
         UIImage* extraButtonImg = [UIImage imageNamed:@"st_album_icon"];
         extraButton = [[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         titleWidth = 254;
@@ -249,7 +249,7 @@
 	[TwitterwebLoadIndicator sizeToFit];  	
     [titleView addSubview:TwitterwebLoadIndicator];
     [titleView addSubview:topNavigationLabel];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UIToolbar *toolbar = [UIToolbar new];
         toolbar.barStyle = UIBarStyleBlackTranslucent;
         toolbar.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
@@ -287,22 +287,22 @@
     [Twitterweb loadRequest:self.urlRequest];
 }
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 //    return (interfaceOrientation == UIInterfaceOrientationPortrait);
     return YES;
 }
 
--(BOOL)shouldAutorotate{
+-(BOOL)shouldAutorotate {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 

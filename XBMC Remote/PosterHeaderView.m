@@ -16,20 +16,20 @@
 
 @synthesize headerLabel = _headerLabel;
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setClipsToBounds:NO];
         self.restorationIdentifier = @"posterHeaderView";
         
-//        if (self.frame.size.height > 0){
+//        if (self.frame.size.height > 0) {
 //            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
 //            [lineView setBackgroundColor:[UIColor colorWithRed:130.0f/255.0f green:130.0f/255.0f blue:130.0f/255.0f alpha:1]];
 //            [self addSubview:lineView];
 //        }
         
-        if (self.frame.size.height > 1){
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+        if (self.frame.size.height > 1) {
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
                 //TYPE 1
 //                UIToolbar *buttonsToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 //                [buttonsToolbar setBarStyle:UIBarStyleBlack];
@@ -45,7 +45,7 @@
 //                gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:75.0f/255.0f green:75.0f/255.0f blue:75.0f/255.0f alpha:.95] CGColor], (id)[[UIColor colorWithRed:35.0f/255.0f green:35.0f/255.0f blue:35.0f/255.0f alpha:.95] CGColor], nil];
 //                [self.layer insertSublayer:gradient atIndex:0];
             }
-            else{
+            else {
                 UIView *lineViewBottom = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1)];
                 [lineViewBottom setBackgroundColor:[UIColor colorWithRed:52.0f/255.0f green:52.0f/255.0f blue:52.0f/255.0f alpha:1]];
                 [self addSubview:lineViewBottom];
@@ -56,7 +56,7 @@
             }
         }
 
-        if (self.frame.size.height > 10){
+        if (self.frame.size.height > 10) {
             _headerLabel = [[PosterLabel alloc] initWithFrame:CGRectMake(10, 0, self.frame.size.width - 10, self.frame.size.height - 1)];
             [_headerLabel setBackgroundColor:[UIColor clearColor]];
             [_headerLabel setFont:[UIFont boldSystemFontOfSize:(self.frame.size.height > 20 ? 17 : self.frame.size.height - 5)]];
@@ -82,7 +82,7 @@
     return self;
 }
 
-- (void) setHeaderText:(NSString *)text{
+- (void) setHeaderText:(NSString *)text {
     _headerLabel.text = text;
 
 }

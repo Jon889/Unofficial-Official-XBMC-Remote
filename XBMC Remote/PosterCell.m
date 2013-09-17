@@ -14,7 +14,7 @@
 @synthesize posterLabel = _posterLabel;
 @synthesize busyView = _busyView;
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         float labelHeight = (int)(frame.size.height * 0.19f);
@@ -67,15 +67,15 @@
     return self;
 }
 
-- (float)halfSizeIfRetina:(float)size{
+- (float)halfSizeIfRetina:(float)size {
     BOOL isRetina = ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2);
     size = isRetina ? size / 2 : size;
     return size;
 }
 
--(void)setOverlayWatched:(BOOL)enable{
-    if (enable == YES){
-        if (overlayWatched == nil){
+-(void)setOverlayWatched:(BOOL)enable {
+    if (enable == YES) {
+        if (overlayWatched == nil) {
             overlayWatched = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OverlayWatched"]];
             [overlayWatched setAutoresizingMask: UIViewAutoresizingFlexibleLeftMargin  | UIViewAutoresizingFlexibleBottomMargin];
             overlayWatched.frame = CGRectMake(self.contentView.frame.size.width - overlayWatched.frame.size.width + 2,
@@ -86,7 +86,7 @@
         }
         overlayWatched.hidden = NO;
     }
-    else{
+    else {
         overlayWatched.hidden = YES;
     }
 }

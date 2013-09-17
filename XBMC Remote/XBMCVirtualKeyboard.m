@@ -11,7 +11,7 @@
 
 @implementation XBMCVirtualKeyboard
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         accessoryHeight = 52;
@@ -21,7 +21,7 @@
         background_padding = 6;
         alignBottom = 10;
         UIColor *accessoryColor = [UIColor colorWithRed:0.565f green:0.596f blue:0.643f alpha:1];
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             accessoryHeight = 74;
             verboseHeight = 34;
             padding = 50;
@@ -58,7 +58,7 @@
         [keyboardTitle setFont:[UIFont boldSystemFontOfSize:textSize]];
         
         inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, accessoryHeight)];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             UIToolbar *buttonsToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, accessoryHeight)];
             [buttonsToolbar setBarStyle:UIBarStyleDefault];
             [buttonsToolbar setTranslucent:YES];
@@ -66,7 +66,7 @@
             [inputAccView insertSubview: buttonsToolbar atIndex:0];
             [keyboardTitle setTextColor:BAR_TINT_COLOR];
         }
-        else{
+        else {
             [inputAccView setBackgroundColor:accessoryColor];
             UIImageView *keyboardLineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 2)];
             [keyboardLineImageView setImage:[UIImage imageNamed:@"keyboard_line"]];
@@ -106,26 +106,26 @@
 
 #pragma mark - keyboard
 
--(void) hideKeyboard:(id)sender{
+-(void) hideKeyboard:(id)sender {
     [xbmcVirtualKeyboard resignFirstResponder];
 }
 
--(void) showKeyboard:(NSNotification *)note{
-    if ([AppDelegate instance].serverVersion == 11){
+-(void) showKeyboard:(NSNotification *)note {
+    if ([AppDelegate instance].serverVersion == 11) {
         xbmcVirtualKeyboard.text = @" ";
     }
     NSDictionary *params;
-    if (note != nil){
+    if (note != nil) {
         params = [note userInfo][@"params"];
     }
     keyboardTitle.text = @"";
-    if (params != nil){
-        if (((NSNull *)params[@"data"] != [NSNull null])){
-            if (((NSNull *)params[@"data"][@"title"] != [NSNull null])){
+    if (params != nil) {
+        if (((NSNull *)params[@"data"] != [NSNull null])) {
+            if (((NSNull *)params[@"data"][@"title"] != [NSNull null])) {
                 keyboardTitle.text = params[@"data"][@"title"];
             }
-            if (((NSNull *)params[@"data"][@"value"] != [NSNull null])){
-                if (![params[@"data"][@"value"] isEqualToString:@""]){
+            if (((NSNull *)params[@"data"][@"value"] != [NSNull null])) {
+                if (![params[@"data"][@"value"] isEqualToString:@""]) {
                     xbmcVirtualKeyboard.text = params[@"data"][@"value"];
                 }
             }
@@ -134,8 +134,8 @@
     [xbmcVirtualKeyboard becomeFirstResponder];
 }
 
--(void)toggleVirtualKeyboard:(id)sender{
-    if ([xbmcVirtualKeyboard isFirstResponder]){
+-(void)toggleVirtualKeyboard:(id)sender {
+    if ([xbmcVirtualKeyboard isFirstResponder]) {
         [self hideKeyboard:nil];
     }
     else {
@@ -146,9 +146,9 @@
 #pragma mark - UITextFieldDelegate Methods
 
 
--(void)textFieldDidBeginEditing:(UITextField *)textField{
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
     verboseOutput.text = xbmcVirtualKeyboard.text;
-    if ([keyboardTitle.text isEqualToString:@""]){
+    if ([keyboardTitle.text isEqualToString:@""]) {
         [inputAccView setFrame:
          CGRectMake(0, 0, screenWidth, accessoryHeight - alignBottom)];
         [verboseOutput setFrame:
@@ -156,7 +156,7 @@
         [backgroundTextField setFrame:
          CGRectMake(padding - background_padding, (int)(accessoryHeight/2) - (int)(verboseHeight/2) - (int)(alignBottom/2), screenWidth - (padding - background_padding) * 2, verboseHeight)];
     }
-    else{
+    else {
         [inputAccView setFrame:CGRectMake(0, 0, screenWidth, accessoryHeight)];
         [verboseOutput setFrame:CGRectMake(padding, (int)(accessoryHeight/2) - (int)(verboseHeight/2) + alignBottom, screenWidth - padding * 2, verboseHeight)];
         [backgroundTextField setFrame:CGRectMake(padding - background_padding, (int)(accessoryHeight/2) - (int)(verboseHeight/2) + alignBottom, screenWidth - (padding - background_padding) * 2, verboseHeight)];
@@ -165,13 +165,13 @@
 }
 
 -(BOOL) textField: (UITextField *)theTextField shouldChangeCharactersInRange: (NSRange)range replacementString: (NSString *)string {
-    if ([AppDelegate instance].serverVersion == 11){
-        if (range.location == 0){ //BACKSPACE
+    if ([AppDelegate instance].serverVersion == 11) {
+        if (range.location == 0) { //BACKSPACE
             [self sendXbmcHttp:@"SendKey(0xf108)"];
-            if ([verboseOutput.text length] > 0){
+            if ([verboseOutput.text length] > 0) {
                 [verboseOutput setText:[NSString stringWithFormat:@"%@", [verboseOutput.text substringToIndex:[verboseOutput.text length] - 1]]];
             }
-            else{
+            else {
                 verboseOutput.text = @"";
             }
         }
@@ -181,20 +181,20 @@
                 [self GUIAction:@"Input.Select" params:@{} httpAPIcallback:nil];
                 [xbmcVirtualKeyboard resignFirstResponder];
             }
-            else if (x < 1000){
+            else if (x < 1000) {
                 [self sendXbmcHttp:[NSString stringWithFormat:@"SendKey(0xf1%x)", x]];
             }
             [verboseOutput setText:[NSString stringWithFormat:@"%@%@", verboseOutput.text == nil ? @"" : verboseOutput.text, string]];
         }
         return NO;
     }
-    else{
+    else {
         NSString *stringToSend = [theTextField.text stringByReplacingCharactersInRange:range withString:string];
-//        if ([stringToSend isEqualToString:@""]){
+//        if ([stringToSend isEqualToString:@""]) {
 //            stringToSend = @"";
 //        }
         verboseOutput.text = stringToSend;
-        if ([string length] != 0){
+        if ([string length] != 0) {
             int x = (unichar) [string characterAtIndex: 0];
             if (x == 10) {
                 [self GUIAction:@"Input.SendText" params:@{ @"text": stringToSend, @"done": @YES } httpAPIcallback:nil];
@@ -210,7 +210,7 @@
 
 #pragma mark - json commands
 
--(void)GUIAction:(NSString *)action params:(NSDictionary *)params httpAPIcallback:(NSString *)callback{
+-(void)GUIAction:(NSString *)action params:(NSDictionary *)params httpAPIcallback:(NSString *)callback {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance];
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -218,17 +218,17 @@
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         //        NSLog(@"Action %@ ok with %@ ", action , methodResult);
-        //        if (methodError != nil || error != nil){
+        //        if (methodError != nil || error != nil) {
         //            NSLog(@"method error %@", methodError);
         //        }
-        if ((methodError != nil || error != nil) && callback != nil){ // Backward compatibility
+        if ((methodError != nil || error != nil) && callback != nil) { // Backward compatibility
             //            NSLog(@"method error %@", methodError);
             [self sendXbmcHttp:callback];
         }
     }];
 }
 
--(void)sendXbmcHttp:(NSString *) command{
+-(void)sendXbmcHttp:(NSString *) command {
     GlobalData *obj = [GlobalData getInstance];
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
     
@@ -240,7 +240,7 @@
 
 #pragma mark - lifecycle
 
--(void)dealloc{
+-(void)dealloc {
     jsonRPC = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

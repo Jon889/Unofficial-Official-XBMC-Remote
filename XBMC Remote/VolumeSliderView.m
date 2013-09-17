@@ -15,7 +15,7 @@
 
 @synthesize timer, holdVolumeTimer;
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"VolumeSliderView" owner:self options:nil];
@@ -23,12 +23,12 @@
         CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * -0.5);
         volumeSlider.transform = trans;
         pg_thumb_name = @"pgbar_thumb";
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             [volumeSlider setMinimumTrackTintColor:SLIDER_DEFAULT_COLOR];
             [volumeSlider setMaximumTrackTintColor:APP_TINT_COLOR];
             pg_thumb_name = @"pgbar_thumb_iOS7";
         }
-        else{
+        else {
             UIImage *sliderRightTrackImage = [[UIImage imageNamed: @"slider"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6, 0, 6)];
             UIImage *sliderLeftTrackImage = [[UIImage imageNamed: @"slider_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6, 0, 6)];
             [volumeSlider setMinimumTrackImage: sliderLeftTrackImage forState: UIControlStateNormal];
@@ -42,7 +42,7 @@
         [volumeSlider addTarget:self action:@selector(changeServerVolume:) forControlEvents:UIControlEventTouchUpOutside];
         [volumeSlider addTarget:self action:@selector(stopTimer) forControlEvents:UIControlEventTouchDown];
         CGRect frame_tmp;
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             trans = CGAffineTransformMakeRotation(M_PI * - 0.5);
             minusButton.transform = trans;
             volumeLabel.transform = trans;
@@ -60,7 +60,7 @@
             plusButton.frame = frame_tmp;
             
         }
-        else if (frame.size.width == 0){
+        else if (frame.size.width == 0) {
             [plusButton setBackgroundImage:[UIImage imageNamed:@"button_volume_plus"] forState:UIControlStateNormal];
             [plusButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateHighlighted];
             [plusButton setTitle:@"" forState:UIControlStateNormal];
@@ -122,21 +122,21 @@
     return self;
 }
 
--(void)handleApplicationOnVolumeChanged:(NSNotification *)sender{
+-(void)handleApplicationOnVolumeChanged:(NSNotification *)sender {
     [AppDelegate instance].serverVolume = [[[sender userInfo] valueForKey:@"params"][@"data"][@"volume"] intValue];
     volumeLabel.text = [NSString stringWithFormat:@"%d", [AppDelegate instance].serverVolume];
     volumeSlider.value = [AppDelegate instance].serverVolume;
 }
 
-- (void) handleDidEnterBackground: (NSNotification*) sender{
+- (void) handleDidEnterBackground: (NSNotification*) sender {
     [self stopTimer];
 }
 
-- (void) handleEnterForeground: (NSNotification*) sender{
+- (void) handleEnterForeground: (NSNotification*) sender {
     [self startTimer];
 }
 
--(void)changeServerVolume:(id)sender{
+-(void)changeServerVolume:(id)sender {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -145,40 +145,40 @@
     [jsonRPC 
      callMethod:@"Application.SetVolume" 
      withParameters:@{@"volume": @((int)volumeSlider.value)}];
-    if ([sender tag] == 10){
+    if ([sender tag] == 10) {
         [self startTimer];
     }
 }
 
--(void)startTimer{
+-(void)startTimer {
     volumeLabel.text = [NSString stringWithFormat:@"%d", [AppDelegate instance].serverVolume];
     volumeSlider.value = [AppDelegate instance].serverVolume;
     [self stopTimer];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(volumeInfo) userInfo:nil repeats:YES];
 }
 
--(void)stopTimer{
-    if (self.timer != nil){
+-(void)stopTimer {
+    if (self.timer != nil) {
         [self.timer invalidate];
         self.timer = nil;
     }
 }
 
--(void)volumeInfo{
+-(void)volumeInfo {
     if ([AppDelegate instance].serverTCPConnectionOpen == YES) {
         return;
     }
-    if ([AppDelegate instance].serverVolume > -1){
+    if ([AppDelegate instance].serverVolume > -1) {
         volumeLabel.text = [NSString stringWithFormat:@"%d", [AppDelegate instance].serverVolume];
         volumeSlider.value = [AppDelegate instance].serverVolume;
     }
-    else{
+    else {
         volumeLabel.text = @"0";
         volumeSlider.value = 0;
     }
 }
 
--(IBAction)slideVolume:(id)sender{
+-(IBAction)slideVolume:(id)sender {
     volumeSlider.value = (int)volumeSlider.value;
     [AppDelegate instance].serverVolume = (int)volumeSlider.value;
     volumeLabel.text = [NSString  stringWithFormat:@"%.0f", volumeSlider.value];
@@ -186,15 +186,15 @@
 
 NSInteger action;
 
--(IBAction)holdVolume:(id)sender{
+-(IBAction)holdVolume:(id)sender {
     [self stopTimer];
     action = [sender tag];
     [self changeVolume];
     self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(changeVolume) userInfo:nil repeats:YES];
 }
 
--(IBAction)stopVolume:(id)sender{
-    if (self.holdVolumeTimer != nil){
+-(IBAction)stopVolume:(id)sender {
+    if (self.holdVolumeTimer != nil) {
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
     }
@@ -202,13 +202,13 @@ NSInteger action;
     [self startTimer];
 }
 
--(void)changeVolume{
-    if (self.holdVolumeTimer.timeInterval == 0.5f){
+-(void)changeVolume {
+    if (self.holdVolumeTimer.timeInterval == 0.5f) {
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
         self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(changeVolume) userInfo:nil repeats:YES];        
     }
-    if (action == 1){ //Volume Raise
+    if (action == 1) { //Volume Raise
        volumeSlider.value = (int)volumeSlider.value+2; 
         
     }
@@ -221,7 +221,7 @@ NSInteger action;
     [self changeServerVolume:nil];
 }
 
--(void)dealloc{
+-(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     [self stopTimer];
 }

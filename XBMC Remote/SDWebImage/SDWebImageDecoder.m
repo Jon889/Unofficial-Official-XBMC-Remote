@@ -12,7 +12,7 @@
 
 @implementation UIImage (ForceDecode)
 
-+ (UIImage *)decodedImageWithImage:(UIImage *)image{
++ (UIImage *)decodedImageWithImage:(UIImage *)image {
     return [self decodedImageWithImage:image size:CGSizeZero interpolationQuality:kCGInterpolationDefault];
 }
 
@@ -20,7 +20,7 @@
 {	
     CGImageRef imageRef = image.CGImage;
     CGSize imageSize = CGSizeMake(CGImageGetWidth(imageRef), CGImageGetHeight(imageRef));
-    CGRect imageRect = (CGRect){.origin = CGPointZero, .size = imageSize};
+    CGRect imageRect = (CGRect) {.origin = CGPointZero, .size = imageSize};
 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
@@ -52,7 +52,7 @@
 //    float ImageWidth = imageSize.width;
 //    float ImageHeight = imageSize.height;
 
-    if (newSize.width && newSize.height){
+    if (newSize.width && newSize.height) {
         CGFloat horizontalRatio = newSize.width / imageSize.width;
         CGFloat verticalRatio = newSize.height / imageSize.height;
         CGFloat ratio;

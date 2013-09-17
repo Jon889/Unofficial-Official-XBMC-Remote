@@ -71,7 +71,7 @@ static char operationKey;
     if (url)
     {
         NSDictionary *userInfo = nil;
-        if (size.width && size.height){
+        if (size.width && size.height) {
             userInfo = @{@"transformation": @"resize",
                                   @"size": NSStringFromCGSize(size)};
         }

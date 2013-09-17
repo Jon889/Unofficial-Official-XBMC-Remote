@@ -23,11 +23,11 @@
 
 @synthesize detailItem = _detailItem;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     return self;
 }
-- (void)AnimLabel:(UIView *)Lab AnimDuration:(float)seconds Alpha:(float)alphavalue XPos:(int)X{
+- (void)AnimLabel:(UIView *)Lab AnimDuration:(float)seconds Alpha:(float)alphavalue XPos:(int)X {
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:seconds];
 	Lab.alpha = alphavalue;
@@ -39,7 +39,7 @@
     
 }
 
-- (void)AnimView:(UIView *)view AnimDuration:(float)seconds Alpha:(float)alphavalue XPos:(int)X{
+- (void)AnimView:(UIView *)view AnimDuration:(float)seconds Alpha:(float)alphavalue XPos:(int)X {
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:seconds];
 	view.alpha = alphavalue;
@@ -51,7 +51,7 @@
 }
 
 - (void)configureView {
-    if (self.detailItem == nil){
+    if (self.detailItem == nil) {
         self.navigationItem.title = NSLocalizedString(@"New XBMC Server", nil);
     }
     else {
@@ -103,17 +103,17 @@
     }
 }
 
-- (void)setDetailItem:(id)newDetailItem{
+- (void)setDetailItem:(id)newDetailItem {
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
     }
 }
 
-- (IBAction) dismissView:(id)sender{
+- (IBAction) dismissView:(id)sender {
     
     [self textFieldDoneEditing:nil];
     NSString *macAddress = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@", mac_0_UI.text, mac_1_UI.text, mac_2_UI.text, mac_3_UI.text, mac_4_UI.text, mac_5_UI.text];
-    if (self.detailItem == nil){
+    if (self.detailItem == nil) {
         [[AppDelegate instance].arrayServerList addObject:@{@"serverDescription": descriptionUI.text,
                                                            @"serverUser": usernameUI.text,
                                                            @"serverPass": passwordUI.text,
@@ -123,7 +123,7 @@
                                                            @"preferTVPosters": @(preferTVPostersUI.on),
                                                            @"tcpPort": tcpPortUI.text}];
     }
-    else{
+    else {
         NSIndexPath *idx = self.detailItem;
         [[AppDelegate instance].arrayServerList removeObjectAtIndex:idx.row];
         [[AppDelegate instance].arrayServerList insertObject:@{@"serverDescription": descriptionUI.text,
@@ -140,10 +140,10 @@
 }
 #pragma mark - UITextFieldDelegate Methods
 
-//- (void)textFieldDidBeginEditing:(UITextField *)textField{
+//- (void)textFieldDidBeginEditing:(UITextField *)textField {
 //    [textField setTextColor:[UIColor blackColor]];
 //}
--(void)resignKeyboard{
+-(void)resignKeyboard {
     [descriptionUI resignFirstResponder];
     [ipUI resignFirstResponder];
     [portUI resignFirstResponder];
@@ -163,7 +163,7 @@
     return YES;
 }
 
--(IBAction)textFieldDoneEditing:(id)sender{
+-(IBAction)textFieldDoneEditing:(id)sender {
     [self resignKeyboard];
 }
 
@@ -171,15 +171,15 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    if (newLength > 2 && textField.tag > 100){
-        if (textField.tag < 106){
+    if (newLength > 2 && textField.tag > 100) {
+        if (textField.tag < 106) {
             UITextField *next = (UITextField*) [self.view viewWithTag:textField.tag + 1];
             [next becomeFirstResponder];
             [next selectAll:self];
         }
         return NO;
     }
-    else{
+    else {
         return YES;
     }
 //    return (newLength > 2 && textField.tag > 100) ? NO : YES;
@@ -194,17 +194,17 @@
 
 # pragma mark - NSNetServiceBrowserDelegate Methods
 
-- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)browser{
+- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)browser {
     searching = YES;
     [self updateUI];
 }
 
-- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)browser{
+- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)browser {
     searching = NO;
     [self updateUI];
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser didNotSearch:(NSDictionary *)errorDict{
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser didNotSearch:(NSDictionary *)errorDict {
     searching = NO;
     [self handleError:errorDict[NSNetServicesErrorCode]];
 }
@@ -221,7 +221,7 @@
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser
          didRemoveService:(NSNetService *)aNetService
-               moreComing:(BOOL)moreComing{
+               moreComing:(BOOL)moreComing {
     [services removeObject:aNetService];
     if (!moreComing) {
         [self updateUI];
@@ -233,7 +233,7 @@
     // Handle error here
 }
 
-- (void)updateUI{
+- (void)updateUI {
     if (!searching) {
         switch ([services count]) {
             case 0:
@@ -269,7 +269,7 @@
                                                &(socketAddress->sin_addr), addressBuffer,
                                                sizeof(addressBuffer));
             int port = ntohs(socketAddress->sin_port);
-            if (addressStr && port){
+            if (addressStr && port) {
                 descriptionUI.text = [service name];
                 ipUI.text = [NSString stringWithFormat:@"%s", addressStr];
                 portUI.text = [NSString stringWithFormat:@"%d", port];
@@ -285,13 +285,13 @@
     }
 }
 
--(void)stopDiscovery{
+-(void)stopDiscovery {
     [netServiceBrowser stop];
     [activityIndicatorView stopAnimating];
     startDiscover.enabled = YES;
 }
 
--(IBAction)startDiscover:(id)sender{
+-(IBAction)startDiscover:(id)sender {
     [self resignKeyboard];
     [activityIndicatorView startAnimating];
     [services removeAllObjects];
@@ -335,29 +335,29 @@
 	return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self resolveIPAddress:services[indexPath.row]];
 }
 
 #pragma mark - LifeCycle
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     CGSize size = CGSizeMake(320, 380);
     self.contentSizeForViewInPopover = size;
     [super viewWillAppear:animated];
 }
 
--(void)viewDidDisappear:(BOOL)animated{
+-(void)viewDidDisappear:(BOOL)animated {
     [timer invalidate];
     timer = nil;
     netServiceBrowser = nil;
     services = nil;
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         self.edgesForExtendedLayout = 0;
     }
     services = [[NSMutableArray alloc] init];
@@ -370,23 +370,23 @@
     [self configureView];
 }
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(BOOL)shouldAutorotate{
+-(BOOL)shouldAutorotate {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
--(void)dealloc{
+-(void)dealloc {
     services = nil;
     netServiceBrowser = nil;
     descriptionUI = nil;

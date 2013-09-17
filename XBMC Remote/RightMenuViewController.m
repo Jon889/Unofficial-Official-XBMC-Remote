@@ -18,7 +18,7 @@
 @synthesize peekLeftAmount;
 @synthesize rightMenuItems;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     return self;
 }
@@ -27,7 +27,7 @@
     Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
     if (captureDeviceClass != nil) {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        if ([device hasTorch] && [device hasFlash]){
+        if ([device hasTorch] && [device hasFlash]) {
             [device lockForConfiguration:nil];
             if (on) {
                 [device setTorchMode:AVCaptureTorchModeOn];
@@ -48,11 +48,11 @@
 #pragma mark -
 #pragma mark Table view data source
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]){
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]) {
         return 44;
     }
-    else if ([labelsList[indexPath.row] isEqualToString:@"RemoteControl"]){
+    else if ([labelsList[indexPath.row] isEqualToString:@"RemoteControl"]) {
         return 532;
     }
     return 50;
@@ -67,7 +67,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([colorsList[indexPath.row] count]){        
+    if ([colorsList[indexPath.row] count]) {        
         cell.backgroundColor = [UIColor colorWithRed:[colorsList[indexPath.row][@"red"] floatValue]
                                                green:[colorsList[indexPath.row][@"green"] floatValue]
                                                 blue:[colorsList[indexPath.row][@"blue"] floatValue]
@@ -79,12 +79,12 @@
     UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"rightMenuCell"];
     [[NSBundle mainBundle] loadNibNamed:@"rightCellView" owner:self options:NULL];
-    if (cell == nil || [labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    if (cell == nil || [labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]) {
         cell = rightMenuCell;
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
         [backgroundView setBackgroundColor:[UIColor colorWithRed:.086 green:.086 blue:.086 alpha:1]];
         cell.selectedBackgroundView = backgroundView;
-        if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]){
+        if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]) {
             [backgroundView setBackgroundColor:[UIColor colorWithRed:.208f green:.208f blue:.208f alpha:1]];
             cell.selectedBackgroundView = backgroundView;
             UIImageView *xbmc_logo = [[UIImageView alloc] initWithFrame:CGRectMake(165, (int)((44/2) - (36/2)) - 2, 145, 36)];
@@ -97,8 +97,8 @@
     UILabel *title = (UILabel*) [cell viewWithTag:3];
     UIImageView *line = (UIImageView*) [cell viewWithTag:4];
     NSString *iconName = @"";
-    if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]){
-        if (putXBMClogo == YES){
+    if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]) {
+        if (putXBMClogo == YES) {
             UIImageView *xbmc_logo = [[UIImageView alloc] initWithFrame:CGRectMake(165, (int)((44/2) - (36/2)) - 2, 145, 36)];
             xbmc_logo. alpha = .25f;
             [xbmc_logo setImage:[UIImage imageNamed:@"xbmc_logo.png"]];
@@ -107,7 +107,7 @@
         }
         iconName = @"connection_off";
         icon.alpha = 1;
-        if ([AppDelegate instance].serverOnLine){
+        if ([AppDelegate instance].serverOnLine) {
             iconName = @"connection_on";
         }
         int cellHeight = 44;
@@ -120,17 +120,17 @@
         UIImageView *arrowRight = (UIImageView*) [cell viewWithTag:5];
         [arrowRight setFrame:CGRectMake(arrowRight.frame.origin.x, (int)((cellHeight/2) - (arrowRight.frame.size.height/2)), arrowRight.frame.size.width, arrowRight.frame.size.height)];
     }
-    else if ([labelsList[indexPath.row] isEqualToString:@"VolumeControl"]){
+    else if ([labelsList[indexPath.row] isEqualToString:@"VolumeControl"]) {
         [title setText:@""];
-        if (volumeSliderView == nil){
+        if (volumeSliderView == nil) {
             volumeSliderView = [[VolumeSliderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0, 0)];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         [cell.contentView addSubview:volumeSliderView];
     }
-    else if ([labelsList[indexPath.row] isEqualToString:@"RemoteControl"]){
+    else if ([labelsList[indexPath.row] isEqualToString:@"RemoteControl"]) {
         [title setText:@""];
-        if (remoteControllerView == nil){
+        if (remoteControllerView == nil) {
             remoteControllerView = [[RemoteController alloc] initWithNibName:@"RemoteController" bundle:nil];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [cell.contentView addSubview:remoteControllerView.view];
@@ -138,16 +138,16 @@
         }
     }
 
-    else{
+    else {
         icon.alpha = .6f;
         iconName = iconsList[indexPath.row];
         [title setFont:[UIFont fontWithName:@"Roboto-Regular" size:20]];
         [title setText:labelsList[indexPath.row]];
     }
-    if ([hideLineSeparator[indexPath.row] boolValue] == YES){
+    if ([hideLineSeparator[indexPath.row] boolValue] == YES) {
         line.hidden = YES;
     }
-    if ([fontColorList[indexPath.row] count]){
+    if ([fontColorList[indexPath.row] count]) {
         UIColor *fontColor = [UIColor colorWithRed:[fontColorList[indexPath.row][@"red"] floatValue]
                                              green:[fontColorList[indexPath.row][@"green"] floatValue]
                                               blue:[fontColorList[indexPath.row][@"blue"] floatValue]
@@ -155,14 +155,14 @@
         [title setTextColor:fontColor];
         [title setHighlightedTextColor:fontColor];
     }
-    else{
+    else {
         UIColor *fontColor = [UIColor colorWithRed:.49f green:.49f blue:.49f alpha:1];
         [title setTextColor:fontColor];
         [title setHighlightedTextColor:fontColor];
     }
-    if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]) {
         icon.alpha = .8f;
-        if (torchIsOn){
+        if (torchIsOn) {
             iconName = @"torch_on";
         }
     }
@@ -187,11 +187,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ([actionsList[indexPath.row] count]){
+    if ([actionsList[indexPath.row] count]) {
         NSString *message = actionsList[indexPath.row][@"message"];
-        if (message != nil){
+        if (message != nil) {
             NSString *countdown_message = actionsList[indexPath.row][@"countdown_message"];
-            if (countdown_message != nil){
+            if (countdown_message != nil) {
                 countdown_message = [NSString stringWithFormat:@"%@ %d seconds.", countdown_message, [actionsList[indexPath.row][@"countdown_time"] intValue]];
             }
             NSString *cancel_button = actionsList[indexPath.row][@"cancel_button"];
@@ -202,46 +202,46 @@
             
             [actionAlertView show];
         }
-        else{
+        else {
             NSString *command = actionsList[indexPath.row][@"command"];
-            if ([command isEqualToString:@"System.WOL"]){
+            if ([command isEqualToString:@"System.WOL"]) {
                 NSString *serverMAC = [AppDelegate instance].obj.serverHWAddr;
-                if (serverMAC != nil && ![serverMAC isEqualToString:@":::::"]){
+                if (serverMAC != nil && ![serverMAC isEqualToString:@":::::"]) {
                     [self wakeUp:[AppDelegate instance].obj.serverHWAddr];
                     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Command executed", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
                     [alertView show];
                 }
-                else{
+                else {
                     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning", nil) message:NSLocalizedString(@"No sever mac address definied", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
                     [alertView show];
                 }
             }
-            else if (command != nil){
+            else if (command != nil) {
                 [self powerAction:command params:@{}];
             }
         }
     }
-    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Keyboard", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Keyboard", nil)]) {
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleVirtualKeyboard" object:nil userInfo:nil];
-        if ([revealTopView[indexPath.row] boolValue] == YES){
+        if ([revealTopView[indexPath.row] boolValue] == YES) {
             [self.slidingViewController resetTopView];
         }
     }
-    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Help Screen", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Help Screen", nil)]) {
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleQuickHelp" object:nil userInfo:nil];
         [self.slidingViewController resetTopView];
     }
-    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Gesture Zone", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Gesture Zone", nil)]) {
         NSDictionary *userInfo = @{@"forceGestureZone": @YES};
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleGestureZone" object:nil userInfo:userInfo];
         [self.slidingViewController resetTopView];
     }
-    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Button Pad", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Button Pad", nil)]) {
         NSDictionary *userInfo = @{@"forceGestureZone": @NO};
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleGestureZone" object:nil userInfo:userInfo];
         [self.slidingViewController resetTopView];
     }
-    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]) {
         UIImageView *torchIcon = (UIImageView *)[[tableView cellForRowAtIndexPath:indexPath] viewWithTag:1];
         [[tableView cellForRowAtIndexPath:indexPath] viewWithTag:1];
         [self turnTorchOn:!torchIsOn icon:torchIcon];
@@ -250,66 +250,66 @@
 
 #pragma mark - JSON
 
--(void)powerAction:(NSString *)action params:(NSDictionary *)params{
+-(void)powerAction:(NSString *)action params:(NSDictionary *)params {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance];
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
     NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (methodError == nil && error == nil){
+        if (methodError == nil && error == nil) {
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Command executed", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alertView show];
         }
-        else{
+        else {
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot do that", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alertView show];
         }
     }];
 }
 
--(void)wakeUp:(NSString *)macAddress{
+-(void)wakeUp:(NSString *)macAddress {
     [[AppDelegate instance] wake:macAddress];
 }
 
 # pragma mark - UIAlertView
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1){
+    if (buttonIndex == 1) {
         NSString *userChoice = [alertView buttonTitleAtIndex:buttonIndex];
         NSString *command = @"";
-        for (NSDictionary *commands in actionsList){
-            if ([commands[@"ok_button"] isEqualToString:userChoice]){
+        for (NSDictionary *commands in actionsList) {
+            if ([commands[@"ok_button"] isEqualToString:userChoice]) {
                 command = commands[@"command"];
             }
         }
-        if (![command isEqualToString:@""]){
+        if (![command isEqualToString:@""]) {
             [self powerAction:command params:@{}];
         }
     }
 }
 
--(void)updateUIAlertViewCountdown:(NSString *)countdown_message{
+-(void)updateUIAlertViewCountdown:(NSString *)countdown_message {
     [actionAlertView setMessage:countdown_message];
 }
 
 #pragma mark - LifeCycle
 
--(void)viewWillDisappear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated {
     [volumeSliderView stopTimer];
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     int deltaY = 0;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         deltaY = 22;
     }
     torchIsOn = NO;
     Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
     if (captureDeviceClass != nil) {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        if ([device hasTorch] && [device hasFlash]){
+        if ([device hasTorch] && [device hasFlash]) {
             torchIsOn = [device torchLevel];
         }
     }
@@ -334,15 +334,15 @@
     [menuTableView setBackgroundColor:[UIColor clearColor]];
     [menuTableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [menuTableView setScrollEnabled:[(self.rightMenuItems)[0] enableSection]];
-    if ([[UIScreen mainScreen ] bounds].size.height >= 568){
+    if ([[UIScreen mainScreen ] bounds].size.height >= 568) {
         [menuTableView setScrollEnabled:NO];
     }
     [self.view addSubview:menuTableView];
-    if ([[AppDelegate instance].obj.serverIP length] != 0){
-        if (![AppDelegate instance].serverOnLine){
+    if ([[AppDelegate instance].obj.serverIP length] != 0) {
+        if (![AppDelegate instance].serverOnLine) {
             [self setRightMenuOption:@"offline"];
         }
-        else{
+        else {
             [self setRightMenuOption:@"online"];
         }
     }
@@ -371,15 +371,15 @@
 
 }
 
--(void)startTimer:(id)sender{
+-(void)startTimer:(id)sender {
     [volumeSliderView startTimer];
 }
 
--(void)stopTimer:(id)sender{
+-(void)stopTimer:(id)sender {
     [volumeSliderView stopTimer];
 }
 
-- (void)setRightMenuOption:(NSString *)key{
+- (void)setRightMenuOption:(NSString *)key {
     mainMenu *menuItems = (self.rightMenuItems)[0];
     labelsList = [[NSMutableArray alloc] initWithCapacity:0];
     colorsList = [[NSMutableArray alloc] initWithCapacity:0];
@@ -389,7 +389,7 @@
     actionsList = [[NSMutableArray alloc] initWithCapacity:0];
     revealTopView = [[NSMutableArray alloc] initWithCapacity:0];
 
-    for (NSDictionary *item in [menuItems mainMethod][0][key]){
+    for (NSDictionary *item in [menuItems mainMethod][0][key]) {
         NSString *label = item[@"label"];
         if (label == nil) label = @"";
         [labelsList addObject:label];
@@ -421,23 +421,23 @@
         [revealTopView addObject:showTop];
     }
     [UIView animateWithDuration:0.2
-                     animations:^{
+                     animations:^ {
                          int n = [menuTableView numberOfRowsInSection:0];
-                         for (int i = 1;i < n;i++){
+                         for (int i = 1;i < n;i++) {
                              UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                             if (cell != nil){
+                             if (cell != nil) {
                                  cell.alpha = 0;
                              }
                          }
                      }
-                     completion:^(BOOL finished){
+                     completion:^(BOOL finished) {
                          [menuTableView reloadData];
                          [UIView animateWithDuration:0.2
-                                          animations:^{
+                                          animations:^ {
                                               int n = [menuTableView numberOfRowsInSection:0];
-                                              for (int i = 1;i < n;i++){
+                                              for (int i = 1;i < n;i++) {
                                                   UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                                                  if (cell != nil){
+                                                  if (cell != nil) {
                                                       cell.alpha = 1;
                                                   }
                                               }
@@ -468,11 +468,11 @@
         [title setText:serverTxt];
         UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
-        if ([[AppDelegate instance].obj.serverIP length] != 0){
+        if ([[AppDelegate instance].obj.serverIP length] != 0) {
             infoLabel.alpha = 0;
             [self setRightMenuOption:@"offline"];
         }
-        else{
+        else {
             [labelsList removeAllObjects];
             [menuTableView reloadData];
             infoLabel.alpha = 1;
@@ -482,11 +482,11 @@
     }
 }
 
-- (void)didReceiveMemoryWarning{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)dealloc{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

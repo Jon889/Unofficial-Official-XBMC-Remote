@@ -11,7 +11,7 @@
 
 @implementation ClearCacheView
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     return [self initWithFrame:frame border:0];
 }
 
@@ -47,11 +47,11 @@
     return self;
 }
 
--(void)startActivityIndicator{
+-(void)startActivityIndicator {
     [busyView startAnimating];
 }
 
--(void)stopActivityIndicator{
+-(void)stopActivityIndicator {
     [busyView stopAnimating];
 }
 

@@ -204,18 +204,18 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
   self.topView.layer.shadowPath = nil;
   self.topView.layer.shouldRasterize = YES;
   
-  if (![self topViewHasFocus]){
+  if (![self topViewHasFocus]) {
     [self removeTopViewSnapshot];
   }
   
   [self adjustLayout];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   self.topView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.view.layer.bounds].CGPath;
   self.topView.layer.shouldRasterize = NO;
   
-  if (![self topViewHasFocus]){
+  if (![self topViewHasFocus]) {
     [self addTopViewSnapshot];
   }
 }
@@ -270,7 +270,7 @@ BOOL moved;
             if ((newCenterPosition < self.resettedCenter && self.anchorLeftTopViewCenter == NSNotFound) || (newCenterPosition > self.resettedCenter && self.anchorRightTopViewCenter == NSNotFound)) {
                 newCenterPosition = self.resettedCenter;
             }
-            else{
+            else {
                 moved = TRUE;
             }
             
@@ -282,7 +282,7 @@ BOOL moved;
         CGPoint currentVelocityPoint = [recognizer velocityInView:self.view];
         CGFloat currentVelocityX     = currentVelocityPoint.x;
         
-        if (currentVelocityX < SWIPE_LEFT_THRESHOLD && !moved){ // Detected a swipe to the left
+        if (currentVelocityX < SWIPE_LEFT_THRESHOLD && !moved) { // Detected a swipe to the left
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ECSLidingSwipeLeft" object:nil userInfo:nil];
         }
         if ([self underLeftShowing] && currentVelocityX > 100) {
@@ -317,12 +317,12 @@ BOOL moved;
   
   [self topViewHorizontalCenterWillChange:newCenter];
   
-  [UIView animateWithDuration:0.25f animations:^{
+  [UIView animateWithDuration:0.25f animations:^ {
     if (animations) {
       animations();
     }
     [self updateTopViewHorizontalCenter:newCenter];
-  } completion:^(BOOL finished){
+  } completion:^(BOOL finished) {
     if (_resetStrategy & ECPanning) {
       self.panGesture.enabled = YES;
     } else {
@@ -333,7 +333,7 @@ BOOL moved;
     }
     _topViewIsOffScreen = NO;
     [self addTopViewSnapshot];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^ {
       NSString *key = (side == ECLeft) ? ECSlidingViewTopDidAnchorLeft : ECSlidingViewTopDidAnchorRight;
       [[NSNotificationCenter defaultCenter] postNotificationName:key object:self userInfo:nil];
     });
@@ -357,18 +357,18 @@ BOOL moved;
   
   [self topViewHorizontalCenterWillChange:newCenter];
   
-  [UIView animateWithDuration:0.25f animations:^{
+  [UIView animateWithDuration:0.25f animations:^ {
     if (animations) {
       animations();
     }
     [self updateTopViewHorizontalCenter:newCenter];
-  } completion:^(BOOL finished){
+  } completion:^(BOOL finished) {
     if (complete) {
       complete();
     }
     _topViewIsOffScreen = YES;
     [self addTopViewSnapshot];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^ {
       NSString *key = (side == ECLeft) ? ECSlidingViewTopDidAnchorLeft : ECSlidingViewTopDidAnchorRight;
       [[NSNotificationCenter defaultCenter] postNotificationName:key object:self userInfo:nil];
     });
@@ -377,7 +377,7 @@ BOOL moved;
 
 - (void)resetTopView
 {
-  dispatch_async(dispatch_get_main_queue(), ^{
+  dispatch_async(dispatch_get_main_queue(), ^ {
     [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewTopWillReset object:self userInfo:nil];
   });
   [self resetTopViewWithAnimations:nil onComplete:nil];
@@ -387,7 +387,7 @@ BOOL moved;
 {
   [self topViewHorizontalCenterWillChange:self.resettedCenter];
   
-  [UIView animateWithDuration:0.25f animations:^{
+  [UIView animateWithDuration:0.25f animations:^ {
     if (animations) {
       animations();
     }
@@ -439,13 +439,13 @@ BOOL moved;
   CGPoint center = self.topView.center;
   
 	if (center.x >= self.resettedCenter && newHorizontalCenter == self.resettedCenter) {
-		dispatch_async(dispatch_get_main_queue(), ^{
+		dispatch_async(dispatch_get_main_queue(), ^ {
 			[[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewUnderLeftWillDisappear object:self userInfo:nil];
 		});
 	}
 	
 	if (center.x <= self.resettedCenter && newHorizontalCenter == self.resettedCenter) {
-		dispatch_async(dispatch_get_main_queue(), ^{
+		dispatch_async(dispatch_get_main_queue(), ^ {
 			[[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewUnderRightWillDisappear object:self userInfo:nil];
 		});
 	}
@@ -535,7 +535,7 @@ BOOL moved;
 
 - (void)underLeftWillAppear
 {
-  dispatch_async(dispatch_get_main_queue(), ^{
+  dispatch_async(dispatch_get_main_queue(), ^ {
     [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewUnderLeftWillAppear object:self userInfo:nil];
   });
   self.underRightView.hidden = YES;
@@ -548,7 +548,7 @@ BOOL moved;
 
 - (void)underRightWillAppear
 {
-  dispatch_async(dispatch_get_main_queue(), ^{
+  dispatch_async(dispatch_get_main_queue(), ^ {
     [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewUnderRightWillAppear object:self userInfo:nil];
   });
   self.underLeftView.hidden = YES;
@@ -561,7 +561,7 @@ BOOL moved;
 
 - (void)topDidReset
 {
-  dispatch_async(dispatch_get_main_queue(), ^{
+  dispatch_async(dispatch_get_main_queue(), ^ {
     [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewTopDidReset object:self userInfo:nil];
   });
   [self.topView removeGestureRecognizer:self.resetTapGesture];

@@ -31,26 +31,26 @@
 @synthesize holdVolumeTimer;
 @synthesize panFallbackImageView;
 
-- (void)setDetailItem:(id)newDetailItem{
+- (void)setDetailItem:(id)newDetailItem {
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
         // Update the view.
     }
 }
 
--(void)moveButton:(NSArray *)buttonsToDo ypos:(int)y{
-    for (UIButton *button in buttonsToDo){
+-(void)moveButton:(NSArray *)buttonsToDo ypos:(int)y {
+    for (UIButton *button in buttonsToDo) {
         [button setFrame:CGRectMake(button.frame.origin.x, button.frame.origin.y + y, button.frame.size.width, button.frame.size.height)];
     }
 }
 
--(void)hideButton:(NSArray *)buttonsToDo hide:(BOOL)hide{
-    for (UIButton *button in buttonsToDo){
+-(void)hideButton:(NSArray *)buttonsToDo hide:(BOOL)hide {
+    for (UIButton *button in buttonsToDo) {
         [button setHidden:hide];
     }
 }
 
-- (void)setEmbeddedView{
+- (void)setEmbeddedView {
     CGRect frame = TransitionalView.frame;
     [self hideButton: @[[(UIButton *) self.view viewWithTag:2],
                        [(UIButton *) self.view viewWithTag:3],
@@ -60,14 +60,14 @@
                 hide:YES];
     UIButton *buttonTodo = (UIButton *)[self.view viewWithTag:10];
     [buttonTodo setFrame:CGRectMake(buttonTodo.frame.origin.x, buttonTodo.frame.origin.y - 1, buttonTodo.frame.size.width, buttonTodo.frame.size.height)];
-    if ([[UIScreen mainScreen ] bounds].size.height >= 568){
+    if ([[UIScreen mainScreen ] bounds].size.height >= 568) {
         [self moveButton: @[(UIButton *)[self.view viewWithTag:21],
                            (UIButton *)[self.view viewWithTag:22],
                            (UIButton *)[self.view viewWithTag:23],
                            (UIButton *)[self.view viewWithTag:24]]
                     ypos: -32];
     }
-    else{
+    else {
         [self hideButton: @[[(UIButton *) self.view viewWithTag:21],
                            [(UIButton *) self.view viewWithTag:22],
                            [(UIButton *) self.view viewWithTag:23],
@@ -85,7 +85,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     BOOL showGesture = [[userDefaults objectForKey:@"gesture_preference"] boolValue];
-    if (showGesture){
+    if (showGesture) {
         gestureSwitchImg = [UIImage imageNamed:@"circle"];
         frame = [gestureZoneView frame];
         frame.origin.x = 0;
@@ -124,7 +124,7 @@
 //    [remoteControlView addSubview:keyboardButton];
 }
 
-- (void)configureView{
+- (void)configureView {
     if (self.detailItem) {
         self.navigationItem.title = [self.detailItem mainLabel]; 
     }
@@ -140,12 +140,12 @@
         leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
         [remoteControlView addGestureRecognizer:leftSwipe];
         quickHelpImageView.image = [UIImage imageNamed:@"remote quick help"];
-        if ([[UIScreen mainScreen ] bounds].size.height >= 568){
+        if ([[UIScreen mainScreen ] bounds].size.height >= 568) {
             CGRect frame = remoteControlView.frame;
             [remoteControlView setFrame:CGRectMake(frame.origin.x, frame.origin.y + 12, frame.size.width * 1.075, frame.size.height * 1.075)];
         }
     }
-    else{
+    else {
         int newWidth = STACKSCROLL_WIDTH;
         [quickHelpView setFrame:CGRectMake(quickHelpView.frame.origin.x, quickHelpView.frame.origin.y, quickHelpView.frame.size.width, quickHelpView.frame.size.height - 20)];
         [quickHelpView
@@ -223,7 +223,7 @@
     [gestureZoneView addGestureRecognizer:twoFingersUpSwipe];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     return self;
 }
@@ -231,17 +231,17 @@
 #pragma mark - Touch
 
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
-//    if (recognizer.numberOfTouches == 2 && recognizer.direction == UISwipeGestureRecognizerDirectionDown){
+//    if (recognizer.numberOfTouches == 2 && recognizer.direction == UISwipeGestureRecognizerDirectionDown) {
 ////        NSLog(@"down");
-////        if (storeBrightness == -1){
+////        if (storeBrightness == -1) {
 ////            storeBrightness = [UIScreen mainScreen].brightness;
 ////            [[UIScreen mainScreen] setWantsSoftwareDimming:YES];
 ////            [[UIScreen mainScreen] setBrightness:0.0];
 ////        }
 //    }
-//    else if (recognizer.numberOfTouches == 2 && recognizer.direction == UISwipeGestureRecognizerDirectionUp){
+//    else if (recognizer.numberOfTouches == 2 && recognizer.direction == UISwipeGestureRecognizerDirectionUp) {
 ////        NSLog(@"up");
-////        if (storeBrightness > -1){
+////        if (storeBrightness > -1) {
 ////            [[UIScreen mainScreen] setWantsSoftwareDimming:NO];
 ////            [[UIScreen mainScreen] setBrightness:storeBrightness];
 ////            storeBrightness = -1;
@@ -266,22 +266,22 @@
     }
 }
 
--(void)handleTouchpadDoubleTap{
+-(void)handleTouchpadDoubleTap {
     buttonAction = 18;
     [self sendAction];
 }
 
--(void)handleTouchpadSingleTap{
+-(void)handleTouchpadSingleTap {
     buttonAction = 13;
     [self sendAction];
 }
 
--(void)twoFingersTap{
+-(void)twoFingersTap {
     [self GUIAction:@"Input.Home" params:@{} httpAPIcallback:nil];
 }
 
 - (void)handleTouchpadLongPress:(UILongPressGestureRecognizer*)gestureRecognizer { 
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         jsonRPC = nil;
         GlobalData *obj = [GlobalData getInstance]; 
         NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -293,29 +293,29 @@
          withParameters:@{@"booleans": @[@"Window.IsActive(fullscreenvideo)", @"Window.IsActive(visualisation)", @"Window.IsActive(slideshow)"]} 
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
              
-             if (error == nil && methodError == nil && [methodResult isKindOfClass: [NSDictionary class]]){
+             if (error == nil && methodError == nil && [methodResult isKindOfClass: [NSDictionary class]]) {
                  NSNumber *fullscreenActive = 0;
                  NSNumber *visualisationActive = 0;
                  NSNumber *slideshowActive = 0;
 
-                 if (((NSNull *)methodResult[@"Window.IsActive(fullscreenvideo)"] != [NSNull null])){
+                 if (((NSNull *)methodResult[@"Window.IsActive(fullscreenvideo)"] != [NSNull null])) {
                      fullscreenActive = methodResult[@"Window.IsActive(fullscreenvideo)"];
                  }
-                 if (((NSNull *)methodResult[@"Window.IsActive(visualisation)"] != [NSNull null])){
+                 if (((NSNull *)methodResult[@"Window.IsActive(visualisation)"] != [NSNull null])) {
                      visualisationActive = methodResult[@"Window.IsActive(visualisation)"];
                  }
-                 if (((NSNull *)methodResult[@"Window.IsActive(slideshow)"] != [NSNull null])){
+                 if (((NSNull *)methodResult[@"Window.IsActive(slideshow)"] != [NSNull null])) {
                      slideshowActive = methodResult[@"Window.IsActive(slideshow)"];
                  }
-                 if ([fullscreenActive intValue] == 1 || [visualisationActive intValue] == 1 || [slideshowActive intValue] == 1){
+                 if ([fullscreenActive intValue] == 1 || [visualisationActive intValue] == 1 || [slideshowActive intValue] == 1) {
                      buttonAction = 15;
                      [self sendActionNoRepeat];
                  }
-                 else{
+                 else {
                      [self GUIAction:@"Input.ContextMenu" params:@{} httpAPIcallback:@"SendKey(0xF043)"];
                  }
              }
-             else{
+             else {
                  [self GUIAction:@"Input.ContextMenu" params:@{} httpAPIcallback:@"SendKey(0xF043)"];
              }
          }];   
@@ -333,27 +333,27 @@
 	}
 	CGFloat rotation = 0.0 - (lastRotation - [(UIRotationGestureRecognizer*)sender rotation]);
     
-    if (rotation > ROTATION_TRIGGER && audioVolume < 100){
+    if (rotation > ROTATION_TRIGGER && audioVolume < 100) {
         audioVolume += 1;
     }
-    else if (rotation < -ROTATION_TRIGGER && audioVolume > 0){
+    else if (rotation < -ROTATION_TRIGGER && audioVolume > 0) {
         audioVolume -= 1;
     }
     [self changeServerVolume];
 	lastRotation = [(UIRotationGestureRecognizer*)sender rotation];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self stopHoldKey:nil];
 }
 
--(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     [self stopHoldKey:nil];
 }
         
 # pragma mark - view Effects
 
--(void)showSubInfo:(NSString *)message timeout:(float)timeout color:(UIColor *)color{
+-(void)showSubInfo:(NSString *)message timeout:(float)timeout color:(UIColor *)color {
     // first fadeout 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -376,7 +376,7 @@
 }
 
 
--(void)fadeoutSubs{
+-(void)fadeoutSubs {
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDuration:0.2];
@@ -388,14 +388,14 @@
 
 # pragma mark - ToolBar
 
--(void)toggleGestureZone:(id)sender{
+-(void)toggleGestureZone:(id)sender {
     NSString *imageName = @"";
     BOOL showGesture = (gestureZoneView.alpha == 0);
-    if ([sender isKindOfClass:[NSNotification class]]){
+    if ([sender isKindOfClass:[NSNotification class]]) {
         showGesture = [[sender userInfo][@"forceGestureZone"] boolValue];
     }
     if (showGesture == YES && gestureZoneView.alpha == 1) return;
-    if (showGesture == YES){
+    if (showGesture == YES) {
         CGRect frame;
         frame = [gestureZoneView frame];
         frame.origin.x = -320;
@@ -416,7 +416,7 @@
         [UIView commitAnimations];
         imageName = @"circle.png";
     }
-    else{
+    else {
         CGRect frame;
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -434,12 +434,12 @@
         [UIView commitAnimations];
         imageName = @"finger.png";
     }
-    if ([sender isKindOfClass: [UIButton class]]){
+    if ([sender isKindOfClass: [UIButton class]]) {
         [sender setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
         [sender setImage:[UIImage imageNamed:imageName] forState:UIControlStateHighlighted];
 
     }
-    else if ([sender isKindOfClass: [UIBarButtonItem class]]){
+    else if ([sender isKindOfClass: [UIBarButtonItem class]]) {
         [sender setImage:[UIImage imageNamed:imageName]];        
     }
 }
@@ -449,7 +449,7 @@
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i < numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2) {
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -461,7 +461,7 @@
  If sub are enabled then go to the next sub. 
  If the last sub is reached then the subs are disabled.
 */
--(void)subtitlesAction{
+-(void)subtitlesAction {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -469,10 +469,10 @@
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error == nil && methodError == nil){
-            if ( [methodResult count] > 0){
+        if (error == nil && methodError == nil) {
+            if ( [methodResult count] > 0) {
                 NSNumber *response;
-                if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])){
+                if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])) {
                     response = methodResult[0][@"playerid"];
                 }
                 [jsonRPC 
@@ -480,36 +480,36 @@
                  withParameters:@{@"playerid": response,
                                  @"properties": @[@"subtitleenabled", @"currentsubtitle", @"subtitles"]} 
                  onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                     if (error == nil && methodError == nil){
-                         if ( [NSJSONSerialization isValidJSONObject:methodResult]){
-                             if ([methodResult count]){
+                     if (error == nil && methodError == nil) {
+                         if ( [NSJSONSerialization isValidJSONObject:methodResult]) {
+                             if ([methodResult count]) {
                                  NSDictionary *currentSubtitle = methodResult[@"currentsubtitle"];
                                  BOOL subtitleEnabled =  [methodResult[@"subtitleenabled"] boolValue];
                                  NSArray *subtitles = methodResult[@"subtitles"];
-                                 if ([subtitles count]){
+                                 if ([subtitles count]) {
                                      int currentSubIdx = [currentSubtitle[@"index"] intValue];
                                      int totalSubs = [subtitles count];
-                                     if (subtitleEnabled){
-                                         if ( (currentSubIdx + 1) >= totalSubs ){
+                                     if (subtitleEnabled) {
+                                         if ( (currentSubIdx + 1) >= totalSubs ) {
                                              // disable subs
                                              [self showSubInfo:@"Subtitles disabled" timeout:2.0 color:[UIColor redColor]];
                                              [self playbackAction:@"Player.SetSubtitle" params:@[@"off", @"subtitle"]];
                                          }
-                                         else{
+                                         else {
                                              NSString *message = [NSString stringWithFormat:@"%@ %d/%d %@", @"Subtitles: ", ([subtitles[currentSubIdx + 1][@"index"] intValue] + 1), totalSubs, subtitles[currentSubIdx + 1][@"name"]];
                                              [self showSubInfo:message timeout:2.0 color:[UIColor whiteColor]];
                                          }
                                          // next subs
                                          [self playbackAction:@"Player.SetSubtitle" params:@[@"next", @"subtitle"]];
                                      }
-                                     else{
+                                     else {
                                          // enable subs
                                          NSString *message = [NSString stringWithFormat:@"%@ %d/%d %@", @"Subtitles: ", currentSubIdx + 1, totalSubs, subtitles[currentSubIdx][@"name"]];
                                          [self showSubInfo:message timeout:2.0 color:[UIColor whiteColor]];
                                          [self playbackAction:@"Player.SetSubtitle" params:@[@"on", @"subtitle"]];
                                      }
                                  }
-                                 else{
+                                 else {
                                      [self showSubInfo:NSLocalizedString(@"Subtitles not available",nil) timeout:2.0 color:[UIColor redColor]];
                                  }
                              }
@@ -517,7 +517,7 @@
                      }
                  }];
             }
-            else{
+            else {
                 [self showSubInfo:NSLocalizedString(@"Subtitles not available",nil) timeout:2.0 color:[UIColor redColor]];
             }
         }
@@ -530,7 +530,7 @@
 /* 
  method to cycle through audio streams. 
   */
--(void)audiostreamAction:(NSString *)action params:(NSArray *)parameters{
+-(void)audiostreamAction:(NSString *)action params:(NSArray *)parameters {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -538,10 +538,10 @@
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error == nil && methodError == nil){
-            if ( [methodResult count] > 0){
+        if (error == nil && methodError == nil) {
+            if ( [methodResult count] > 0) {
                 NSNumber *response;
-                if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])){
+                if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])) {
                     response = methodResult[0][@"playerid"];
                 }
                 [jsonRPC 
@@ -549,25 +549,25 @@
                  withParameters:@{@"playerid": response,
                                  @"properties": @[@"currentaudiostream", @"audiostreams"]} 
                  onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                     if (error == nil && methodError == nil){
-                         if ( [NSJSONSerialization isValidJSONObject:methodResult]){
-                             if ([methodResult count]){
+                     if (error == nil && methodError == nil) {
+                         if ( [NSJSONSerialization isValidJSONObject:methodResult]) {
+                             if ([methodResult count]) {
                                  NSDictionary *currentAudiostream = methodResult[@"currentaudiostream"];
                                  NSArray *audiostreams = methodResult[@"audiostreams"];
-                                 if ([audiostreams count]){
+                                 if ([audiostreams count]) {
                                      int currentAudioIdx = [currentAudiostream[@"index"] intValue];
                                      int totalAudio = [audiostreams count];
-                                     if ( (currentAudioIdx + 1) >= totalAudio ){
+                                     if ( (currentAudioIdx + 1) >= totalAudio ) {
                                          currentAudioIdx = 0;
                                      }
-                                     else{
+                                     else {
                                          currentAudioIdx ++;
                                      }
                                      NSString *message = [NSString stringWithFormat:@"%d/%d %@", currentAudioIdx + 1, totalAudio, audiostreams[currentAudioIdx][@"name"]];
                                      [self showSubInfo:message timeout:2.0 color:[UIColor whiteColor]];
                                      [self playbackAction:action params:parameters];
                                 }
-                                 else{
+                                 else {
                                      [self showSubInfo:NSLocalizedString(@"Audiostreams not available",nil) timeout:2.0 color:[UIColor redColor]];
                                  }
                              }
@@ -575,7 +575,7 @@
                      }
                  }];
             }
-            else{
+            else {
                 [self showSubInfo:NSLocalizedString(@"Audiostream not available",nil) timeout:2.0 color:[UIColor redColor]];
             }
         }
@@ -586,21 +586,21 @@
 }
 
 
--(void)playbackAction:(NSString *)action params:(NSArray *)parameters{
+-(void)playbackAction:(NSString *)action params:(NSArray *)parameters {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
     NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error == nil && methodError == nil){
-            if ( [methodResult count] > 0){
+        if (error == nil && methodError == nil) {
+            if ( [methodResult count] > 0) {
                 NSNumber *response = methodResult[0][@"playerid"];
                 NSMutableArray *commonParams = [NSMutableArray arrayWithObjects:response, @"playerid", nil];
                 if (parameters != nil)
                     [commonParams addObjectsFromArray:parameters];
                 [jsonRPC callMethod:action withParameters:[self indexKeyedDictionaryFromArray:commonParams] onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-//                    if (error == nil && methodError == nil){
+//                    if (error == nil && methodError == nil) {
 //                        NSLog(@"comando %@ eseguito. Risultato: %@", action, methodResult);
 //                    }
 //                    else {
@@ -615,7 +615,7 @@
     }];
 }
 
--(void)GUIAction:(NSString *)action params:(NSDictionary *)params httpAPIcallback:(NSString *)callback{
+-(void)GUIAction:(NSString *)action params:(NSDictionary *)params httpAPIcallback:(NSString *)callback {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -623,16 +623,16 @@
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
 //        NSLog(@"Action %@ ok with %@ ", action , methodResult);
-//        if (methodError != nil || error != nil){
+//        if (methodError != nil || error != nil) {
 //            NSLog(@"method error %@ %@", methodError, error);
 //        }
-        if ((methodError != nil || error != nil) && callback != nil){ // Backward compatibility
+        if ((methodError != nil || error != nil) && callback != nil) { // Backward compatibility
             [self sendXbmcHttp:callback];
         }
     }];
 }
 
--(void)sendXbmcHttp:(NSString *) command{
+-(void)sendXbmcHttp:(NSString *) command {
     GlobalData *obj = [GlobalData getInstance];
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
 
@@ -642,11 +642,11 @@
     requestANS = nil;
 }
 
--(void)volumeInfo{
-    if ([AppDelegate instance].serverVolume > -1){
+-(void)volumeInfo {
+    if ([AppDelegate instance].serverVolume > -1) {
         audioVolume = [AppDelegate instance].serverVolume;
     }
-    else{
+    else {
         audioVolume = 0;
     }
 
@@ -659,15 +659,15 @@
 //     callMethod:@"Application.GetProperties" 
 //     withParameters:[NSDictionary dictionaryWithObjectsAndKeys: [[NSArray alloc] initWithObjects:@"volume", nil], @"properties", nil]
 //     onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-//         if (error == nil && methodError == nil){
-//             if ( [NSJSONSerialization isValidJSONObject:methodResult] && [methodResult count]){
+//         if (error == nil && methodError == nil) {
+//             if ( [NSJSONSerialization isValidJSONObject:methodResult] && [methodResult count]) {
 //                 audioVolume =  [[methodResult objectForKey:@"volume"] intValue];
 //             }
 //         }
 //     }];
 }
 
--(void)changeServerVolume{
+-(void)changeServerVolume {
     jsonRPC = nil;
     GlobalData *obj = [GlobalData getInstance]; 
     NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -679,7 +679,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if ([touches count] == 1){
+    if ([touches count] == 1) {
         self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:1.5f target:self selector:@selector(sendAction) userInfo:nil repeats:YES];
     }
 }
@@ -689,10 +689,10 @@
 
 NSInteger buttonAction;
 
--(IBAction)holdKey:(id)sender{
+-(IBAction)holdKey:(id)sender {
     buttonAction = [sender tag];
     [self sendAction];
-    if (self.holdVolumeTimer != nil){
+    if (self.holdVolumeTimer != nil) {
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
     }
@@ -701,21 +701,21 @@ NSInteger buttonAction;
     [userDefaults synchronize];
     
     BOOL startVibrate = [[userDefaults objectForKey:@"vibrate_preference"] boolValue];
-    if (startVibrate){
+    if (startVibrate) {
         [[UIDevice currentDevice] playInputClick];
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
 }
 
--(IBAction)stopHoldKey:(id)sender{
-    if (self.holdVolumeTimer != nil){
+-(IBAction)stopHoldKey:(id)sender {
+    if (self.holdVolumeTimer != nil) {
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
     }
     buttonAction = 0;
 }
 
--(void)sendActionNoRepeat{
+-(void)sendActionNoRepeat {
 //    NSString *action;
     switch (buttonAction) {
         case 15: // MENU OSD
@@ -726,9 +726,9 @@ NSInteger buttonAction;
     }
 }
 
--(void)playerStep:(NSString *)step musicPlayerGo:(NSString *)musicAction{
-    if ([AppDelegate instance].serverVersion > 11){
-        if (jsonRPC == nil){
+-(void)playerStep:(NSString *)step musicPlayerGo:(NSString *)musicAction {
+    if ([AppDelegate instance].serverVersion > 11) {
+        if (jsonRPC == nil) {
             GlobalData *obj = [GlobalData getInstance];
             NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
             NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
@@ -738,14 +738,14 @@ NSInteger buttonAction;
          callMethod:@"GUI.GetProperties"
          withParameters:@{@"properties": @[@"currentwindow", @"fullscreen"]}
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-             if (error == nil && methodError == nil && [methodResult isKindOfClass: [NSDictionary class]]){
-                 if (((NSNull *)methodResult[@"currentwindow"] != [NSNull null])){
+             if (error == nil && methodError == nil && [methodResult isKindOfClass: [NSDictionary class]]) {
+                 if (((NSNull *)methodResult[@"currentwindow"] != [NSNull null])) {
                      int winID = [methodResult[@"currentwindow"][@"id"] intValue];
-                     if ([methodResult[@"fullscreen"] boolValue] == YES && (winID == 12005 || winID == 12006)){
-                         if (winID == 12005){
+                     if ([methodResult[@"fullscreen"] boolValue] == YES && (winID == 12005 || winID == 12006)) {
+                         if (winID == 12005) {
                              [self playbackAction:@"Player.Seek" params:@[step, @"value"]];
                          }
-                         else if (winID == 12006 && musicAction != nil){
+                         else if (winID == 12006 && musicAction != nil) {
                              [self playbackAction:@"Player.GoTo" params:@[musicAction, @"to"]];
                          }
                      }
@@ -756,16 +756,16 @@ NSInteger buttonAction;
     return;
 }
 
--(void)sendAction{
+-(void)sendAction {
     if (!buttonAction) return;
-    if (self.holdVolumeTimer.timeInterval == 0.5f || self.holdVolumeTimer.timeInterval == 1.5f){
+    if (self.holdVolumeTimer.timeInterval == 0.5f || self.holdVolumeTimer.timeInterval == 1.5f) {
         
-        if (self.holdVolumeTimer.timeInterval == 1.5f){
+        if (self.holdVolumeTimer.timeInterval == 1.5f) {
             [self.holdVolumeTimer invalidate];
             self.holdVolumeTimer = nil;
             self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(sendAction) userInfo:nil repeats:YES];  
         }
-        else{
+        else {
             [self.holdVolumeTimer invalidate];
             self.holdVolumeTimer = nil;
             self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(sendAction) userInfo:nil repeats:YES]; 
@@ -843,12 +843,12 @@ NSInteger buttonAction;
             [self playbackAction:action params:params];
             break;
         case 5:
-            if ([AppDelegate instance].serverVersion > 11){
+            if ([AppDelegate instance].serverVersion > 11) {
                 action = @"Player.GoTo";
                 params = @[@"previous", @"to"];
                 [self playbackAction:action params:params];
             }
-            else{
+            else {
                 action = @"Player.GoPrevious";
                 params = nil;
                 [self playbackAction:action params:nil];
@@ -868,12 +868,12 @@ NSInteger buttonAction;
             break;
             
         case 8:
-            if ([AppDelegate instance].serverVersion > 11){
+            if ([AppDelegate instance].serverVersion > 11) {
                 action = @"Player.GoTo";
                 params = @[@"next", @"to"];
                 [self playbackAction:action params:params];
             }
-            else{
+            else {
                 action = @"Player.GoNext";
                 params = nil;
                 [self playbackAction:action params:nil];
@@ -938,7 +938,7 @@ NSInteger buttonAction;
     [userDefaults synchronize];
     
     BOOL startVibrate = [[userDefaults objectForKey:@"vibrate_preference"] boolValue];
-    if (startVibrate){
+    if (startVibrate) {
         [[UIDevice currentDevice] playInputClick];
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
@@ -948,21 +948,21 @@ NSInteger buttonAction;
 # pragma  mark - Gestures
 
 - (void)handleSwipeFromRight:(id)sender {
-    if ([self.navigationController.viewControllers indexOfObject:self] == 0){
+    if ([self.navigationController.viewControllers indexOfObject:self] == 0) {
         [self revealMenu:nil];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)handleSwipeFromLeft:(id)sender {
-    if ([self.navigationController.viewControllers indexOfObject:self] == 0){
+    if ([self.navigationController.viewControllers indexOfObject:self] == 0) {
         [self revealUnderRight:nil];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(IBAction)handleButtonLongPress:(UILongPressGestureRecognizer *)gestureRecognizer{
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
+-(IBAction)handleButtonLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         switch (gestureRecognizer.view.tag) {
             case 1:// FULLSCREEN BUTTON
                 [self GUIAction:@"Input.ExecuteAction" params:@{@"action": @"togglefullscreen"} httpAPIcallback:@"Action(199)"];
@@ -998,9 +998,9 @@ NSInteger buttonAction;
 
 #pragma mark - Quick Help
 
--(IBAction)toggleQuickHelp:(id)sender{
+-(IBAction)toggleQuickHelp:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
-    if (quickHelpView.alpha == 0){
+    if (quickHelpView.alpha == 0) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.2];
@@ -1022,18 +1022,18 @@ NSInteger buttonAction;
 
 #pragma mark - Keyboard methods
 
--(void)toggleVirtualKeyboard:(id)sender{
+-(void)toggleVirtualKeyboard:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"toggleVirtualKeyboard" object:nil userInfo:nil];
 }
 
--(void) hideKeyboard:(id)sender{
+-(void) hideKeyboard:(id)sender {
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
 }
 
 #pragma mark - Life Cycle
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self.navigationController.view removeGestureRecognizer:self.slidingViewController.panGesture];
         [self.navigationController.navigationBar addGestureRecognizer:self.slidingViewController.panGesture];
@@ -1043,7 +1043,7 @@ NSInteger buttonAction;
         self.slidingViewController.underRightViewController = rightMenuViewController;
         UIImage* settingsImg = [UIImage imageNamed:@"button_settings"];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImg style:UIBarButtonItemStyleBordered target:self action:@selector(revealUnderRight:)];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             [self.navigationController.navigationBar setBarTintColor:REMOTE_CONTROL_BAR_TINT_COLOR];            
         }
     }
@@ -1080,22 +1080,22 @@ NSInteger buttonAction;
                                                object: nil];
 }
 
--(void)handleECSlidingViewTopDidReset:(id)sender{
+-(void)handleECSlidingViewTopDidReset:(id)sender {
     [self.navigationController.view removeGestureRecognizer:self.slidingViewController.panGesture];
     [self.navigationController.navigationBar addGestureRecognizer:self.slidingViewController.panGesture];
 }
 
-- (void)revealMenu:(id)sender{
+- (void)revealMenu:(id)sender {
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
-- (void)revealUnderRight:(id)sender{
+- (void)revealUnderRight:(id)sender {
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController anchorTopViewTo:ECLeft];
 }
 
--(void)resetRemote{
+-(void)resetRemote {
     [self stopHoldKey:nil];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
@@ -1103,7 +1103,7 @@ NSInteger buttonAction;
  
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated {
     [self resetRemote];
 }
 
@@ -1112,7 +1112,7 @@ NSInteger buttonAction;
     torchIsOn = !torchIsOn;
     if (captureDeviceClass != nil) {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        if ([device hasTorch] && [device hasFlash]){
+        if ([device hasTorch] && [device hasFlash]) {
             [device lockForConfiguration:nil];
             if (torchIsOn) {
                 [device setTorchMode:AVCaptureTorchModeOn];
@@ -1130,9 +1130,9 @@ NSInteger buttonAction;
     }
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         self.edgesForExtendedLayout = 0;
         self.view.tintColor = TINT_COLOR;
     }
@@ -1143,7 +1143,7 @@ NSInteger buttonAction;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     BOOL showGesture = [[userDefaults objectForKey:@"gesture_preference"] boolValue];
-    if (showGesture){
+    if (showGesture) {
         gestureSwitchImg = [UIImage imageNamed:@"circle.png"];
         CGRect frame = [gestureZoneView frame];
         frame.origin.x = 0;
@@ -1161,8 +1161,8 @@ NSInteger buttonAction;
     Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
     if (captureDeviceClass != nil) {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        if ([device hasTorch] && [device hasFlash]){
-            if ([device torchLevel] == YES){
+        if ([device hasTorch] && [device hasFlash]) {
+            if ([device torchLevel] == YES) {
                 torchIsOn = YES;
                 torchIcon = @"torch_on";
             }
@@ -1213,7 +1213,7 @@ NSInteger buttonAction;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage: [UIImage imageNamed:@"backgroundImage_repeat.png"]]];
 }
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     TransitionalView = nil;
     gestureZoneImageView = nil;
     [super viewDidUnload];
@@ -1221,20 +1221,20 @@ NSInteger buttonAction;
     jsonRPC = nil;
 }
 
--(void)dealloc{
+-(void)dealloc {
     jsonRPC = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(BOOL)shouldAutorotate{
+-(BOOL)shouldAutorotate {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

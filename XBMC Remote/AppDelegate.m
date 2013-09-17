@@ -61,7 +61,7 @@ NSMutableArray *hostRightMenuItems;
         NSString *fullNamespace = @"LibraryCache";
         paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         self.libraryCachePath = [paths[0] stringByAppendingPathComponent:fullNamespace];
-        if (![fileManager1 fileExistsAtPath:self.libraryCachePath]){
+        if (![fileManager1 fileExistsAtPath:self.libraryCachePath]) {
             [fileManager1 createDirectoryAtPath:self.libraryCachePath withIntermediateDirectories:YES attributes:nil error:NULL];
         }
     }
@@ -69,19 +69,19 @@ NSMutableArray *hostRightMenuItems;
 	
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
-    if ([[userDefaults objectForKey:@"lang_preference"] length]){
+    if ([[userDefaults objectForKey:@"lang_preference"] length]) {
         [userDefaults setObject:@[[userDefaults objectForKey:@"lang_preference"]] forKey:@"AppleLanguages"];
         [userDefaults synchronize];
     }
-    else{
+    else {
          [userDefaults removeObjectForKey:@"AppleLanguages"];
     }
     UIApplication *xbmcRemote = [UIApplication sharedApplication];
-    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue] == YES){
+    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue] == YES) {
         xbmcRemote.idleTimerDisabled = YES;
     }
     else {
@@ -98,7 +98,7 @@ NSMutableArray *hostRightMenuItems;
 
     NSString *filemodeVideoType = @"video";
     NSString *filemodeMusicType = @"music";
-    if ([[userDefaults objectForKey:@"fileType_preference"] boolValue] == YES){
+    if ([[userDefaults objectForKey:@"fileType_preference"] boolValue] == YES) {
         filemodeVideoType = @"files";
         filemodeMusicType = @"files";
     }
@@ -2420,20 +2420,20 @@ NSMutableArray *hostRightMenuItems;
     return YES;
 }
 
--(void)handleProximityChangeNotification:(id)sender{
-    if ([[UIDevice currentDevice] proximityState]){
+-(void)handleProximityChangeNotification:(id)sender {
+    if ([[UIDevice currentDevice] proximityState]) {
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIApplicationDidEnterBackgroundNotification" object: nil];
     }
-    else{
+    else {
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIApplicationWillEnterForegroundNotification" object: nil];
     }
 }
 
--(void)wake:(NSString *)macAddress{
+-(void)wake:(NSString *)macAddress {
     Wake_on_LAN("255.255.255.255", [macAddress UTF8String]);
 }
 
-int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
+int Wake_on_LAN(char *ip_broadcast,const char *wake_mac) {
 	int i,sockfd,an = 1;
 	char *x;
 	char mac[102];
@@ -2485,22 +2485,22 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application{
+- (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application{
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application{
+- (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     UIApplication *xbmcRemote = [UIApplication sharedApplication];
-    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue] == YES ){
+    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue] == YES ) {
         xbmcRemote.idleTimerDisabled = YES;
         
     }
@@ -2510,18 +2510,18 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 //    [[NSNotificationCenter defaultCenter] postNotificationName: @"UIApplicationWillEnterForegroundNotification" object: nil];
 }
 
-- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-    if (event.type == UIEventSubtypeMotionShake){
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (event.type == UIEventSubtypeMotionShake) {
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIApplicationShakeNotification" object: nil]; 
     }
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application{
+- (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application{
+- (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
@@ -2529,14 +2529,14 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
     [[SDImageCache sharedImageCache] clearMemory];
 }
 
--(void)saveServerList{
+-(void)saveServerList {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     if ([paths count] > 0) { 
         [NSKeyedArchiver archiveRootObject:arrayServerList toFile:self.dataFilePath];
     }
 }
 
--(void)clearAppDiskCache{
+-(void)clearAppDiskCache {
     // OLD SDWEBImageCache
     NSString *fullNamespace = @"ImageCache"; 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
