@@ -71,12 +71,12 @@
         NSString *macAddress = ([AppDelegate instance].arrayServerList)[idx.row][@"serverMacAddress"];
         NSArray *mac_octect = [macAddress componentsSeparatedByString:@":"];
         int num_octects = [mac_octect count];
-        if (num_octects>0) mac_0_UI.text = mac_octect[0];
-        if (num_octects>1) mac_1_UI.text = mac_octect[1];
-        if (num_octects>2) mac_2_UI.text = mac_octect[2];
-        if (num_octects>3) mac_3_UI.text = mac_octect[3];
-        if (num_octects>4) mac_4_UI.text = mac_octect[4];
-        if (num_octects>5) mac_5_UI.text = mac_octect[5];
+        if (num_octects > 0) mac_0_UI.text = mac_octect[0];
+        if (num_octects > 1) mac_1_UI.text = mac_octect[1];
+        if (num_octects > 2) mac_2_UI.text = mac_octect[2];
+        if (num_octects > 3) mac_3_UI.text = mac_octect[3];
+        if (num_octects > 4) mac_4_UI.text = mac_octect[4];
+        if (num_octects > 5) mac_5_UI.text = mac_octect[5];
 
         preferTVPostersUI.on = [([AppDelegate instance].arrayServerList)[idx.row][@"preferTVPosters"] boolValue];
         tcpPortUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"tcpPort"];
@@ -171,7 +171,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    if (newLength > 2 && textField.tag>100){
+    if (newLength > 2 && textField.tag > 100){
         if (textField.tag < 106){
             UITextField *next = (UITextField*) [self.view viewWithTag:textField.tag + 1];
             [next becomeFirstResponder];
@@ -182,7 +182,7 @@
     else{
         return YES;
     }
-//    return (newLength > 2 && textField.tag>100) ? NO : YES;
+//    return (newLength > 2 && textField.tag > 100) ? NO : YES;
 }
 
 # pragma  mark - Gestures
@@ -213,7 +213,7 @@
            didFindService:(NSNetService *)aNetService
                moreComing:(BOOL)moreComing {    
     [services addObject:aNetService];
-    if(!moreComing) {
+    if (!moreComing) {
         [self stopDiscovery];
         [self updateUI];
     }
@@ -223,7 +223,7 @@
          didRemoveService:(NSNetService *)aNetService
                moreComing:(BOOL)moreComing{
     [services removeObject:aNetService];
-    if(!moreComing) {
+    if (!moreComing) {
         [self updateUI];
     }
 }

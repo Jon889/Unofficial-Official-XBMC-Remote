@@ -24,7 +24,7 @@ static CGRect initialTextFieldFrame;
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
-    if(self){
+    if (self){
         [self configureView];
     }
     return self;

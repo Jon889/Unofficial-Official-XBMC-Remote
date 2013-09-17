@@ -100,7 +100,7 @@ typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *err
  */
 @interface SDWebImageManager : NSObject
 
-@property (weak, nonatomic) id<SDWebImageManagerDelegate> delegate;
+@property (weak, nonatomic) id <SDWebImageManagerDelegate> delegate;
 
 @property (strong, nonatomic, readonly) SDImageCache *imageCache;
 @property (strong, nonatomic, readonly) SDWebImageDownloader *imageDownloader;
@@ -149,7 +149,7 @@ typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *err
  *
  * @return Returns a cancellable NSOperation
  */
-- (id<SDWebImageOperation>)downloadWithURL:(NSURL *)url
+- (id <SDWebImageOperation>)downloadWithURL:(NSURL *)url
                                    options:(SDWebImageOptions)options
                                   userInfo:(NSDictionary *)userInfo
                                   progress:(SDWebImageDownloaderProgressBlock)progressBlock

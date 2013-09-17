@@ -204,7 +204,7 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
   self.topView.layer.shadowPath = nil;
   self.topView.layer.shouldRasterize = YES;
   
-  if(![self topViewHasFocus]){
+  if (![self topViewHasFocus]){
     [self removeTopViewSnapshot];
   }
   
@@ -215,7 +215,7 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
   self.topView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.view.layer.bounds].CGPath;
   self.topView.layer.shouldRasterize = NO;
   
-  if(![self topViewHasFocus]){
+  if (![self topViewHasFocus]){
     [self addTopViewSnapshot];
   }
 }
@@ -262,7 +262,7 @@ BOOL moved;
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self.view];
         
-        if(fabs(translation.x) > fabs(translation.y))
+        if (fabs(translation.x) > fabs(translation.y))
         {
             CGFloat panAmount = self.initialTouchPositionX - currentTouchPositionX;
             CGFloat newCenterPosition = self.initialHoizontalCenter - panAmount;

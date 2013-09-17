@@ -24,7 +24,7 @@ int offsetY = 5;
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-        if ([AppDelegate instance].serverVersion>11){
+        if ([AppDelegate instance].serverVersion > 11){
             [self setSelectionStyle:UITableViewCellSelectionStyleGray];
         }
         

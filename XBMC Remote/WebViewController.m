@@ -126,7 +126,7 @@
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i<numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -135,7 +135,7 @@
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i<numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSMutableDictionary *)mutableDictionary;
@@ -157,16 +157,16 @@
     }
     MenuItem.subItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
     NSDictionary *methods = [self indexKeyedDictionaryFromArray:[MenuItem.subItem mainMethod][choosedTab]];
-    if (methods[@"method"]!=nil){ // THERE IS A CHILD
+    if (methods[@"method"] != nil){ // THERE IS A CHILD
         NSDictionary *mainFields = [MenuItem mainFields][choosedTab];
         NSMutableDictionary *parameters = [self indexKeyedMutableDictionaryFromArray:[MenuItem.subItem mainParameters][choosedTab]];
         NSString *key = @"null";
-        if (item[mainFields[@"row15"]]!=nil){
+        if (item[mainFields[@"row15"]] != nil){
             key = mainFields[@"row15"];
         }
         id obj = @([item[mainFields[@"row6"]] intValue]);
         id objKey = mainFields[@"row6"];
-        if ([AppDelegate instance].serverVersion>11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE){
+        if ([AppDelegate instance].serverVersion > 11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE){
             obj = @{mainFields[@"row6"]: @([item[mainFields[@"row6"]] intValue])};
             objKey = @"filter";
         }

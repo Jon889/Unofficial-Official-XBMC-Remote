@@ -178,7 +178,7 @@ NSOutputStream	*outStream;
          if (error == nil && methodError == nil){
              [AppDelegate instance].serverVolume = [methodResult[@"volume"] intValue];
              if (![AppDelegate instance].serverOnLine){
-                 if( [NSJSONSerialization isValidJSONObject:methodResult]){
+                 if ( [NSJSONSerialization isValidJSONObject:methodResult]){
                      NSDictionary *serverInfo = methodResult[@"version"];
                      [AppDelegate instance].serverVersion = [serverInfo[@"major"] intValue];
                      [AppDelegate instance].serverMinorVersion = [serverInfo[@"minor"] intValue];

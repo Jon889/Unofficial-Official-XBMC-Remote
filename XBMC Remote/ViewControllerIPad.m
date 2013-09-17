@@ -58,7 +58,7 @@
 		
 	}
 	
-	if(viewToReturn != nil) {
+	if (viewToReturn != nil) {
 		return [viewToReturn hitTest:pointToReturn withEvent:event];		
 	}
 	
@@ -118,7 +118,7 @@
         [icon setImage:[UIImage imageNamed:@"connection_on"]];
         [xbmcInfo setTitle:infoText forState:UIControlStateNormal];
         int n = [menuViewController.tableView numberOfRowsInSection:0];
-        for (int i = 1;i<n;i++){
+        for (int i = 1;i < n;i++){
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell != nil){
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -142,7 +142,7 @@
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
         [xbmcInfo setTitle:infoText forState:UIControlStateNormal];
         int n = [menuViewController.tableView numberOfRowsInSection:0];
-        for (int i = 1;i<n;i++){
+        for (int i = 1;i < n;i++){
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell != nil){
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -182,7 +182,7 @@
     int actualPosY = view.frame.origin.y;
     CGRect frame;
 	frame = [view frame];
-    if (actualPosY<667 || hide){
+    if (actualPosY < 667 || hide){
         Y = self.view.frame.size.height;
     }
     view.alpha = alphavalue;
@@ -241,7 +241,7 @@
 #pragma mark - power control action sheet
 
 -(void)powerControl{
-    if ([[AppDelegate instance].obj.serverIP length]==0){
+    if ([[AppDelegate instance].obj.serverIP length] == 0){
         [self toggleSetup];
         return;
     }

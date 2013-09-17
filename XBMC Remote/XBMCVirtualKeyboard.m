@@ -168,7 +168,7 @@
     if ([AppDelegate instance].serverVersion == 11){
         if (range.location == 0){ //BACKSPACE
             [self sendXbmcHttp:@"SendKey(0xf108)"];
-            if ([verboseOutput.text length]>0){
+            if ([verboseOutput.text length] > 0){
                 [verboseOutput setText:[NSString stringWithFormat:@"%@", [verboseOutput.text substringToIndex:[verboseOutput.text length] - 1]]];
             }
             else{
@@ -181,7 +181,7 @@
                 [self GUIAction:@"Input.Select" params:@{} httpAPIcallback:nil];
                 [xbmcVirtualKeyboard resignFirstResponder];
             }
-            else if (x<1000){
+            else if (x < 1000){
                 [self sendXbmcHttp:[NSString stringWithFormat:@"SendKey(0xf1%x)", x]];
             }
             [verboseOutput setText:[NSString stringWithFormat:@"%@%@", verboseOutput.text == nil ? @"" : verboseOutput.text, string]];

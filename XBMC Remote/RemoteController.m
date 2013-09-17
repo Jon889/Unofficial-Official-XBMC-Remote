@@ -60,7 +60,7 @@
                 hide:YES];
     UIButton *buttonTodo = (UIButton *)[self.view viewWithTag:10];
     [buttonTodo setFrame:CGRectMake(buttonTodo.frame.origin.x, buttonTodo.frame.origin.y - 1, buttonTodo.frame.size.width, buttonTodo.frame.size.height)];
-    if([[UIScreen mainScreen ] bounds].size.height >= 568){
+    if ([[UIScreen mainScreen ] bounds].size.height >= 568){
         [self moveButton: @[(UIButton *)[self.view viewWithTag:21],
                            (UIButton *)[self.view viewWithTag:22],
                            (UIButton *)[self.view viewWithTag:23],
@@ -140,7 +140,7 @@
         leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
         [remoteControlView addGestureRecognizer:leftSwipe];
         quickHelpImageView.image = [UIImage imageNamed:@"remote quick help"];
-        if([[UIScreen mainScreen ] bounds].size.height >= 568){
+        if ([[UIScreen mainScreen ] bounds].size.height >= 568){
             CGRect frame = remoteControlView.frame;
             [remoteControlView setFrame:CGRectMake(frame.origin.x, frame.origin.y + 12, frame.size.width * 1.075, frame.size.height * 1.075)];
         }
@@ -324,10 +324,10 @@
 
 
 -(void)handleRotate:(id)sender {
-    if([(UIRotationGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
+    if ([(UIRotationGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
         [self volumeInfo];
     }
-	else if([(UIRotationGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+	else if ([(UIRotationGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
 		lastRotation = 0.0;
 		return;
 	}
@@ -449,7 +449,7 @@
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i<numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -470,7 +470,7 @@
     
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         if (error == nil && methodError == nil){
-            if( [methodResult count] > 0){
+            if ( [methodResult count] > 0){
                 NSNumber *response;
                 if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])){
                     response = methodResult[0][@"playerid"];
@@ -481,7 +481,7 @@
                                  @"properties": @[@"subtitleenabled", @"currentsubtitle", @"subtitles"]} 
                  onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
                      if (error == nil && methodError == nil){
-                         if( [NSJSONSerialization isValidJSONObject:methodResult]){
+                         if ( [NSJSONSerialization isValidJSONObject:methodResult]){
                              if ([methodResult count]){
                                  NSDictionary *currentSubtitle = methodResult[@"currentsubtitle"];
                                  BOOL subtitleEnabled =  [methodResult[@"subtitleenabled"] boolValue];
@@ -539,7 +539,7 @@
     
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         if (error == nil && methodError == nil){
-            if( [methodResult count] > 0){
+            if ( [methodResult count] > 0){
                 NSNumber *response;
                 if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])){
                     response = methodResult[0][@"playerid"];
@@ -550,7 +550,7 @@
                                  @"properties": @[@"currentaudiostream", @"audiostreams"]} 
                  onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
                      if (error == nil && methodError == nil){
-                         if( [NSJSONSerialization isValidJSONObject:methodResult]){
+                         if ( [NSJSONSerialization isValidJSONObject:methodResult]){
                              if ([methodResult count]){
                                  NSDictionary *currentAudiostream = methodResult[@"currentaudiostream"];
                                  NSArray *audiostreams = methodResult[@"audiostreams"];
@@ -594,7 +594,7 @@
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         if (error == nil && methodError == nil){
-            if( [methodResult count] > 0){
+            if ( [methodResult count] > 0){
                 NSNumber *response = methodResult[0][@"playerid"];
                 NSMutableArray *commonParams = [NSMutableArray arrayWithObjects:response, @"playerid", nil];
                 if (parameters != nil)
@@ -660,7 +660,7 @@
 //     withParameters:[NSDictionary dictionaryWithObjectsAndKeys: [[NSArray alloc] initWithObjects:@"volume", nil], @"properties", nil]
 //     onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
 //         if (error == nil && methodError == nil){
-//             if( [NSJSONSerialization isValidJSONObject:methodResult] && [methodResult count]){
+//             if ( [NSJSONSerialization isValidJSONObject:methodResult] && [methodResult count]){
 //                 audioVolume =  [[methodResult objectForKey:@"volume"] intValue];
 //             }
 //         }
@@ -727,7 +727,7 @@ NSInteger buttonAction;
 }
 
 -(void)playerStep:(NSString *)step musicPlayerGo:(NSString *)musicAction{
-    if ([AppDelegate instance].serverVersion>11){
+    if ([AppDelegate instance].serverVersion > 11){
         if (jsonRPC == nil){
             GlobalData *obj = [GlobalData getInstance];
             NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
@@ -843,7 +843,7 @@ NSInteger buttonAction;
             [self playbackAction:action params:params];
             break;
         case 5:
-            if ([AppDelegate instance].serverVersion>11){
+            if ([AppDelegate instance].serverVersion > 11){
                 action = @"Player.GoTo";
                 params = @[@"previous", @"to"];
                 [self playbackAction:action params:params];
@@ -868,7 +868,7 @@ NSInteger buttonAction;
             break;
             
         case 8:
-            if ([AppDelegate instance].serverVersion>11){
+            if ([AppDelegate instance].serverVersion > 11){
                 action = @"Player.GoTo";
                 params = @[@"next", @"to"];
                 [self playbackAction:action params:params];

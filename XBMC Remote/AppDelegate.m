@@ -51,7 +51,7 @@ NSMutableArray *hostRightMenuItems;
         NSString *documentsDirectory = paths[0];
         self.dataFilePath = [documentsDirectory stringByAppendingPathComponent:@"serverList_saved.dat"];
         NSFileManager *fileManager1 = [NSFileManager defaultManager];
-        if([fileManager1 fileExistsAtPath:self.dataFilePath]) {
+        if ([fileManager1 fileExistsAtPath:self.dataFilePath]) {
             NSMutableArray *tempArray;
             tempArray = [NSKeyedUnarchiver unarchiveObjectWithFile:self.dataFilePath];
             [self setArrayServerList:tempArray];
@@ -81,7 +81,7 @@ NSMutableArray *hostRightMenuItems;
          [userDefaults removeObjectForKey:@"AppleLanguages"];
     }
     UIApplication *xbmcRemote = [UIApplication sharedApplication];
-    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue]==YES){
+    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue] == YES){
         xbmcRemote.idleTimerDisabled = YES;
     }
     else {
@@ -98,7 +98,7 @@ NSMutableArray *hostRightMenuItems;
 
     NSString *filemodeVideoType = @"video";
     NSString *filemodeMusicType = @"music";
-    if ([[userDefaults objectForKey:@"fileType_preference"] boolValue]==YES){
+    if ([[userDefaults objectForKey:@"fileType_preference"] boolValue] == YES){
         filemodeVideoType = @"files";
         filemodeMusicType = @"files";
     }
@@ -2421,7 +2421,7 @@ NSMutableArray *hostRightMenuItems;
 }
 
 -(void)handleProximityChangeNotification:(id)sender{
-    if([[UIDevice currentDevice] proximityState]){
+    if ([[UIDevice currentDevice] proximityState]){
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIApplicationDidEnterBackgroundNotification" object: nil];
     }
     else{
@@ -2454,8 +2454,8 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 	
 	inet_pton( AF_INET, ip_broadcast, &serverAddress.sin_addr );
 	
-	for (i = 0;i<6;i++) mac[i]=255;
-	for (i = 1;i<17;i++) {
+	for (i = 0;i < 6;i++) mac[i]=255;
+	for (i = 1;i < 17;i++) {
 		macpart[0]=wake_mac[0];
 		macpart[1]=wake_mac[1];
 		mac[6*i]=strtol(macpart,&x,16);
@@ -2475,7 +2475,7 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 		macpart[1]=wake_mac[16];
 		mac[6*i+5]=strtol(macpart,&x,16);
 	}
-	for (i = 0;i<103;i++) test[i]=mac[i];
+	for (i = 0;i < 103;i++) test[i]=mac[i];
 	test[102]=0;
 	
 	sendto(sockfd,&mac,102,0,(struct sockaddr *)&serverAddress,sizeof(serverAddress));
@@ -2500,7 +2500,7 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     UIApplication *xbmcRemote = [UIApplication sharedApplication];
-    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue]==YES ){
+    if ([[userDefaults objectForKey:@"lockscreen_preference"] boolValue] == YES ){
         xbmcRemote.idleTimerDisabled = YES;
         
     }
@@ -2511,7 +2511,7 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 }
 
 - (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-    if(event.type == UIEventSubtypeMotionShake){
+    if (event.type == UIEventSubtypeMotionShake){
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIApplicationShakeNotification" object: nil]; 
     }
 }

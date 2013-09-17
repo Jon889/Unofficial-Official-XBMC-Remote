@@ -57,7 +57,7 @@
         UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
         [icon setImage:[UIImage imageNamed:@"connection_on"]];
         int n = [menuList numberOfRowsInSection:0];
-        for (int i = 1;i<n;i++){
+        for (int i = 1;i < n;i++){
             UITableViewCell *cell = [menuList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell != nil){
                 [UIView beginAnimations:nil context:nil];
@@ -93,7 +93,7 @@
         UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
         int n = [menuList numberOfRowsInSection:0];
-        for (int i = 1;i<n;i++){
+        for (int i = 1;i < n;i++){
             UITableViewCell *cell = [menuList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell != nil){
                 [UIView beginAnimations:nil context:nil];

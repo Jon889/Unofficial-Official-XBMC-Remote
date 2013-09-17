@@ -46,7 +46,7 @@ static char operationKey;
     if (url)
     {
         __weak UIButton *wself = self;
-        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options userInfo:nil progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+        id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options userInfo:nil progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {
             __strong UIButton *sself = wself;
             if (!sself) return;
@@ -97,7 +97,7 @@ static char operationKey;
     if (url)
     {
         __weak UIButton *wself = self;
-        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options userInfo:nil progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+        id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options userInfo:nil progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {
             __strong UIButton *sself = wself;
             if (!sself) return;
@@ -118,7 +118,7 @@ static char operationKey;
 - (void)cancelCurrentImageLoad
 {
     // Cancel in progress downloader from queue
-    id<SDWebImageOperation> operation = objc_getAssociatedObject(self, &operationKey);
+    id <SDWebImageOperation> operation = objc_getAssociatedObject(self, &operationKey);
     if (operation)
     {
         [operation cancel];

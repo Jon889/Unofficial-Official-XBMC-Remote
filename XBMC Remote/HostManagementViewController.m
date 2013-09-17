@@ -217,7 +217,7 @@
         [[AppDelegate instance] saveServerList];
         if (storeServerSelection){
             NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-            if (indexPath.row<storeServerSelection.row){
+            if (indexPath.row < storeServerSelection.row){
                 storeServerSelection = [NSIndexPath  indexPathForRow:storeServerSelection.row-1 inSection:storeServerSelection.section];
                 if (standardUserDefaults) {
                     [standardUserDefaults setObject:@(storeServerSelection.row) forKey:@"lastServer"];
@@ -271,7 +271,7 @@
 }
 
 -(IBAction)editTable:(id)sender forceClose:(BOOL)forceClose{
-    if ([[AppDelegate instance].arrayServerList count]==0 && !serverListTableView.editing) return;
+    if ([[AppDelegate instance].arrayServerList count] == 0 && !serverListTableView.editing) return;
     if (serverListTableView.editing || forceClose == YES){
         [serverListTableView setEditing:NO animated:YES];
         [editTableButton setSelected:NO];
@@ -295,7 +295,7 @@
     if (lpgr.state == UIGestureRecognizerStateBegan){
         CGPoint p = [lpgr locationInView:serverListTableView];
         NSIndexPath *indexPath = [serverListTableView indexPathForRowAtPoint:p];
-        if (indexPath != nil && indexPath.row<[[AppDelegate instance].arrayServerList count]){
+        if (indexPath != nil && indexPath.row < [[AppDelegate instance].arrayServerList count]){
             [self modifyHost:indexPath];
         }
     }
@@ -447,7 +447,7 @@
     }
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     int lastServer;
-    if ([userDefaults objectForKey:@"lastServer"]!=nil){
+    if ([userDefaults objectForKey:@"lastServer"] != nil){
         lastServer = [[userDefaults objectForKey:@"lastServer"] intValue];
         if (lastServer > -1 && lastServer < [[AppDelegate instance].arrayServerList count]){
             NSIndexPath *lastServerIndexPath = [NSIndexPath indexPathForRow:lastServer inSection:0];

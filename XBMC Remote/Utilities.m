@@ -128,7 +128,7 @@
     CGColorSpaceModel model = CGColorSpaceGetModel(colorSpace);
     const CGFloat* colors = CGColorGetComponents(color.CGColor);
     
-    if(model == kCGColorSpaceModelMonochrome){
+    if (model == kCGColorSpaceModelMonochrome){
         CGContextSetRGBFillColor(c, colors[0], colors[0], colors[0], colors[1]);
     }
     else{

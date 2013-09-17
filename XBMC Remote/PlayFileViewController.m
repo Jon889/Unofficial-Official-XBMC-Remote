@@ -34,7 +34,7 @@
  
     [jsonRPC callMethod:@"Files.PrepareDownload" withParameters:@{@"path": item[@"file"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         if (error == nil && methodError == nil){
-            if( [methodResult count] > 0){
+            if ( [methodResult count] > 0){
                 GlobalData *obj = [GlobalData getInstance];     
                 //NSDictionary *itemid = [methodResult objectForKey:@"details"]; 
 

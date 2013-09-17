@@ -103,7 +103,7 @@ typedef void (^DSJSONRPCCompletionHandler)(NSString *methodName, NSInteger callI
     NSTimer* timer;
 }
 
-@property (nonatomic, DS_WEAK) id<DSJSONRPCDelegate> delegate;
+@property (nonatomic, DS_WEAK) id <DSJSONRPCDelegate> delegate;
 
 - (id)initWithServiceEndpoint:(NSURL *)serviceEndpoint;
 - (id)initWithServiceEndpoint:(NSURL *)serviceEndpoint andHTTPHeaders:(NSDictionary *)httpHeaders;

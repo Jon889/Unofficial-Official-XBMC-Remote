@@ -174,7 +174,7 @@ int count = 0;
         NSDictionary *resumePointDict = item[@"resume"];
         if (resumePointDict != nil){
             if (((NSNull *)resumePointDict[@"position"] != [NSNull null])){
-                if ([resumePointDict[@"position"] floatValue]>0){
+                if ([resumePointDict[@"position"] floatValue] > 0){
                     resumePointPercentage = ([resumePointDict[@"position"] floatValue] * 100) / [resumePointDict[@"total"] floatValue];
                     [sheetActions addObject:[NSString stringWithFormat:NSLocalizedString(@"Resume from %@", nil), [self convertTimeFromSeconds:@([resumePointDict[@"position"] floatValue])]]];
                 }
@@ -355,7 +355,7 @@ int count = 0;
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i<numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -364,7 +364,7 @@ int count = 0;
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement = [array count];
-    for (int i = 0;i<numelement-1;i+=2){
+    for (int i = 0;i < numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSMutableDictionary *)mutableDictionary;
@@ -400,7 +400,7 @@ int count = 0;
         choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
 
     }
-    else if ([item[@"family"] isEqualToString:@"movieid"] && [AppDelegate instance].serverVersion>11){
+    else if ([item[@"family"] isEqualToString:@"movieid"] && [AppDelegate instance].serverVersion > 11){
         if ([sender isKindOfClass:[NSString class]]){
             NSString *actorName = (NSString *)sender;
             choosedTab = 2;
@@ -411,7 +411,7 @@ int count = 0;
             choosedMenuItem.mainLabel = actorName;
         }
     }
-    else if (([item[@"family"] isEqualToString:@"episodeid"] || [item[@"family"] isEqualToString:@"tvshowid"]) && [AppDelegate instance].serverVersion>11){
+    else if (([item[@"family"] isEqualToString:@"episodeid"] || [item[@"family"] isEqualToString:@"tvshowid"]) && [AppDelegate instance].serverVersion > 11){
         if ([sender isKindOfClass:[NSString class]]){
             NSString *actorName = (NSString *)sender;
             choosedTab = 0;
@@ -435,11 +435,11 @@ int count = 0;
         return;
     }
     NSDictionary *methods = [self indexKeyedDictionaryFromArray:[choosedMenuItem mainMethod][choosedTab]];
-    if (methods[@"method"]!=nil){ // THERE IS A CHILD
+    if (methods[@"method"] != nil){ // THERE IS A CHILD
         NSDictionary *mainFields = [MenuItem mainFields][choosedTab];
         NSMutableDictionary *parameters = [self indexKeyedMutableDictionaryFromArray:[choosedMenuItem mainParameters][choosedTab]];
         NSString *key = @"null";
-        if (item[mainFields[@"row15"]]!=nil){
+        if (item[mainFields[@"row15"]] != nil){
             key = mainFields[@"row15"];
         }
         id obj = @([item[mainFields[@"row6"]] intValue]);
@@ -448,7 +448,7 @@ int count = 0;
             obj = movieObj;
             objKey = movieObjKey;
         }
-        else if ([AppDelegate instance].serverVersion>11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE){
+        else if ([AppDelegate instance].serverVersion > 11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE){
             obj = @{mainFields[@"row6"]: @([item[mainFields[@"row6"]] intValue])};
             objKey = @"filter";
         }
@@ -554,17 +554,17 @@ int count = 0;
             [self addQueueAfterCurrent:YES];
 
         }
-        else if([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Queue", nil)]){
+        else if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Queue", nil)]){
             [self addQueueAfterCurrent:NO];
         }
-        else if([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Play", nil)]){
+        else if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Play", nil)]){
             [self addPlayback:0.0];
         }
         else if ([sheetActions[buttonIndex] rangeOfString:NSLocalizedString(@"Resume from", nil)].location != NSNotFound){
             [self addPlayback:resumePointPercentage];
             return;
         }
-        else if([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Play Trailer", nil)]){
+        else if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Play Trailer", nil)]){
             [self openFile:@{@"item": @{@"file": (self.detailItem)[@"trailer"]}}];
         }
     }
@@ -840,18 +840,18 @@ int h = 0;
             if ([item[@"genre"] isKindOfClass:NSClassFromString(@"JKArray")] ||
                 [item[@"genre"] isKindOfClass:[NSArray class]]){
                 runtimeLabel.text = [item[@"genre"] componentsJoinedByString:@" / "];
-                runtimeLabel.text = [runtimeLabel.text length]==0 ? @"-" : runtimeLabel.text;
+                runtimeLabel.text = [runtimeLabel.text length] == 0 ? @"-" : runtimeLabel.text;
             }
             else{
-                runtimeLabel.text = [item[@"genre"] length]==0 ? @"-" : item[@"genre"];
+                runtimeLabel.text = [item[@"genre"] length] == 0 ? @"-" : item[@"genre"];
             }
             if ([item[@"studio"] isKindOfClass:NSClassFromString(@"JKArray")] ||
                 [item[@"studio"] isKindOfClass:[NSArray class]]){
                 studioLabel.text = [item[@"studio"] componentsJoinedByString:@" / "];
-                studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
+                studioLabel.text = [studioLabel.text length] == 0 ? @"-" : studioLabel.text;
             }
             else{
-                studioLabel.text = [item[@"studio"] length]==0 ? @"-" : item[@"studio"];
+                studioLabel.text = [item[@"studio"] length] == 0 ? @"-" : item[@"studio"];
             }
             [self setTvShowsToolbar];
         }
@@ -895,7 +895,7 @@ int h = 0;
             frame = jewelView.frame;
             frame.size.height = coverHeight;
             jewelView.frame = frame;
-            directorLabel.text = [item[@"showtitle"] length]==0 ? @"-" : item[@"showtitle"];
+            directorLabel.text = [item[@"showtitle"] length] == 0 ? @"-" : item[@"showtitle"];
             
 
             NSString *aired = @"-";
@@ -909,18 +909,18 @@ int h = 0;
             if ([item[@"director"] isKindOfClass:NSClassFromString(@"JKArray")] ||
                 [item[@"director"] isKindOfClass:[NSArray class]]){
                 runtimeLabel.text = [item[@"director"] componentsJoinedByString:@" / "];
-                runtimeLabel.text = [runtimeLabel.text length]==0 ? @"-" : runtimeLabel.text;
+                runtimeLabel.text = [runtimeLabel.text length] == 0 ? @"-" : runtimeLabel.text;
             }
             else{
-                runtimeLabel.text = [item[@"director"] length]==0 ? @"-" : item[@"director"];
+                runtimeLabel.text = [item[@"director"] length] == 0 ? @"-" : item[@"director"];
             }
             if ([item[@"writer"] isKindOfClass:NSClassFromString(@"JKArray")] ||
                 [item[@"writer"] isKindOfClass:[NSArray class]]){
                 studioLabel.text = [item[@"writer"] componentsJoinedByString:@" / "];
-                studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
+                studioLabel.text = [studioLabel.text length] == 0 ? @"-" : studioLabel.text;
             }
             else{
-                studioLabel.text = [item[@"writer"] length]==0 ? @"-" : item[@"writer"];
+                studioLabel.text = [item[@"writer"] length] == 0 ? @"-" : item[@"writer"];
             }
             shiftParentalRating = 0;
         }
@@ -989,7 +989,7 @@ int h = 0;
         if ([item[@"artist"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"artist"] isKindOfClass:[NSArray class]]){
             directorLabel.text = [item[@"artist"] componentsJoinedByString:@" / "];
-            directorLabel.text = [directorLabel.text length]==0 ? @"-" : directorLabel.text;
+            directorLabel.text = [directorLabel.text length] == 0 ? @"-" : directorLabel.text;
         }
         else{
             directorLabel.text = [item[@"artist"] length] == 0 ? @"-" : item[@"artist"];
@@ -998,7 +998,7 @@ int h = 0;
         if ([item[@"genre"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"genre"] isKindOfClass:[NSArray class]]){
             runtimeLabel.text = [item[@"genre"] componentsJoinedByString:@" / "];
-            runtimeLabel.text = [runtimeLabel.text length]==0 ? @"-" : runtimeLabel.text;
+            runtimeLabel.text = [runtimeLabel.text length] == 0 ? @"-" : runtimeLabel.text;
         }
         else{
             runtimeLabel.text = [item[@"genre"] length] == 0 ? @"-" : item[@"genre"];
@@ -1036,7 +1036,7 @@ int h = 0;
         if ([item[@"genre"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"genre"] isKindOfClass:[NSArray class]]){
             directorLabel.text = [item[@"genre"] componentsJoinedByString:@" / "];
-            directorLabel.text = [directorLabel.text length]==0 ? @"-" : directorLabel.text;
+            directorLabel.text = [directorLabel.text length] == 0 ? @"-" : directorLabel.text;
         }
         else{
             directorLabel.text = [item[@"genre"] length] == 0 ? @"-" : item[@"genre"];
@@ -1045,7 +1045,7 @@ int h = 0;
         if ([item[@"style"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"style"] isKindOfClass:[NSArray class]]){
             genreLabel.text = [item[@"style"] componentsJoinedByString:@" / "];
-            genreLabel.text = [genreLabel.text length]==0 ? @"-" : genreLabel.text;
+            genreLabel.text = [genreLabel.text length] == 0 ? @"-" : genreLabel.text;
         }
         else{
             genreLabel.text = [item[@"style"] length] == 0 ? @"-" : item[@"style"];
@@ -1066,7 +1066,7 @@ int h = 0;
         if ([item[@"born"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"born"] isKindOfClass:[NSArray class]]){
             studioLabel.text = [item[@"born"] componentsJoinedByString:@" / "];
-            studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
+            studioLabel.text = [studioLabel.text length] == 0 ? @"-" : studioLabel.text;
         }
         else{
             studioLabel.text = [item[@"born"] length] == 0 ? @"-" : item[@"born"];
@@ -1075,7 +1075,7 @@ int h = 0;
         if ([item[@"formed"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"formed"] isKindOfClass:[NSArray class]]){
             studioLabel.text = [item[@"formed"] componentsJoinedByString:@" / "];
-            studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
+            studioLabel.text = [studioLabel.text length] == 0 ? @"-" : studioLabel.text;
         }
         else{
             studioLabel.text = [item[@"formed"] length] == 0 ? studioLabel.text : item[@"formed"];
@@ -1125,27 +1125,27 @@ int h = 0;
         if ([item[@"director"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"director"] isKindOfClass:[NSArray class]]){
             directorLabel.text = [item[@"director"] componentsJoinedByString:@" / "];
-            directorLabel.text = [directorLabel.text length]==0 ? @"-" : directorLabel.text;
+            directorLabel.text = [directorLabel.text length] == 0 ? @"-" : directorLabel.text;
         }
         else{
-            directorLabel.text = [item[@"director"] length]==0 ? @"-" : item[@"director"];
+            directorLabel.text = [item[@"director"] length] == 0 ? @"-" : item[@"director"];
         }
         if ([item[@"genre"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"genre"] isKindOfClass:[NSArray class]]){
             genreLabel.text = [item[@"genre"] componentsJoinedByString:@" / "];
-            genreLabel.text = [genreLabel.text length]==0 ? @"-" : genreLabel.text;
+            genreLabel.text = [genreLabel.text length] == 0 ? @"-" : genreLabel.text;
         }
         else{
-            genreLabel.text = [item[@"genre"] length]==0 ? @"-" : item[@"genre"];
+            genreLabel.text = [item[@"genre"] length] == 0 ? @"-" : item[@"genre"];
         }
-        runtimeLabel.text = [item[@"runtime"] length]==0 ? @"-" : item[@"runtime"];
+        runtimeLabel.text = [item[@"runtime"] length] == 0 ? @"-" : item[@"runtime"];
         if ([item[@"studio"] isKindOfClass:NSClassFromString(@"JKArray")] ||
             [item[@"studio"] isKindOfClass:[NSArray class]]){
             studioLabel.text = [item[@"studio"] componentsJoinedByString:@" / "];
-            studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
+            studioLabel.text = [studioLabel.text length] == 0 ? @"-" : studioLabel.text;
         }
         else{
-            studioLabel.text = [item[@"studio"] length]==0 ? @"-" : item[@"studio"];
+            studioLabel.text = [item[@"studio"] length] == 0 ? @"-" : item[@"studio"];
         }
     }
     BOOL inEnableKenBurns = enableKenBurns;
@@ -1236,19 +1236,19 @@ int h = 0;
 
     [fanartView setClipsToBounds:YES];
     
-    voteLabel.text = [item[@"rating"] length]==0 ? @"N.A." : item[@"rating"];
+    voteLabel.text = [item[@"rating"] length] == 0 ? @"N.A." : item[@"rating"];
     starsView.image = [UIImage imageNamed:[NSString stringWithFormat:@"stars_%.0f.png", round([item[@"rating"] doubleValue])]];
     
-    NSString *numVotes = [item[@"votes"] length]==0 ? @"" : item[@"votes"];
-    if ([numVotes length]!=0){
+    NSString *numVotes = [item[@"votes"] length] == 0 ? @"" : item[@"votes"];
+    if ([numVotes length] != 0){
         NSString *numVotesPlus = NSLocalizedString(([numVotes isEqualToString:@"1"]) ? @"vote" : @"votes",nil);
         numVotesLabel.text = [NSString stringWithFormat:@"(%@ %@)",numVotes, numVotesPlus];
     }
     CGRect frame = summaryLabel.frame;
     summaryLabel.frame = frame;
-    summaryLabel.text = [item[@"plot"] length]==0 ? @"-" : item[@"plot"];
+    summaryLabel.text = [item[@"plot"] length] == 0 ? @"-" : item[@"plot"];
     if ([item[@"family"] isEqualToString:@"albumid"] || [item[@"family"] isEqualToString:@"artistid"]){
-        summaryLabel.text = [item[@"description"] length]==0 ? @"-" : item[@"description"];
+        summaryLabel.text = [item[@"description"] length] == 0 ? @"-" : item[@"description"];
     }
     CGSize maximunLabelSize = CGSizeMake(pageSize, 9999);
     CGSize expectedLabelSize = [summaryLabel.text 
@@ -1260,7 +1260,7 @@ int h = 0;
     newFrame.size.height = expectedLabelSize.height + size;
     summaryLabel.frame = newFrame;
 
-    if ([item[@"mpaa"] length]==0){
+    if ([item[@"mpaa"] length] == 0){
         parentalRatingLabel.hidden = YES;
         parentalRatingLabelUp.hidden = YES;
     }
@@ -1276,7 +1276,7 @@ int h = 0;
         frame = parentalRatingLabel.frame;
         frame.size.height = 2000;
         parentalRatingLabel.frame = frame;
-        parentalRatingLabel.text = [item[@"mpaa"] length]==0 ? @"-" : item[@"mpaa"];
+        parentalRatingLabel.text = [item[@"mpaa"] length] == 0 ? @"-" : item[@"mpaa"];
         expectedLabelSize = [parentalRatingLabel.text
                              sizeWithFont:parentalRatingLabel.font
                              constrainedToSize:maximunLabelSize
@@ -1422,7 +1422,7 @@ int h = 0;
         [actorsTable setDataSource:self];
         [scrollView addSubview:actorsTable];
         startY = startY + [cast count]*(castHeight + 10);
-        if ([cast count]==0){
+        if ([cast count] == 0){
             label6.hidden = YES;
             startY-=20;
         }
@@ -1558,14 +1558,14 @@ int h = 0;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)theScrollView {
-    if (arrow_continue_down.alpha && theScrollView.contentOffset.y>40){
+    if (arrow_continue_down.alpha && theScrollView.contentOffset.y > 40){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView setAnimationDuration:1];
         arrow_continue_down.alpha = 0;
         [UIView commitAnimations];
     }
-    else if (arrow_continue_down.alpha == 0 && theScrollView.contentOffset.y<40){
+    else if (arrow_continue_down.alpha == 0 && theScrollView.contentOffset.y < 40){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView setAnimationDuration:1];
@@ -1629,14 +1629,14 @@ int h = 0;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([AppDelegate instance].serverVersion>11){
+    if ([AppDelegate instance].serverVersion > 11){
         cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_arrow_right_selected"]];
         cell.accessoryView.alpha = 0.5f;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([AppDelegate instance].serverVersion>11){
+    if ([AppDelegate instance].serverVersion > 11){
         [self showContent:cast[indexPath.row][@"name"]];
     }
 }
@@ -1663,7 +1663,7 @@ int h = 0;
                          @"properties": @[@"percentage", @"time", @"totaltime", @"partymode", @"position"]}
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
              if (error == nil && methodError == nil){
-                 if( [NSJSONSerialization isValidJSONObject:methodResult]){
+                 if ( [NSJSONSerialization isValidJSONObject:methodResult]){
                      if ([methodResult count]){
                          [activityIndicatorView stopAnimating];
                          int newPos = [methodResult[@"position"] intValue] + 1;

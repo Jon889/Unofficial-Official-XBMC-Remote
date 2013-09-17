@@ -96,7 +96,7 @@
     int bufferSize = (imageBufer < urls.count) ? imageBufer : urls.count;
     
     // Fill the buffer.
-    for (uint i = 0; i<bufferSize; i++) {
+    for (uint i = 0; i < bufferSize; i++) {
         NSString *url = [[NSString alloc] initWithString:urls[i]];
         [self.imagesArray addObject:[self _downloadImageFrom:url]];
     }
@@ -322,7 +322,7 @@
 
 - (void) _notifyDelegate: (NSNumber *)imageIndex{
     if (delegate) {
-        if([self.delegate respondsToSelector:@selector(didShowImageAtIndex:)]){
+        if ([self.delegate respondsToSelector:@selector(didShowImageAtIndex:)]){
             [self.delegate didShowImageAtIndex:[imageIndex intValue]];
         }      
         

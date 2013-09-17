@@ -334,11 +334,11 @@
     [menuTableView setBackgroundColor:[UIColor clearColor]];
     [menuTableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [menuTableView setScrollEnabled:[(self.rightMenuItems)[0] enableSection]];
-    if([[UIScreen mainScreen ] bounds].size.height >= 568){
+    if ([[UIScreen mainScreen ] bounds].size.height >= 568){
         [menuTableView setScrollEnabled:NO];
     }
     [self.view addSubview:menuTableView];
-    if ([[AppDelegate instance].obj.serverIP length]!=0){
+    if ([[AppDelegate instance].obj.serverIP length] != 0){
         if (![AppDelegate instance].serverOnLine){
             [self setRightMenuOption:@"offline"];
         }
@@ -423,7 +423,7 @@
     [UIView animateWithDuration:0.2
                      animations:^{
                          int n = [menuTableView numberOfRowsInSection:0];
-                         for (int i = 1;i<n;i++){
+                         for (int i = 1;i < n;i++){
                              UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                              if (cell != nil){
                                  cell.alpha = 0;
@@ -435,7 +435,7 @@
                          [UIView animateWithDuration:0.2
                                           animations:^{
                                               int n = [menuTableView numberOfRowsInSection:0];
-                                              for (int i = 1;i<n;i++){
+                                              for (int i = 1;i < n;i++){
                                                   UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                                                   if (cell != nil){
                                                       cell.alpha = 1;
@@ -468,7 +468,7 @@
         [title setText:serverTxt];
         UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
-        if ([[AppDelegate instance].obj.serverIP length]!=0){
+        if ([[AppDelegate instance].obj.serverIP length] != 0){
             infoLabel.alpha = 0;
             [self setRightMenuOption:@"offline"];
         }
