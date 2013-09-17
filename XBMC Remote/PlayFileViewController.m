@@ -29,7 +29,7 @@
 #pragma mark - PlayBack
 
 -(void) createPlayback{
-    NSDictionary *item=self.detailItem;
+    NSDictionary *item = self.detailItem;
     NSLog(@"%@", item);
  
     [jsonRPC callMethod:@"Files.PrepareDownload" withParameters:@{@"path": item[@"file"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
@@ -74,7 +74,7 @@
 }
 
 -(void)dealloc{
-    jsonRPC=nil;
+    jsonRPC = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{

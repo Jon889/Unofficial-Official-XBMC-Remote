@@ -76,7 +76,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell=nil;
+    UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"rightMenuCell"];
     [[NSBundle mainBundle] loadNibNamed:@"rightCellView" owner:self options:NULL];
     if (cell==nil || [labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
@@ -188,7 +188,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([actionsList[indexPath.row] count]){
-        NSString *message=actionsList[indexPath.row][@"message"];
+        NSString *message = actionsList[indexPath.row][@"message"];
         if (message != nil){
             NSString *countdown_message = actionsList[indexPath.row][@"countdown_message"];
             if (countdown_message != nil){
@@ -423,7 +423,7 @@
     [UIView animateWithDuration:0.2
                      animations:^{
                          int n = [menuTableView numberOfRowsInSection:0];
-                         for (int i=1;i<n;i++){
+                         for (int i = 1;i<n;i++){
                              UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                              if (cell!=nil){
                                  cell.alpha = 0;
@@ -435,7 +435,7 @@
                          [UIView animateWithDuration:0.2
                                           animations:^{
                                               int n = [menuTableView numberOfRowsInSection:0];
-                                              for (int i=1;i<n;i++){
+                                              for (int i = 1;i<n;i++){
                                                   UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                                                   if (cell!=nil){
                                                       cell.alpha = 1;

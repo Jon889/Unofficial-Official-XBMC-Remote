@@ -152,7 +152,7 @@ NSOutputStream	*outStream;
 
 -(void)checkServer{
     if (inCheck) return;
-    jsonRPC=nil;
+    jsonRPC = nil;
     if ([[AppDelegate instance].obj.serverIP length] == 0){
         NSDictionary *params = @{@"showSetup": @YES};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCShowSetup" object:nil userInfo:params];
@@ -179,7 +179,7 @@ NSOutputStream	*outStream;
              [AppDelegate instance].serverVolume = [methodResult[@"volume"] intValue];
              if (![AppDelegate instance].serverOnLine){
                  if( [NSJSONSerialization isValidJSONObject:methodResult]){
-                     NSDictionary *serverInfo=methodResult[@"version"];
+                     NSDictionary *serverInfo = methodResult[@"version"];
                      [AppDelegate instance].serverVersion = [serverInfo[@"major"] intValue];
                      [AppDelegate instance].serverMinorVersion = [serverInfo[@"minor"] intValue];
                      NSString *infoTitle=[NSString stringWithFormat:@"%@ v%@.%@ %@",
@@ -211,7 +211,7 @@ NSOutputStream	*outStream;
              [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCShowSetup" object:nil userInfo:params];
          }
      }];
-    jsonRPC=nil;
+    jsonRPC = nil;
 }
 
 

@@ -57,7 +57,7 @@
         UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
         [icon setImage:[UIImage imageNamed:@"connection_on"]];
         int n = [menuList numberOfRowsInSection:0];
-        for (int i=1;i<n;i++){
+        for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell!=nil){
                 [UIView beginAnimations:nil context:nil];
@@ -70,7 +70,7 @@
         }
 //        NSString *userPassword=[[AppDelegate instance].obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", [AppDelegate instance].obj.serverPass];
 //        NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", [AppDelegate instance].obj.serverUser, userPassword, [AppDelegate instance].obj.serverIP, [AppDelegate instance].obj.serverPort];
-//        jsonRPC=nil;
+//        jsonRPC = nil;
 //        jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
 //
 //        [jsonRPC
@@ -93,7 +93,7 @@
         UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
         int n = [menuList numberOfRowsInSection:0];
-        for (int i=1;i<n;i++){
+        for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell!=nil){
                 [UIView beginAnimations:nil context:nil];
@@ -128,7 +128,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell=nil;
+    UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"mainMenuCell"];
     [[NSBundle mainBundle] loadNibNamed:@"cellView" owner:self options:NULL];
     if (cell == nil){
@@ -224,7 +224,7 @@
         
     }
     else if (item.family == 1){
-        self.detailViewController=nil;
+        self.detailViewController = nil;
         self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil] ;
         self.detailViewController.detailItem = item;
         object = self.detailViewController;
@@ -332,7 +332,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    jsonRPC=nil;
+    jsonRPC = nil;
 }
 
 - (void)viewDidLoad{
@@ -359,7 +359,7 @@
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
     [AppDelegate instance].obj=[GlobalData getInstance];
-    checkServerParams=@{@"properties": @[@"version", @"volume"]};
+    checkServerParams = @{@"properties": @[@"version", @"volume"]};
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(handleWillResignActive:)
@@ -416,9 +416,9 @@
         thumbWidth = PHONE_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PHONE_TV_SHOWS_POSTER_HEIGHT;
     }
-    mainMenu *menuItem=(self.mainMenu)[3];
-    menuItem.thumbWidth=thumbWidth;
-    menuItem.rowHeight=tvshowHeight;
+    mainMenu *menuItem = (self.mainMenu)[3];
+    menuItem.thumbWidth = thumbWidth;
+    menuItem.rowHeight = tvshowHeight;
     [self changeServerStatus:NO infoText:NSLocalizedString(@"No connection", nil)];
 }
 

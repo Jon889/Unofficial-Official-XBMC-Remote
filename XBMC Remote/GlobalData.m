@@ -19,7 +19,7 @@
 @synthesize serverHWAddr;
 @synthesize preferTVPosters;    
 
-static GlobalData *instance =nil;    
+static GlobalData *instance = nil;    
 +(GlobalData *)getInstance    {    
     @synchronized(self){    
         if(instance==nil){    

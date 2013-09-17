@@ -178,7 +178,7 @@
 }
 
 -(void)cancelRequest:(NSTimer*)theTimer {
-    NSURLConnection *connection= (NSURLConnection *)[theTimer userInfo];
+    NSURLConnection *connection = (NSURLConnection *)[theTimer userInfo];
     NSNumber *connectionKey = @((int)connection);
     NSMutableDictionary *connectionInfo = (self._activeConnections)[connectionKey];
     DSJSONRPCCompletionHandler completionHandler = connectionInfo[@"completionHandler"];

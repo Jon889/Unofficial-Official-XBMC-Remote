@@ -29,7 +29,7 @@
 #pragma mark - Button Mamagement
 
 -(IBAction)addHost:(id)sender{
-    self.hostController=nil;
+    self.hostController = nil;
     self.hostController = [[HostViewController alloc] initWithNibName:@"HostViewController" bundle:nil];
     [self.navigationController pushViewController:self.hostController animated:YES];
 }
@@ -55,9 +55,9 @@
         }
         [connectingActivityIndicator stopAnimating];
     }
-    self.hostController=nil;
+    self.hostController = nil;
     self.hostController = [[HostViewController alloc] initWithNibName:@"HostViewController" bundle:nil] ;
-    self.hostController.detailItem=item;
+    self.hostController.detailItem = item;
     [self.navigationController pushViewController:self.hostController animated:YES];
 }
 
@@ -75,7 +75,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell=nil;
+    UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"serverListCell"];
     [[NSBundle mainBundle] loadNibNamed:@"serverListCellView" owner:self options:NULL];
     if (cell==nil){
@@ -87,45 +87,45 @@
     }
     if ([[AppDelegate instance].arrayServerList count] == 0){
         [(UIImageView*) [cell viewWithTag:1] setHidden:TRUE];
-        UILabel *cellLabel=(UILabel*) [cell viewWithTag:2];
-        UILabel *cellIP=(UILabel*) [cell viewWithTag:3];
-        cellLabel.textAlignment=NSTextAlignmentCenter;
+        UILabel *cellLabel = (UILabel*) [cell viewWithTag:2];
+        UILabel *cellIP = (UILabel*) [cell viewWithTag:3];
+        cellLabel.textAlignment = NSTextAlignmentCenter;
         [cellLabel setText:NSLocalizedString(@"No saved hosts found", nil)];
         [cellIP setText:@""];
-        CGRect frame=cellLabel.frame;
-        frame.origin.x=10;
-        frame.origin.y=0;
-        frame.size.width=300;
-        frame.size.height=44;
-        cellLabel.frame=frame;
-        cell.accessoryType=UITableViewCellAccessoryNone;
+        CGRect frame = cellLabel.frame;
+        frame.origin.x = 10;
+        frame.origin.y = 0;
+        frame.size.width = 300;
+        frame.size.height = 44;
+        cellLabel.frame = frame;
+        cell.accessoryType = UITableViewCellAccessoryNone;
         return cell;
     }
     else{
         [(UIImageView*) [cell viewWithTag:1] setHidden:FALSE];
-        UILabel *cellLabel=(UILabel*) [cell viewWithTag:2];
-        UILabel *cellIP=(UILabel*) [cell viewWithTag:3];
-        CGRect frame=cellLabel.frame;
-        frame.origin.x=36;
-        frame.origin.y=0;
-        frame.size.width=166;
-        frame.size.height=44;
-        cellLabel.frame=frame;
-        cellLabel.textAlignment=NSTextAlignmentLeft;
-        NSDictionary *item=([AppDelegate instance].arrayServerList)[indexPath.row];
+        UILabel *cellLabel = (UILabel*) [cell viewWithTag:2];
+        UILabel *cellIP = (UILabel*) [cell viewWithTag:3];
+        CGRect frame = cellLabel.frame;
+        frame.origin.x = 36;
+        frame.origin.y = 0;
+        frame.size.width = 166;
+        frame.size.height = 44;
+        cellLabel.frame = frame;
+        cellLabel.textAlignment = NSTextAlignmentLeft;
+        NSDictionary *item = ([AppDelegate instance].arrayServerList)[indexPath.row];
         [cellLabel setText:item[@"serverDescription"]];
         [cellIP setText:item[@"serverIP"]];
         NSIndexPath *selection = [serverListTableView indexPathForSelectedRow];
         if (selection && indexPath.row == selection.row){
-            cell.accessoryType=UITableViewCellAccessoryCheckmark;
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
             if ([AppDelegate instance].serverOnLine == YES){
                 [(UIImageView *)[cell viewWithTag:1] setImage:[UIImage imageNamed:@"connection_on"]];
             }
         }
         else {
-            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        cell.editingAccessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return cell;
 }
@@ -196,7 +196,7 @@
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [serverListTableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType=UITableViewCellAccessoryNone;
+    cell.accessoryType = UITableViewCellAccessoryNone;
     [(UIImageView *)[cell viewWithTag:1] setImage:[UIImage imageNamed:@"connection_off"]];
 }
 
@@ -225,7 +225,7 @@
                 }
             }
             else if (storeServerSelection.row==indexPath.row){
-                storeServerSelection=nil;
+                storeServerSelection = nil;
                 [AppDelegate instance].obj.serverDescription = @"";
                 [AppDelegate instance].obj.serverUser = @"";
                 [AppDelegate instance].obj.serverPass = @"";
@@ -280,7 +280,7 @@
         if (storeServerSelection){
             [serverListTableView selectRowAtIndexPath:storeServerSelection animated:YES scrollPosition:UITableViewScrollPositionMiddle];
             UITableViewCell *cell = [serverListTableView cellForRowAtIndexPath:storeServerSelection];
-            cell.accessoryType=UITableViewCellAccessoryCheckmark;
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
     else{
@@ -311,7 +311,7 @@
             [serverListTableView selectRowAtIndexPath:checkSelection animated:YES scrollPosition:UITableViewScrollPositionMiddle];
             UITableViewCell *cell = [serverListTableView cellForRowAtIndexPath:checkSelection];
             storeServerSelection = checkSelection;
-            cell.accessoryType=UITableViewCellAccessoryCheckmark;
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
     else if (selection){

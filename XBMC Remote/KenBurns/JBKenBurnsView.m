@@ -96,7 +96,7 @@
     int bufferSize = (imageBufer < urls.count) ? imageBufer : urls.count;
     
     // Fill the buffer.
-    for (uint i=0; i<bufferSize; i++) {
+    for (uint i = 0; i<bufferSize; i++) {
         NSString *url = [[NSString alloc] initWithString:urls[i]];
         [self.imagesArray addObject:[self _downloadImageFrom:url]];
     }
@@ -135,7 +135,7 @@
     BOOL wrapping = NO;
     int bufferIndex = 0;
     
-    for (int urlIndex=self.imagesArray.count; urlIndex < [urls count]; urlIndex++) {
+    for (int urlIndex = self.imagesArray.count; urlIndex < [urls count]; urlIndex++) {
         
         [self performSelectorOnMainThread:@selector(_animate:)
                                withObject:@0

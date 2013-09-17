@@ -33,7 +33,7 @@
 @implementation UIViewExt
 - (UIView *) hitTest: (CGPoint) pt withEvent: (UIEvent *) event {   
 	
-	UIView* viewToReturn=nil;
+	UIView* viewToReturn = nil;
 	CGPoint pointToReturn;
 	
 	UIView* uiRightView = (UIView*)[self subviews][1];
@@ -109,7 +109,7 @@
     if (status==YES){
         [self.tcpJSONRPCconnection startNetworkCommunicationWithServer:[AppDelegate instance].obj.serverIP serverPort:[AppDelegate instance].obj.tcpPort];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionSuccess" object: nil];
-        [AppDelegate instance].serverOnLine=YES;
+        [AppDelegate instance].serverOnLine = YES;
         [AppDelegate instance].serverName = infoText;
 
         [volumeSliderView startTimer];
@@ -118,10 +118,10 @@
         [icon setImage:[UIImage imageNamed:@"connection_on"]];
         [xbmcInfo setTitle:infoText forState:UIControlStateNormal];
         int n = [menuViewController.tableView numberOfRowsInSection:0];
-        for (int i=1;i<n;i++){
+        for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell!=nil){
-                cell.selectionStyle=UITableViewCellSelectionStyleBlue;
+                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
                 [(UIImageView*) [cell viewWithTag:1] setAlpha:1.0];
@@ -134,7 +134,7 @@
     else{
         [self.tcpJSONRPCconnection stopNetworkCommunication];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionFailed" object:nil userInfo:nil];
-        [AppDelegate instance].serverOnLine=NO;
+        [AppDelegate instance].serverOnLine = NO;
         [AppDelegate instance].serverName = infoText;
 
         UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
@@ -142,10 +142,10 @@
         [icon setImage:[UIImage imageNamed:@"connection_off"]];
         [xbmcInfo setTitle:infoText forState:UIControlStateNormal];
         int n = [menuViewController.tableView numberOfRowsInSection:0];
-        for (int i=1;i<n;i++){
+        for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             if (cell!=nil){
-                cell.selectionStyle=UITableViewCellSelectionStyleGray;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
                 
@@ -179,11 +179,11 @@
 	[UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
 	[UIView setAnimationDuration:seconds];
-    int actualPosY=view.frame.origin.y;
+    int actualPosY = view.frame.origin.y;
     CGRect frame;
 	frame = [view frame];
     if (actualPosY<667 || hide){
-        Y=self.view.frame.size.height;
+        Y = self.view.frame.size.height;
     }
     view.alpha = alphavalue;
 	frame.origin.y = Y;
@@ -249,11 +249,11 @@
     NSString *destructive = nil;
     NSArray *sheetActions = nil;
     if (![AppDelegate instance].serverOnLine){
-        sheetActions=@[NSLocalizedString(@"Wake On Lan", nil)];
+        sheetActions = @[NSLocalizedString(@"Wake On Lan", nil)];
     }
     else{
         destructive = NSLocalizedString(@"Power off System", nil);
-        sheetActions=@[NSLocalizedString(@"Hibernate", nil), NSLocalizedString(@"Suspend", nil), NSLocalizedString(@"Reboot", nil), NSLocalizedString(@"Quit XBMC application", nil), NSLocalizedString(@"Update Audio Library", nil), NSLocalizedString(@"Update Video Library", nil)];
+        sheetActions = @[NSLocalizedString(@"Hibernate", nil), NSLocalizedString(@"Suspend", nil), NSLocalizedString(@"Reboot", nil), NSLocalizedString(@"Quit XBMC application", nil), NSLocalizedString(@"Update Audio Library", nil), NSLocalizedString(@"Update Video Library", nil)];
     }
     int numActions=[sheetActions count];
     if (numActions){
@@ -384,14 +384,14 @@
     self.tcpJSONRPCconnection = [[tcpJSONRPC alloc] init];
     XBMCVirtualKeyboard *virtualKeyboard = [[XBMCVirtualKeyboard alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     [self.view addSubview:virtualKeyboard];
-    firstRun=YES;
+    firstRun = YES;
     [AppDelegate instance].obj=[GlobalData getInstance]; 
 
     int cellHeight = 56;
     int infoHeight = 22;
     int tableHeight = ([(NSMutableArray *)mainMenu count] - 1) * cellHeight + infoHeight;
     int tableWidth = 300;
-    int headerHeight=0;
+    int headerHeight = 0;
    
     rootView = [[UIViewExt alloc] initWithFrame:CGRectMake(0, deltaY, self.view.frame.size.width, self.view.frame.size.height - deltaY - 1)];
 	rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth + UIViewAutoresizingFlexibleHeight;
@@ -419,13 +419,13 @@
     [leftMenuView addSubview:horizontalLineView1];
 
     nowPlayingController = [[NowPlaying alloc] initWithNibName:@"NowPlaying" bundle:nil];
-    CGRect frame=nowPlayingController.view.frame;
-    YPOS=-(tableHeight + separator + headerHeight);
-    frame.origin.y=tableHeight + separator + headerHeight;
-    frame.size.width=tableWidth;
-    frame.size.height=self.view.frame.size.height - tableHeight - separator - headerHeight - deltaY;
-    nowPlayingController.view.autoresizingMask=UIViewAutoresizingFlexibleHeight;
-    nowPlayingController.view.frame=frame;
+    CGRect frame = nowPlayingController.view.frame;
+    YPOS = -(tableHeight + separator + headerHeight);
+    frame.origin.y = tableHeight + separator + headerHeight;
+    frame.size.width = tableWidth;
+    frame.size.height = self.view.frame.size.height - tableHeight - separator - headerHeight - deltaY;
+    nowPlayingController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    nowPlayingController.view.frame = frame;
     
     [nowPlayingController setToolbarWidth:768 height:610 YPOS:YPOS playBarWidth:426 portrait:TRUE];
     
@@ -469,10 +469,10 @@
     
     volumeSliderView = [[VolumeSliderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 62.0f, 296.0f)];
     volumeSliderView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-    frame=volumeSliderView.frame;
-    frame.origin.x=408;
-    frame.origin.y=self.view.frame.size.height - 170;
-    volumeSliderView.frame=frame;
+    frame = volumeSliderView.frame;
+    frame.origin.x = 408;
+    frame.origin.y = self.view.frame.size.height - 170;
+    volumeSliderView.frame = frame;
     CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
     volumeSliderView.transform = trans;
     [self.view addSubview:volumeSliderView];
@@ -483,7 +483,7 @@
     xbmcInfo.titleLabel.font = [UIFont systemFontOfSize:fontsize];
     xbmcInfo.titleLabel.minimumScaleFactor = 6.0/fontsize;
     xbmcInfo.titleLabel.numberOfLines = 2;
-    xbmcInfo.titleLabel.textAlignment=NSTextAlignmentCenter;
+    xbmcInfo.titleLabel.textAlignment = NSTextAlignmentCenter;
     xbmcInfo.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 3);
     xbmcInfo.titleLabel.shadowColor = [UIColor blackColor];
     xbmcInfo.titleLabel.shadowOffset = CGSizeMake (1.0, 1.0);
@@ -515,7 +515,7 @@
     [self.view insertSubview:self.nowPlayingController.ProgressSlider aboveSubview:rootView];
     frame = self.nowPlayingController.ProgressSlider.frame;
     frame.origin.x = self.nowPlayingController.ProgressSlider.frame.origin.x + 300;
-    self.nowPlayingController.ProgressSlider.frame=frame;
+    self.nowPlayingController.ProgressSlider.frame = frame;
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
@@ -613,9 +613,9 @@
         thumbWidth = PAD_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PAD_TV_SHOWS_POSTER_HEIGHT;
     }
-    mainMenu *menuItem=(self.mainMenu)[3];
-    menuItem.thumbWidth=thumbWidth;
-    menuItem.rowHeight=tvshowHeight;
+    mainMenu *menuItem = (self.mainMenu)[3];
+    menuItem.thumbWidth = thumbWidth;
+    menuItem.rowHeight = tvshowHeight;
     [[AppDelegate instance].windowController.stackScrollViewController offView];
     NSIndexPath *selection=[menuViewController.tableView indexPathForSelectedRow];
     if (selection){
@@ -673,13 +673,13 @@
     if (toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         CGRect frame = self.nowPlayingController.ProgressSlider.frame;
         frame.origin.y = 444;
-        self.nowPlayingController.ProgressSlider.frame=frame;
+        self.nowPlayingController.ProgressSlider.frame = frame;
         [nowPlayingController setToolbarWidth:768 height:610 YPOS:YPOS playBarWidth:426 portrait:TRUE];
 	}
 	else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight){
         CGRect frame = self.nowPlayingController.ProgressSlider.frame;
         frame.origin.y = 600;
-        self.nowPlayingController.ProgressSlider.frame=frame;
+        self.nowPlayingController.ProgressSlider.frame = frame;
         [nowPlayingController setToolbarWidth:1024 height:768 YPOS:YPOS playBarWidth:680 portrait:FALSE];
 	}
 }

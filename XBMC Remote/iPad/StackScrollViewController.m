@@ -88,8 +88,8 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		dragDirection = @"";
 		
 		viewAtLeft2=nil;
-		viewAtLeft=nil;
-		viewAtRight=nil;
+		viewAtLeft = nil;
+		viewAtRight = nil;
 		viewAtRight2=nil;
 		viewAtRightAtTouchBegan = nil;
 		
@@ -238,7 +238,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
                          [[borderViews viewWithTag:1 + VIEW_TAG] setHidden:TRUE];
                          viewAtLeft2 = nil;
                          viewAtRight = nil;
-                         viewAtLeft= nil;
+                         viewAtLeft = nil;
                          
                          viewAtRight2 = nil;
                      }
@@ -611,7 +611,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 					if (viewAtLeft.frame.origin.x > SLIDE_VIEWS_MINUS_X_POSITION || viewAtRight == nil) {
 						
 						//Drop Card View Animation
-                        int posX=SLIDE_VIEWS_START_X_POS;
+                        int posX = SLIDE_VIEWS_START_X_POS;
 						if ((((UIView*)[slideViews subviews][0]).frame.origin.x+300) >= (self.view.frame.origin.x + ((UIView*)[slideViews subviews][0]).frame.size.width)) {
                             
 //                            NSLog(@"ELIMINO 2");
@@ -872,7 +872,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 }
 
 - (void)addViewInSlider:(UIViewController*)controller invokeByController:(UIViewController*)invokeByController isStackStartView:(BOOL)isStackStartView{
-    float animX=0;
+    float animX = 0;
 	if (isStackStartView) {
         int numViews=[[slideViews subviews]count];
         if (numViews==0){
@@ -1050,7 +1050,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 
 -(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
 	BOOL isViewOutOfScreen = FALSE; 
-    int posX=SLIDE_VIEWS_START_X_POS;
+    int posX = SLIDE_VIEWS_START_X_POS;
     if ([viewControllersStack count]==1){
         posX=[[slideViews subviews][0] frame].origin.x;
     }

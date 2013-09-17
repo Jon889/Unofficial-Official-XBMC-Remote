@@ -131,12 +131,12 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromRight:)];
         rightSwipe.numberOfTouchesRequired = 1;
-        rightSwipe.cancelsTouchesInView=YES;
+        rightSwipe.cancelsTouchesInView = YES;
         rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
         [remoteControlView addGestureRecognizer:rightSwipe];
         leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromLeft:)];
         leftSwipe.numberOfTouchesRequired = 1;
-        leftSwipe.cancelsTouchesInView=YES;
+        leftSwipe.cancelsTouchesInView = YES;
         leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
         [remoteControlView addGestureRecognizer:leftSwipe];
         quickHelpImageView.image = [UIImage imageNamed:@"remote quick help"];
@@ -165,25 +165,25 @@
     }
     UISwipeGestureRecognizer *gestureRightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     gestureRightSwipe.numberOfTouchesRequired = 1;
-    gestureRightSwipe.cancelsTouchesInView=NO;
+    gestureRightSwipe.cancelsTouchesInView = NO;
     gestureRightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     [gestureZoneView addGestureRecognizer:gestureRightSwipe];
     
     UISwipeGestureRecognizer *gestureLeftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     gestureLeftSwipe.numberOfTouchesRequired = 1;
-    gestureLeftSwipe.cancelsTouchesInView=NO;
+    gestureLeftSwipe.cancelsTouchesInView = NO;
     gestureLeftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     [gestureZoneView addGestureRecognizer:gestureLeftSwipe];
     
     UISwipeGestureRecognizer *upSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     upSwipe.numberOfTouchesRequired = 1;
-    upSwipe.cancelsTouchesInView=NO;
+    upSwipe.cancelsTouchesInView = NO;
     upSwipe.direction = UISwipeGestureRecognizerDirectionUp;
     [gestureZoneView addGestureRecognizer:upSwipe];
     
     UISwipeGestureRecognizer *downSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     downSwipe.numberOfTouchesRequired = 1;
-    downSwipe.cancelsTouchesInView=NO;
+    downSwipe.cancelsTouchesInView = NO;
     downSwipe.direction = UISwipeGestureRecognizerDirectionDown;
     [gestureZoneView addGestureRecognizer:downSwipe];
     
@@ -193,12 +193,12 @@
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTouchpadDoubleTap)];
     doubleTap.numberOfTapsRequired = 2;
-    doubleTap.cancelsTouchesInView=YES;
+    doubleTap.cancelsTouchesInView = YES;
     [gestureZoneView addGestureRecognizer:doubleTap];
         
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTouchpadSingleTap)];
     singleTap.numberOfTapsRequired = 1;
-    singleTap.cancelsTouchesInView=YES;
+    singleTap.cancelsTouchesInView = YES;
     [singleTap requireGestureRecognizerToFail:doubleTap];
     [gestureZoneView addGestureRecognizer:singleTap];
     
@@ -212,13 +212,13 @@
     
     UISwipeGestureRecognizer *twoFingersDownSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     twoFingersDownSwipe.numberOfTouchesRequired = 2;
-    twoFingersDownSwipe.cancelsTouchesInView=NO;
+    twoFingersDownSwipe.cancelsTouchesInView = NO;
     twoFingersDownSwipe.direction = UISwipeGestureRecognizerDirectionDown;
     [gestureZoneView addGestureRecognizer:twoFingersDownSwipe];
     
     UISwipeGestureRecognizer *twoFingersUpSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     twoFingersUpSwipe.numberOfTouchesRequired = 2;
-    twoFingersUpSwipe.cancelsTouchesInView=NO;
+    twoFingersUpSwipe.cancelsTouchesInView = NO;
     twoFingersUpSwipe.direction = UISwipeGestureRecognizerDirectionUp;
     [gestureZoneView addGestureRecognizer:twoFingersUpSwipe];
 }
@@ -389,7 +389,7 @@
 # pragma mark - ToolBar
 
 -(void)toggleGestureZone:(id)sender{
-    NSString *imageName=@"";
+    NSString *imageName = @"";
     BOOL showGesture = (gestureZoneView.alpha == 0);
     if ([sender isKindOfClass:[NSNotification class]]){
         showGesture = [[sender userInfo][@"forceGestureZone"] boolValue];
@@ -414,7 +414,7 @@
         leftSwipe.enabled = NO;
         rightSwipe.enabled = NO;
         [UIView commitAnimations];
-        imageName=@"circle.png";
+        imageName = @"circle.png";
     }
     else{
         CGRect frame;
@@ -432,7 +432,7 @@
         leftSwipe.enabled = YES;
         rightSwipe.enabled = YES;
         [UIView commitAnimations];
-        imageName=@"finger.png";
+        imageName = @"finger.png";
     }
     if ([sender isKindOfClass: [UIButton class]]){
         [sender setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
@@ -449,7 +449,7 @@
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
-    for (int i=0;i<numelement-1;i+=2){
+    for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -639,7 +639,7 @@
     NSString *serverHTTP=[NSString stringWithFormat:@"http://%@%@@%@:%@/xbmcCmds/xbmcHttp?command=%@", obj.serverUser, userPassword, obj.serverIP, obj.serverPort, command];
     NSURL *url = [NSURL  URLWithString:serverHTTP];
     NSString *requestANS = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:NULL];  
-    requestANS=nil;
+    requestANS = nil;
 }
 
 -(void)volumeInfo{
@@ -694,7 +694,7 @@ NSInteger buttonAction;
     [self sendAction];
     if (self.holdVolumeTimer!=nil){
         [self.holdVolumeTimer invalidate];
-        self.holdVolumeTimer=nil;
+        self.holdVolumeTimer = nil;
     }
     self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(sendAction) userInfo:nil repeats:YES];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -710,7 +710,7 @@ NSInteger buttonAction;
 -(IBAction)stopHoldKey:(id)sender{
     if (self.holdVolumeTimer!=nil){
         [self.holdVolumeTimer invalidate];
-        self.holdVolumeTimer=nil;
+        self.holdVolumeTimer = nil;
     }
     buttonAction = 0;
 }
@@ -762,49 +762,49 @@ NSInteger buttonAction;
         
         if (self.holdVolumeTimer.timeInterval == 1.5f){
             [self.holdVolumeTimer invalidate];
-            self.holdVolumeTimer=nil;
+            self.holdVolumeTimer = nil;
             self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(sendAction) userInfo:nil repeats:YES];  
         }
         else{
             [self.holdVolumeTimer invalidate];
-            self.holdVolumeTimer=nil;
+            self.holdVolumeTimer = nil;
             self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(sendAction) userInfo:nil repeats:YES]; 
         }
     }
     NSString *action;
     switch (buttonAction) {
         case 10:
-            action=@"Input.Up";
+            action = @"Input.Up";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             [self playerStep:@"bigforward" musicPlayerGo:nil];
             break;
             
         case 12:
-            action=@"Input.Left";
+            action = @"Input.Left";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             [self playerStep:@"smallbackward" musicPlayerGo:@"previous"];
             break;
             
         case 13:
-            action=@"Input.Select";
+            action = @"Input.Select";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
             break;
             
         case 14:
-            action=@"Input.Right";
+            action = @"Input.Right";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             [self playerStep:@"smallforward" musicPlayerGo:@"next"];
             break;
             
         case 16:
-            action=@"Input.Down";
+            action = @"Input.Down";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             [self playerStep:@"bigbackward" musicPlayerGo:nil];
             break;
             
         case 18:
-            action=@"Input.Back";
+            action = @"Input.Back";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             break;
             
@@ -822,71 +822,71 @@ NSInteger buttonAction;
     NSDictionary *dicParams;
     switch ([sender tag]) {
         case 1:
-            action=@"GUI.SetFullscreen";
+            action = @"GUI.SetFullscreen";
             [self GUIAction:action params:@{@"fullscreen": @"toggle"} httpAPIcallback:@"SendKey(0xf009)"];
             break;
         case 2:
-            action=@"Player.Seek";
-            params=@[@"smallbackward", @"value"];
+            action = @"Player.Seek";
+            params = @[@"smallbackward", @"value"];
             [self playbackAction:action params:params];
             break;
             
         case 3:
-            action=@"Player.PlayPause";
-            params=nil;
+            action = @"Player.PlayPause";
+            params = nil;
             [self playbackAction:action params:nil];
             break;
             
         case 4:
-            action=@"Player.Seek";
-            params=@[@"smallforward", @"value"];
+            action = @"Player.Seek";
+            params = @[@"smallforward", @"value"];
             [self playbackAction:action params:params];
             break;
         case 5:
             if ([AppDelegate instance].serverVersion>11){
-                action=@"Player.GoTo";
-                params=@[@"previous", @"to"];
+                action = @"Player.GoTo";
+                params = @[@"previous", @"to"];
                 [self playbackAction:action params:params];
             }
             else{
-                action=@"Player.GoPrevious";
-                params=nil;
+                action = @"Player.GoPrevious";
+                params = nil;
                 [self playbackAction:action params:nil];
             }
             break;
             
         case 6:
-            action=@"Player.Stop";
-            params=nil;
+            action = @"Player.Stop";
+            params = nil;
             [self playbackAction:action params:nil];
             break;
             
         case 7:
-            action=@"Player.PlayPause";
-            params=nil;
+            action = @"Player.PlayPause";
+            params = nil;
             [self playbackAction:action params:nil];
             break;
             
         case 8:
             if ([AppDelegate instance].serverVersion>11){
-                action=@"Player.GoTo";
-                params=@[@"next", @"to"];
+                action = @"Player.GoTo";
+                params = @[@"next", @"to"];
                 [self playbackAction:action params:params];
             }
             else{
-                action=@"Player.GoNext";
-                params=nil;
+                action = @"Player.GoNext";
+                params = nil;
                 [self playbackAction:action params:nil];
             }
             break;
         
         case 9: // HOME
-            action=@"Input.Home";
+            action = @"Input.Home";
             [self GUIAction:action params:@{} httpAPIcallback:nil];
             break;
             
         case 11: // INFO
-            action=@"Input.Info";
+            action = @"Input.Info";
             [self GUIAction:action params:@{} httpAPIcallback:@"SendKey(0xF049)"];
             break;
             
@@ -900,35 +900,35 @@ NSInteger buttonAction;
             break;
             
         case 20:
-            action=@"Player.SetAudioStream";
-            params=@[@"next", @"stream"];
+            action = @"Player.SetAudioStream";
+            params = @[@"next", @"stream"];
             [self audiostreamAction:action params:params];
             break;
             
         case 21:
             action = @"GUI.ActivateWindow";
             dicParams = @{@"window": @"music"};
-            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter=ActivateWindow(Music)"];
+            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter = ActivateWindow(Music)"];
             break;
             
         case 22:
             action = @"GUI.ActivateWindow";
             dicParams = @{@"window": @"videos",
                       @"parameters": @[@"MovieTitles"]};
-            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter=ActivateWindow(Videos,MovieTitles)"];
+            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter = ActivateWindow(Videos,MovieTitles)"];
             break;
         
         case 23:
             action = @"GUI.ActivateWindow";
             dicParams = @{@"window": @"videos",
                          @"parameters": @[@"tvshowtitles"]};
-            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter=ActivateWindow(Videos,tvshowtitles)"];
+            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter = ActivateWindow(Videos,tvshowtitles)"];
             break;
         
         case 24:
             action = @"GUI.ActivateWindow";
             dicParams = @{@"window": @"pictures"};
-            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter=ActivateWindow(Pictures)"];
+            [self GUIAction:action params:dicParams httpAPIcallback:@"ExecBuiltIn&parameter = ActivateWindow(Pictures)"];
             break;
             
         default:
@@ -987,7 +987,7 @@ NSInteger buttonAction;
             case 19:// SUBTITLES BUTTON
                 [self GUIAction:@"Addons.ExecuteAddon"
                          params:@{@"addonid": @"script.xbmc.subtitles"}
-                httpAPIcallback:@"ExecBuiltIn&parameter=RunScript(script.xbmc.subtitles)"];
+                httpAPIcallback:@"ExecBuiltIn&parameter = RunScript(script.xbmc.subtitles)"];
                 break;
             
             default:

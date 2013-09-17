@@ -52,21 +52,21 @@
 
 - (void)configureView {
     if (self.detailItem==nil){
-        self.navigationItem.title=NSLocalizedString(@"New XBMC Server", nil);
+        self.navigationItem.title = NSLocalizedString(@"New XBMC Server", nil);
     }
     else {
-        self.navigationItem.title=NSLocalizedString(@"Modify XBMC Server", nil);
-        NSIndexPath *idx=self.detailItem;
+        self.navigationItem.title = NSLocalizedString(@"Modify XBMC Server", nil);
+        NSIndexPath *idx = self.detailItem;
         
-        descriptionUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverDescription"];
+        descriptionUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"serverDescription"];
         
-        usernameUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverUser"];
+        usernameUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"serverUser"];
 
-        passwordUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverPass"];
+        passwordUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"serverPass"];
 
-        ipUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverIP"];
+        ipUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"serverIP"];
 
-        portUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverPort"];
+        portUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"serverPort"];
         
         NSString *macAddress = ([AppDelegate instance].arrayServerList)[idx.row][@"serverMacAddress"];
         NSArray *mac_octect = [macAddress componentsSeparatedByString:@":"];
@@ -364,7 +364,7 @@
     netServiceBrowser = [[NSNetServiceBrowser alloc] init];
     UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromRight:)];
     rightSwipe.numberOfTouchesRequired = 1;
-    rightSwipe.cancelsTouchesInView=NO;
+    rightSwipe.cancelsTouchesInView = NO;
     rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwipe];
     [self configureView];

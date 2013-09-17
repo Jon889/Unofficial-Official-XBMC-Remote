@@ -92,9 +92,9 @@ NSMutableArray *hostRightMenuItems;
     
     int thumbWidth;
     int tvshowHeight;
-    NSString *filemodeRowHeight= @"44";
-    NSString *filemodeThumbWidth= @"44";
-    NSString *livetvThumbWidth= @"64";
+    NSString *filemodeRowHeight = @"44";
+    NSString *filemodeThumbWidth = @"44";
+    NSString *livetvThumbWidth = @"64";
 
     NSString *filemodeVideoType = @"video";
     NSString *filemodeMusicType = @"music";
@@ -132,7 +132,7 @@ NSMutableArray *hostRightMenuItems;
     float itemMovieWidthIpad = 119.0f;
     float itemMovieHeightIpad = 170.0f;
     
-    float itemMovieWidthLargeIpad =158.0f;
+    float itemMovieWidthLargeIpad = 158.0f;
     float itemMovieHeightLargeIpad =  230.0f;
     
     float itemMovieHeightRecentlyIphone =  132.0f;
@@ -166,8 +166,8 @@ NSMutableArray *hostRightMenuItems;
     item1.upperLabel = NSLocalizedString(@"Listen to", nil);
     item1.icon = @"icon_home_music_alt";
     item1.family = 1;
-    item1.enableSection=YES;
-    item1.mainButtons=@[@"st_album", @"st_artist", @"st_genre", @"st_filemode", @"st_album_recently", @"st_songs_recently", @"st_album_top100", @"st_songs_top100", @"st_album_recently_played", @"st_songs_recently_played", @"st_song", @"st_addons", @"st_music_playlist"]; //
+    item1.enableSection = YES;
+    item1.mainButtons = @[@"st_album", @"st_artist", @"st_genre", @"st_filemode", @"st_album_recently", @"st_songs_recently", @"st_album_top100", @"st_songs_top100", @"st_album_recently_played", @"st_songs_recently_played", @"st_song", @"st_addons", @"st_music_playlist"]; //
     
     item1.mainMethod=[NSMutableArray arrayWithObjects:
                       
@@ -386,7 +386,7 @@ NSMutableArray *hostRightMenuItems;
                           
                           nil];
     
-    item1.mainFields=@[@{@"itemid": @"albums",
+    item1.mainFields = @[@{@"itemid": @"albums",
                        @"row1": @"label",
                        @"row2": @"artist",
                        @"row3": @"year",
@@ -569,11 +569,11 @@ NSMutableArray *hostRightMenuItems;
                        @"row9": @"file",
                        @"row10": @"filetype",
                        @"row11": @"type"}];
-    item1.rowHeight=53;
-    item1.thumbWidth=53;
-    item1.defaultThumb=@"nocover_music";
+    item1.rowHeight = 53;
+    item1.thumbWidth = 53;
+    item1.defaultThumb = @"nocover_music";
     
-    item1.sheetActions=@[@[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil), NSLocalizedString(@"Album Details", nil), NSLocalizedString(@"Search Wikipedia", nil)],
+    item1.sheetActions = @[@[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil), NSLocalizedString(@"Album Details", nil), NSLocalizedString(@"Search Wikipedia", nil)],
                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil), NSLocalizedString(@"Artist Details", nil), NSLocalizedString(@"Search Wikipedia", nil), NSLocalizedString(@"Search last.fm charts", nil)],
                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil)],
                         @[],
@@ -730,7 +730,7 @@ NSMutableArray *hostRightMenuItems;
                                     nil], @"parameters", @"Files", @"label", @"nocover_filemode", @"defaultThumb", filemodeRowHeight, @"rowHeight", @"53", @"thumbWidth", nil],
                                   
                                   nil];
-    item1.subItem.mainFields=@[@{@"itemid": @"songs",
+    item1.subItem.mainFields = @[@{@"itemid": @"songs",
                                @"row1": @"label",
                                @"row2": @"artist",
                                @"row3": @"year",
@@ -865,11 +865,11 @@ NSMutableArray *hostRightMenuItems;
                                @"row9": @"file",
                                @"row10": @"filetype",
                                @"row11": @"type"}];
-    item1.subItem.enableSection=NO;
-    item1.subItem.rowHeight=53;
-    item1.subItem.thumbWidth=53;
-    item1.subItem.defaultThumb=@"nocover_music";
-    item1.subItem.sheetActions=@[@[NSLocalizedString(@"Queue after current", nil),  NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)], //@"Stream to iPhone",
+    item1.subItem.enableSection = NO;
+    item1.subItem.rowHeight = 53;
+    item1.subItem.thumbWidth = 53;
+    item1.subItem.defaultThumb = @"nocover_music";
+    item1.subItem.sheetActions = @[@[NSLocalizedString(@"Queue after current", nil),  NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)], //@"Stream to iPhone",
                                 @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil), NSLocalizedString(@"Album Details", nil), NSLocalizedString(@"Search Wikipedia", nil)],
                                 @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil), NSLocalizedString(@"Album Details", nil), NSLocalizedString(@"Search Wikipedia", nil)],
                                 @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Play in shuffle mode", nil)],
@@ -883,9 +883,9 @@ NSMutableArray *hostRightMenuItems;
                                 @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
 //                                [NSArray arrayWithObjects:nil],
                                 @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)]];//, @"Stream to iPhone"
-    item1.subItem.originYearDuration=248;
-    item1.subItem.widthLabel=252;
-    item1.subItem.showRuntime=@[@YES,
+    item1.subItem.originYearDuration = 248;
+    item1.subItem.widthLabel = 252;
+    item1.subItem.showRuntime = @[@YES,
                                @NO,
                                @NO,
                                @YES,
@@ -965,7 +965,7 @@ NSMutableArray *hostRightMenuItems;
                                           [NSMutableArray arrayWithObjects:filemodeRowHeight, @"rowHeight", @"53", @"thumbWidth", nil],
                                           
                                           nil];
-    item1.subItem.subItem.mainFields=@[@[],
+    item1.subItem.subItem.mainFields = @[@[],
                                       
                                       @{@"itemid": @"songs",
                                        @"row1": @"label",
@@ -1014,10 +1014,10 @@ NSMutableArray *hostRightMenuItems;
                                       @[],
                                       
                                       @[]];
-    item1.subItem.subItem.rowHeight=53;
-    item1.subItem.subItem.thumbWidth=53;
-    item1.subItem.subItem.defaultThumb=@"nocover_music";
-    item1.subItem.subItem.sheetActions=@[@[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
+    item1.subItem.subItem.rowHeight = 53;
+    item1.subItem.subItem.thumbWidth = 53;
+    item1.subItem.subItem.defaultThumb = @"nocover_music";
+    item1.subItem.subItem.sheetActions = @[@[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
                                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],//@"Stream to iPhone",
                                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
                                         @[],
@@ -1031,7 +1031,7 @@ NSMutableArray *hostRightMenuItems;
                                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
 //                                        [NSArray arrayWithObjects:nil],
                                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)]];
-    item1.subItem.subItem.showRuntime=@[@YES,
+    item1.subItem.subItem.showRuntime = @[@YES,
                                        @YES,
                                        @YES,
                                        @YES,
@@ -1049,9 +1049,9 @@ NSMutableArray *hostRightMenuItems;
     item2.upperLabel = NSLocalizedString(@"Watch your", nil);
     item2.icon = @"icon_home_movie_alt";
     item2.family = 1;
-    item2.enableSection=YES;
+    item2.enableSection = YES;
     item2.noConvertTime = YES;
-    item2.mainButtons=@[@"st_movie", @"st_movie_genre", @"st_movie_set", @"st_movie_recently", @"st_concert", @"st_filemode", @"st_addons", @"st_livetv"];
+    item2.mainButtons = @[@"st_movie", @"st_movie_genre", @"st_movie_set", @"st_movie_recently", @"st_concert", @"st_filemode", @"st_addons", @"st_livetv"];
     item2.mainMethod=[NSMutableArray arrayWithObjects:
                       @[@"VideoLibrary.GetMovies", @"method",
                        @"VideoLibrary.GetMovieDetails", @"extra_info_method"],
@@ -1189,7 +1189,7 @@ NSMutableArray *hostRightMenuItems;
                           //                          "plot" and "runtime" and "plotoutline"
                           nil];
     
-    item2.mainFields=@[@{@"itemid": @"movies",
+    item2.mainFields = @[@{@"itemid": @"movies",
                        @"row1": @"label",
                        @"row2": @"genre",
                        @"row3": @"year",
@@ -1307,10 +1307,10 @@ NSMutableArray *hostRightMenuItems;
                        @"playlistid": @1,
                        @"row8": @"channelgroupid",
                        @"row9": @"channelgroupid"}];
-    item2.rowHeight=76;
-    item2.thumbWidth=53;
-    item2.defaultThumb=@"nocover_movies";
-    item2.sheetActions=@[[NSMutableArray arrayWithObjects:NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Movie Details", nil), nil],
+    item2.rowHeight = 76;
+    item2.thumbWidth = 53;
+    item2.defaultThumb = @"nocover_movies";
+    item2.sheetActions = @[[NSMutableArray arrayWithObjects:NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Movie Details", nil), nil],
                         @[],
                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
                         [NSMutableArray arrayWithObjects:NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Movie Details", nil), nil],
@@ -1444,7 +1444,7 @@ NSMutableArray *hostRightMenuItems;
                                      @"height": @(itemMovieWidthIpad)}}, @"itemSizes",
                                    nil],
                                   nil];
-    item2.subItem.mainFields=@[@{},
+    item2.subItem.mainFields = @[@{},
                               
                               @{@"itemid": @"movies",
                                @"row1": @"label",
@@ -1968,14 +1968,14 @@ NSMutableArray *hostRightMenuItems;
                                   @[],
                                   @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
                                   @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)]];//, @"Stream to iPhone"
-    item3.subItem.originYearDuration=248;
-    item3.subItem.widthLabel=208;
-    item3.subItem.showRuntime=@[@NO,
+    item3.subItem.originYearDuration = 248;
+    item3.subItem.widthLabel = 208;
+    item3.subItem.showRuntime = @[@NO,
 //                               [NSNumber numberWithBool:NO],
                                @NO,
                                @NO,
                                @NO];
-    item3.subItem.noConvertTime=YES;
+    item3.subItem.noConvertTime = YES;
     item3.subItem.showInfo = @[@YES,
 //                              [NSNumber numberWithBool:NO],
                               @YES,
@@ -2001,7 +2001,7 @@ NSMutableArray *hostRightMenuItems;
                                           [NSMutableArray arrayWithObjects:filemodeRowHeight, @"rowHeight", filemodeThumbWidth, @"thumbWidth", nil],
                                           
                                           nil];
-    item3.subItem.subItem.mainFields=@[@[],
+    item3.subItem.subItem.mainFields = @[@[],
                                       
 //                                      [NSArray arrayWithObjects:nil],
                                       
@@ -2010,23 +2010,23 @@ NSMutableArray *hostRightMenuItems;
                                       @[],
                                       
                                       @[]];
-    item3.subItem.subItem.enableSection=NO;
-    item3.subItem.subItem.rowHeight=53;
-    item3.subItem.subItem.thumbWidth=95;
-    item3.subItem.subItem.defaultThumb=@"nocover_tvshows_episode.png";
-    item3.subItem.subItem.sheetActions=@[@[],
+    item3.subItem.subItem.enableSection = NO;
+    item3.subItem.subItem.rowHeight = 53;
+    item3.subItem.subItem.thumbWidth = 95;
+    item3.subItem.subItem.defaultThumb = @"nocover_tvshows_episode.png";
+    item3.subItem.subItem.sheetActions = @[@[],
 //                                        [NSArray arrayWithObjects:nil],
                                         @[],
                                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)],
                                         @[NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil)]];
-    item3.subItem.subItem.originYearDuration=248;
-    item3.subItem.subItem.widthLabel=208;
-    item3.subItem.subItem.showRuntime=@[@NO,
+    item3.subItem.subItem.originYearDuration = 248;
+    item3.subItem.subItem.widthLabel = 208;
+    item3.subItem.subItem.showRuntime = @[@NO,
 //                                       [NSNumber numberWithBool:NO],
                                        @NO,
                                        @NO,
                                        @NO];
-    item3.subItem.subItem.noConvertTime=YES;
+    item3.subItem.subItem.noConvertTime = YES;
     item3.subItem.subItem.showInfo = @[@YES,
 //                                      [NSNumber numberWithBool:YES],
                                       @YES,
@@ -2038,8 +2038,8 @@ NSMutableArray *hostRightMenuItems;
     item4.upperLabel = NSLocalizedString(@"Browse your", nil);
     item4.icon = @"icon_home_picture_alt";
     item4.family = 1;
-    item4.enableSection=YES;
-    item4.mainButtons=@[@"st_filemode", @"st_addons"];
+    item4.enableSection = YES;
+    item4.mainButtons = @[@"st_filemode", @"st_addons"];
     
     item4.mainMethod=[NSMutableArray arrayWithObjects:
                       
@@ -2069,7 +2069,7 @@ NSMutableArray *hostRightMenuItems;
                             nil], @"parameters", NSLocalizedString(@"Pictures Addons", nil), @"label", NSLocalizedString(@"Pictures Addons", nil), @"morelabel", @"nocover_filemode", @"defaultThumb", filemodeRowHeight, @"rowHeight", filemodeThumbWidth, @"thumbWidth", nil],
                           
                           nil];
-    item4.mainFields=@[@{@"itemid": @"sources",
+    item4.mainFields = @[@{@"itemid": @"sources",
                        @"row1": @"label",
                        @"row2": @"year",
                        @"row3": @"year",
@@ -2091,8 +2091,8 @@ NSMutableArray *hostRightMenuItems;
                        @"row8": @"file",
                        @"row9": @"file"}];
     
-    item4.thumbWidth=53;
-    item4.defaultThumb=@"jewel_dvd.table.png";
+    item4.thumbWidth = 53;
+    item4.defaultThumb = @"jewel_dvd.table.png";
     
     item4.subItem.mainMethod=[NSMutableArray arrayWithObjects:
                               
@@ -2123,7 +2123,7 @@ NSMutableArray *hostRightMenuItems;
                                     nil], @"parameters", NSLocalizedString(@"Video Addons", nil), @"label", @"nocover_filemode", @"defaultThumb", filemodeRowHeight, @"rowHeight", filemodeThumbWidth, @"thumbWidth", nil],
                                   
                                   nil];
-    item4.subItem.mainFields=@[@{@"itemid": @"files",
+    item4.subItem.mainFields = @[@{@"itemid": @"files",
                                @"row1": @"label",
                                @"row2": @"filetype",
                                @"row3": @"filetype",
@@ -2149,10 +2149,10 @@ NSMutableArray *hostRightMenuItems;
                                @"row10": @"filetype",
                                @"row11": @"type"}];
     
-    item4.subItem.enableSection=NO;
-    item4.subItem.rowHeight=76;
-    item4.subItem.thumbWidth=53;
-    item4.subItem.defaultThumb=@"nocover_tvshows_episode.png";
+    item4.subItem.enableSection = NO;
+    item4.subItem.rowHeight = 76;
+    item4.subItem.thumbWidth = 53;
+    item4.subItem.defaultThumb = @"nocover_tvshows_episode.png";
     
     
     item4.subItem.subItem.mainMethod=[NSMutableArray arrayWithObjects:
@@ -2171,7 +2171,7 @@ NSMutableArray *hostRightMenuItems;
                                           
                                           nil];
     
-    item4.subItem.subItem.mainFields=@[@[],
+    item4.subItem.subItem.mainFields = @[@[],
                                       
                                       @[]];
     
@@ -2434,7 +2434,7 @@ NSMutableArray *hostRightMenuItems;
 }
 
 int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
-	int i,sockfd,an=1;
+	int i,sockfd,an = 1;
 	char *x;
 	char mac[102];
 	char macpart[2];
@@ -2454,8 +2454,8 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 	
 	inet_pton( AF_INET, ip_broadcast, &serverAddress.sin_addr );
 	
-	for (i=0;i<6;i++) mac[i]=255;
-	for (i=1;i<17;i++) {
+	for (i = 0;i<6;i++) mac[i]=255;
+	for (i = 1;i<17;i++) {
 		macpart[0]=wake_mac[0];
 		macpart[1]=wake_mac[1];
 		mac[6*i]=strtol(macpart,&x,16);
@@ -2475,7 +2475,7 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac){
 		macpart[1]=wake_mac[16];
 		mac[6*i+5]=strtol(macpart,&x,16);
 	}
-	for (i=0;i<103;i++) test[i]=mac[i];
+	for (i = 0;i<103;i++) test[i]=mac[i];
 	test[102]=0;
 	
 	sendto(sockfd,&mac,102,0,(struct sockaddr *)&serverAddress,sizeof(serverAddress));

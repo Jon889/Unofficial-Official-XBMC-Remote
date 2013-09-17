@@ -53,7 +53,7 @@
             volumeSlider.hidden = YES;
             frame_tmp = volumeLabel.frame;
             frame_tmp.origin.y = 204;
-            volumeLabel.frame= frame_tmp;
+            volumeLabel.frame = frame_tmp;
             
             frame_tmp = plusButton.frame;
             frame_tmp.origin.y = plusButton.frame.origin.y - 30;
@@ -160,7 +160,7 @@
 -(void)stopTimer{
     if (self.timer!=nil){
         [self.timer invalidate];
-        self.timer=nil;
+        self.timer = nil;
     }
 }
 
@@ -196,7 +196,7 @@ NSInteger action;
 -(IBAction)stopVolume:(id)sender{
     if (self.holdVolumeTimer!=nil){
         [self.holdVolumeTimer invalidate];
-        self.holdVolumeTimer=nil;
+        self.holdVolumeTimer = nil;
     }
     action = 0;
     [self startTimer];
@@ -205,15 +205,15 @@ NSInteger action;
 -(void)changeVolume{
     if (self.holdVolumeTimer.timeInterval == 0.5f){
         [self.holdVolumeTimer invalidate];
-        self.holdVolumeTimer=nil;
+        self.holdVolumeTimer = nil;
         self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(changeVolume) userInfo:nil repeats:YES];        
     }
     if (action==1){ //Volume Raise
-       volumeSlider.value=(int)volumeSlider.value+2; 
+       volumeSlider.value = (int)volumeSlider.value+2; 
         
     }
     else if (action==2) { // Volume Lower
-        volumeSlider.value=(int)volumeSlider.value-2;
+        volumeSlider.value = (int)volumeSlider.value-2;
 
     }
     [AppDelegate instance].serverVolume = volumeSlider.value;

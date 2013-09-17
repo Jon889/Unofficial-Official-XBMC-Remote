@@ -126,7 +126,7 @@
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
-    for (int i=0;i<numelement-1;i+=2){
+    for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -135,14 +135,14 @@
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
-    for (int i=0;i<numelement-1;i+=2){
+    for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSMutableDictionary *)mutableDictionary;
 }
 
 -(void)showContent:(id)sender{
-    NSDictionary *item=self.detailItem;
+    NSDictionary *item = self.detailItem;
     mainMenu *MenuItem = nil;
     int choosedTab = 0;
     NSString *notificationName = nil;
@@ -160,9 +160,9 @@
     if (methods[@"method"]!=nil){ // THERE IS A CHILD
         NSDictionary *mainFields=[MenuItem mainFields][choosedTab];
         NSMutableDictionary *parameters=[self indexKeyedMutableDictionaryFromArray:[MenuItem.subItem mainParameters][choosedTab]];
-        NSString *key=@"null";
+        NSString *key = @"null";
         if (item[mainFields[@"row15"]]!=nil){
-            key=mainFields[@"row15"];
+            key = mainFields[@"row15"];
         }
         id obj = @([item[mainFields[@"row6"]] intValue]);
         id objKey = mainFields[@"row6"];
@@ -179,7 +179,7 @@
                                        parameters[@"extra_info_parameters"], @"extra_info_parameters",
                                        nil];
         [MenuItem.subItem mainParameters][choosedTab] = newParameters;
-        MenuItem.subItem.chooseTab=choosedTab;
+        MenuItem.subItem.chooseTab = choosedTab;
         if (![item[@"disableNowPlaying"] boolValue]){
             MenuItem.subItem.disableNowPlaying = NO;
         }
@@ -235,14 +235,14 @@
     topNavigationLabel.backgroundColor = [UIColor clearColor];
     CGFloat fontsize = 12;
     topNavigationLabel.font = [UIFont boldSystemFontOfSize:fontsize];
-    topNavigationLabel.minimumScaleFactor=10.0/fontsize;
-    topNavigationLabel.numberOfLines=0;
+    topNavigationLabel.minimumScaleFactor = 10.0/fontsize;
+    topNavigationLabel.numberOfLines = 0;
     topNavigationLabel.adjustsFontSizeToFitWidth = YES;
     topNavigationLabel.textAlignment = NSTextAlignmentLeft;
     topNavigationLabel.textColor = [UIColor whiteColor];
     topNavigationLabel.shadowOffset    = CGSizeMake (0.0, -1.0);
     topNavigationLabel.highlightedTextColor = [UIColor blackColor];
-    topNavigationLabel.opaque=YES;
+    topNavigationLabel.opaque = YES;
     CGRect frame = CGRectMake(0.0, 12.0, 25.0, 44.0);  	
 	TwitterwebLoadIndicator = [[UIActivityIndicatorView alloc] initWithFrame:frame];	
 	TwitterwebLoadIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;	

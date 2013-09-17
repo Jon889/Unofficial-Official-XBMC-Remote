@@ -71,7 +71,7 @@
                  videoID = input;
              }
              if (!!videoID) {
-                 return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", videoID];
+                 return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd = 1&showinfo = 0&autohide = 1&rel = 0", videoID];
              }
          }
      } else if ([NSURLConnection canHandleRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:input]]]) {
@@ -156,11 +156,11 @@ double round(double d){
     return floor(d + 0.5);
 }
 
-int count=0;
+int count = 0;
 
 - (void)configureView{
     if (self.detailItem) {
-        NSDictionary *item=self.detailItem;
+        NSDictionary *item = self.detailItem;
         CGRect frame = CGRectMake(0, 0, 140, 40);
         UILabel *viewTitle = [[UILabel alloc] initWithFrame:frame] ;
         viewTitle.font = [UIFont boldSystemFontOfSize:11];
@@ -232,10 +232,10 @@ int count=0;
             UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             actionSheetButtonItemIpad = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showActionSheet)];
             actionSheetButtonItemIpad.style = UIBarButtonItemStyleBordered;
-            viewTitle.numberOfLines=1;
+            viewTitle.numberOfLines = 1;
             CGFloat fontsize = 22;
             viewTitle.font = [UIFont boldSystemFontOfSize:fontsize];
-            viewTitle.minimumScaleFactor=6.0/fontsize;
+            viewTitle.minimumScaleFactor = 6.0/fontsize;
             viewTitle.adjustsFontSizeToFitWidth = YES;
             viewTitle.shadowOffset = CGSizeMake(1.0, 1.0);
             viewTitle.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.7];
@@ -292,7 +292,7 @@ int count=0;
             }
             UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromRight:)];
             rightSwipe.numberOfTouchesRequired = 1;
-            rightSwipe.cancelsTouchesInView=NO;
+            rightSwipe.cancelsTouchesInView = NO;
             rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
             [self.view addGestureRecognizer:rightSwipe];
         }
@@ -300,7 +300,7 @@ int count=0;
     if (![(self.detailItem)[@"disableNowPlaying"] boolValue]){
         UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromLeft:)];
         leftSwipe.numberOfTouchesRequired = 1;
-        leftSwipe.cancelsTouchesInView=NO;
+        leftSwipe.cancelsTouchesInView = NO;
         leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
         [self.view addGestureRecognizer:leftSwipe];
     }
@@ -355,7 +355,7 @@ int count=0;
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
-    for (int i=0;i<numelement-1;i+=2){
+    for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
@@ -364,20 +364,20 @@ int count=0;
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
-    for (int i=0;i<numelement-1;i+=2){
+    for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
     return (NSMutableDictionary *)mutableDictionary;
 }
 
 -(void)showContent:(id)sender{
-    NSDictionary *item=self.detailItem;
+    NSDictionary *item = self.detailItem;
     mainMenu *MenuItem = nil;
     mainMenu *choosedMenuItem = nil;
     choosedTab = 0;
     id movieObj = nil;
     id movieObjKey = nil;
-    NSString *blackTableSeparator=@"NO";
+    NSString *blackTableSeparator = @"NO";
     if ([item[@"family"] isEqualToString:@"albumid"]){
         notificationName = @"UIApplicationEnableMusicSection";
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
@@ -408,7 +408,7 @@ int count=0;
             movieObj = @{@"actor": actorName};
             movieObjKey = @"filter";
             choosedMenuItem = MenuItem.subItem;
-            choosedMenuItem.mainLabel=actorName;
+            choosedMenuItem.mainLabel = actorName;
         }
     }
     else if (([item[@"family"] isEqualToString:@"episodeid"] || [item[@"family"] isEqualToString:@"tvshowid"]) && [AppDelegate instance].serverVersion>11){
@@ -419,16 +419,16 @@ int count=0;
             movieObj = @{@"actor": actorName};
             movieObjKey = @"filter";
             choosedMenuItem = MenuItem;
-            choosedMenuItem.mainLabel=actorName;
+            choosedMenuItem.mainLabel = actorName;
             [MenuItem setEnableSection:NO];
             [MenuItem setMainButtons:nil];
             if ([AppDelegate instance].obj.preferTVPosters==YES){
                 thumbWidth = PHONE_TV_SHOWS_POSTER_WIDTH;
                 tvshowHeight = PHONE_TV_SHOWS_POSTER_HEIGHT;
             }
-            MenuItem.thumbWidth=thumbWidth;
-            MenuItem.rowHeight=tvshowHeight;
-            blackTableSeparator=@"YES";
+            MenuItem.thumbWidth = thumbWidth;
+            MenuItem.rowHeight = tvshowHeight;
+            blackTableSeparator = @"YES";
         }
     }
     else{
@@ -438,9 +438,9 @@ int count=0;
     if (methods[@"method"]!=nil){ // THERE IS A CHILD
         NSDictionary *mainFields=[MenuItem mainFields][choosedTab];
         NSMutableDictionary *parameters=[self indexKeyedMutableDictionaryFromArray:[choosedMenuItem mainParameters][choosedTab]];
-        NSString *key=@"null";
+        NSString *key = @"null";
         if (item[mainFields[@"row15"]]!=nil){
-            key=mainFields[@"row15"];
+            key = mainFields[@"row15"];
         }
         id obj = @([item[mainFields[@"row6"]] intValue]);
         id objKey = mainFields[@"row6"];
@@ -479,7 +479,7 @@ int count=0;
                                        newSectionParameters, @"extra_section_parameters",
                                        nil];
         [choosedMenuItem mainParameters][choosedTab] = newParameters;
-        choosedMenuItem.chooseTab=choosedTab;
+        choosedMenuItem.chooseTab = choosedTab;
         if (![item[@"disableNowPlaying"] boolValue]){
             choosedMenuItem.disableNowPlaying = NO;
         }
@@ -528,7 +528,7 @@ int count=0;
     }
     int numActions=[sheetActions count];
     if (numActions){
-        NSDictionary *item=self.detailItem;
+        NSDictionary *item = self.detailItem;
         actionSheetView = [[UIActionSheet alloc] initWithTitle:item[@"label"]
                                                             delegate:self
                                                    cancelButtonTitle:nil
@@ -577,15 +577,15 @@ int count=0;
 
 -(void)showNowPlaying{
     if (!alreadyPush){
-        //self.nowPlaying=nil;
+        //self.nowPlaying = nil;
         if (self.nowPlaying == nil){
             self.nowPlaying = [[NowPlaying alloc] initWithNibName:@"NowPlaying" bundle:nil];
         }
         self.nowPlaying.detailItem = self.detailItem;
 //        self.nowPlaying.presentedFromNavigation = YES;
         [self.navigationController pushViewController:self.nowPlaying animated:YES];
-        self.navigationItem.rightBarButtonItem.enabled=YES;
-        alreadyPush=YES;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        alreadyPush = YES;
     }
 }
 
@@ -594,16 +594,16 @@ int count=0;
     CGRect frame;
     for (int i = 0; i < count; i++){
         if ([objects[i] isKindOfClass:[UIImageView class]]){
-            UIImageView *label=objects[i];
-            frame=label.frame;
-            frame.origin.y=frame.origin.y - y;
-            label.frame=frame;
+            UIImageView *label = objects[i];
+            frame = label.frame;
+            frame.origin.y = frame.origin.y - y;
+            label.frame = frame;
         }
         if ([objects[i] isKindOfClass:[UILabel class]]){
-            UILabel *label=objects[i];
-            frame=label.frame;
-            frame.origin.y=frame.origin.y - y;
-            label.frame=frame;
+            UILabel *label = objects[i];
+            frame = label.frame;
+            frame.origin.y = frame.origin.y - y;
+            label.frame = frame;
         }
         
     }
@@ -627,7 +627,7 @@ int count=0;
     }
 }
 
-int h=0;
+int h = 0;
 
 -(void)setTvShowsToolbar{
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
@@ -640,7 +640,7 @@ int h=0;
     else{
         NSMutableArray *navigationItems = [self.navigationItem.rightBarButtonItems mutableCopy];
         [navigationItems removeObjectAtIndex:0];
-        self.navigationItem.rightBarButtonItems=navigationItems;
+        self.navigationItem.rightBarButtonItems = navigationItems;
     }
 }
 
@@ -704,7 +704,7 @@ int h=0;
 
 -(void)createInfo{
     // NEED TO BE OPTIMIZED. IT WORKS BUT THERE ARE TOO MANY IFS!
-    NSDictionary *item=self.detailItem;
+    NSDictionary *item = self.detailItem;
     NSString *placeHolderImage = @"coverbox_back.png";
 //    NSLog(@"ITEM %@", item);
     int scrollViewDefaultHeight = 1660;
@@ -746,7 +746,7 @@ int h=0;
         [voteLabel setFont:[UIFont systemFontOfSize:26]];
         [numVotesLabel setFont:[UIFont systemFontOfSize:18]];
 
-        NSArray *arrayLabels=@[label1,
+        NSArray *arrayLabels = @[label1,
                               directorLabel, 
                               label2,
                               genreLabel,
@@ -767,9 +767,9 @@ int h=0;
         jewelView.frame = frame;
     }
     if ([item[@"family"] isEqualToString:@"episodeid"] || [item[@"family"] isEqualToString:@"tvshowid"]){
-        int deltaY=0;
-        int coverHeight=0;
-        int shiftY=40;
+        int deltaY = 0;
+        int coverHeight = 0;
+        int shiftY = 40;
         CGRect frame;
         placeHolderImage = @"coverbox_back_tvshows";
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
@@ -783,29 +783,29 @@ int h=0;
             if (obj.preferTVPosters==NO && [AppDelegate instance].serverVersion < 12){
                 placeHolderImage = @"";
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
-                    coverHeight=70;
-                    deltaY=coverView.frame.size.height - coverHeight;
-                    shiftY=0;
-                    jewelView.hidden=YES;
-                    frame=coverView.frame;
-                    frame.origin.x=0;
-                    frame.origin.y=12;
-                    frame.size.width=320;
-                    frame.size.height=59;
-                    coverView.frame=frame;
+                    coverHeight = 70;
+                    deltaY = coverView.frame.size.height - coverHeight;
+                    shiftY = 0;
+                    jewelView.hidden = YES;
+                    frame = coverView.frame;
+                    frame.origin.x = 0;
+                    frame.origin.y = 12;
+                    frame.size.width = 320;
+                    frame.size.height = 59;
+                    coverView.frame = frame;
                     jewelView.frame = frame;
                 }
                 else {
-                    coverHeight=90;
-                    deltaY=coverView.frame.size.height - coverHeight;
-                    shiftY=0;
-                    jewelView.hidden=YES;
-                    frame=coverView.frame;
-                    frame.origin.x=-78;
-                    frame.origin.y=12;
-                    frame.size.width=STACKSCROLL_WIDTH;
-                    frame.size.height=90;
-                    coverView.frame=frame;
+                    coverHeight = 90;
+                    deltaY = coverView.frame.size.height - coverHeight;
+                    shiftY = 0;
+                    jewelView.hidden = YES;
+                    frame = coverView.frame;
+                    frame.origin.x = -78;
+                    frame.origin.y = 12;
+                    frame.size.width = STACKSCROLL_WIDTH;
+                    frame.size.height = 90;
+                    coverView.frame = frame;
                     jewelView.frame = frame;
                 }
             }
@@ -819,7 +819,7 @@ int h=0;
                 frame.size.height = coverHeight;
                 frame.size.width = coverWidth;
                 jewelView.frame = frame;
-                frame=coverView.frame;
+                frame = coverView.frame;
                 frame.origin.x = 87;
                 frame.origin.y = 24;
                 frame.size.width = 353;
@@ -924,19 +924,19 @@ int h=0;
             }
             shiftParentalRating = 0;
         }
-        scrollViewDefaultHeight=scrollViewDefaultHeight - deltaY - shiftY;
+        scrollViewDefaultHeight = scrollViewDefaultHeight - deltaY - shiftY;
         [self moveLabel:@[starsView, voteLabel, numVotesLabel, label1, label2, label3, label4, label5, label6, directorLabel, genreLabel, runtimeLabel, studioLabel, summaryLabel, parentalRatingLabelUp, parentalRatingLabel] posY:deltaY];
         
-        label2.text=NSLocalizedString(@"FIRST AIRED", nil);
-        label5.text=NSLocalizedString(@"SUMMARY", nil);
+        label2.text = NSLocalizedString(@"FIRST AIRED", nil);
+        label5.text = NSLocalizedString(@"SUMMARY", nil);
         
-        frame=starsView.frame;
-        frame.origin.x=frame.origin.x+29;
-        starsView.frame=frame;
+        frame = starsView.frame;
+        frame.origin.x = frame.origin.x+29;
+        starsView.frame = frame;
         
-        frame=voteLabel.frame;
-        frame.origin.x=frame.origin.x+29;
-        voteLabel.frame=frame;
+        frame = voteLabel.frame;
+        frame.origin.x = frame.origin.x+29;
+        voteLabel.frame = frame;
     }
     else if ([item[@"family"] isEqualToString:@"albumid"]){
         
@@ -1004,7 +1004,7 @@ int h=0;
             runtimeLabel.text = [item[@"genre"] length] == 0 ? @"-" : item[@"genre"];
         }
         studioLabel.text = [item[@"albumlabel"] length] == 0 ? @"-" : item[@"albumlabel"];
-        scrollViewDefaultHeight=scrollViewDefaultHeight - deltaY - shiftY;
+        scrollViewDefaultHeight = scrollViewDefaultHeight - deltaY - shiftY;
         [self moveLabel:@[starsView, voteLabel, numVotesLabel, label1, label2, label3, label4, label5, label6, directorLabel, genreLabel, runtimeLabel, studioLabel, summaryLabel, parentalRatingLabelUp, parentalRatingLabel] posY:deltaY];
     }
     else if ([item[@"family"] isEqualToString:@"artistid"]){
@@ -1051,7 +1051,7 @@ int h=0;
             genreLabel.text = [item[@"style"] length] == 0 ? @"-" : item[@"style"];
         }
         genreLabel.numberOfLines = 0;
-        CGSize maximunLabelSize= CGSizeMake(pageSize, 9999);
+        CGSize maximunLabelSize = CGSizeMake(pageSize, 9999);
         CGSize expectedLabelSize = [genreLabel.text
                                     sizeWithFont:genreLabel.font
                                     constrainedToSize:maximunLabelSize
@@ -1111,7 +1111,7 @@ int h=0;
             frame.size.height = coverHeight;
             frame.size.width = coverWidth;
             jewelView.frame = frame;
-            frame=coverView.frame;
+            frame = coverView.frame;
             frame.origin.x = 87;
             frame.origin.y = 24;
             frame.size.width = 353;
@@ -1210,10 +1210,10 @@ int h=0;
         }
     }];
     
-    NSString *fanartPath=item[@"fanart"];
+    NSString *fanartPath = item[@"fanart"];
     [[SDImageCache sharedImageCache] queryDiskCacheForKey:fanartPath done:^(UIImage *image, SDImageCacheType cacheType) {
         if (image!=nil){
-            fanartView.image=image;
+            fanartView.image = image;
             if (inEnableKenBurns){
                 fanartView.alpha = 0;
                 [sf elabKenBurns:image];
@@ -1244,13 +1244,13 @@ int h=0;
         NSString *numVotesPlus = NSLocalizedString(([numVotes isEqualToString:@"1"]) ? @"vote" : @"votes",nil);
         numVotesLabel.text=[NSString stringWithFormat:@"(%@ %@)",numVotes, numVotesPlus];
     }
-    CGRect frame=summaryLabel.frame;
-    summaryLabel.frame=frame;
+    CGRect frame = summaryLabel.frame;
+    summaryLabel.frame = frame;
     summaryLabel.text=[item[@"plot"] length]==0 ? @"-" : item[@"plot"];
     if ([item[@"family"] isEqualToString:@"albumid"] || [item[@"family"] isEqualToString:@"artistid"]){
         summaryLabel.text=[item[@"description"] length]==0 ? @"-" : item[@"description"];
     }
-    CGSize maximunLabelSize= CGSizeMake(pageSize, 9999);
+    CGSize maximunLabelSize = CGSizeMake(pageSize, 9999);
     CGSize expectedLabelSize = [summaryLabel.text 
                                 sizeWithFont:summaryLabel.font
                                 constrainedToSize:maximunLabelSize 
@@ -1323,7 +1323,7 @@ int h=0;
                             param = [param substringToIndex:end.location];
                         }
                     }
-                    embedVideoURL = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", param];
+                    embedVideoURL = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd = 1&showinfo = 0&autohide = 1&rel = 0", param];
                     isYoutubeVideoLink = YES;
                 }
             }
@@ -1449,7 +1449,7 @@ int h=0;
     }
     [scrollView addSubview:clearlogoButton];
     startY = startY + clearLogoHeight + 20;
-    scrollView.contentSize=CGSizeMake(320, startY);
+    scrollView.contentSize = CGSizeMake(320, startY);
     [self createCollectionViewData];
 }
 
@@ -1562,14 +1562,14 @@ int h=0;
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView setAnimationDuration:1];
-        arrow_continue_down.alpha=0;
+        arrow_continue_down.alpha = 0;
         [UIView commitAnimations];
     }
     else if (arrow_continue_down.alpha==0 && theScrollView.contentOffset.y<40){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView setAnimationDuration:1];
-        arrow_continue_down.alpha=0.5;
+        arrow_continue_down.alpha = 0.5;
         [UIView commitAnimations];
     }
 }
@@ -1653,7 +1653,7 @@ int h=0;
 # pragma  mark - JSON Data
 
 -(void)addQueueAfterCurrent:(BOOL)afterCurrent{
-    self.navigationItem.rightBarButtonItem.enabled=NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSDictionary *item = self.detailItem;
     if (afterCurrent){
         [activityIndicatorView startAnimating];
@@ -1677,7 +1677,7 @@ int h=0;
                              }
                              
                          }];
-                         self.navigationItem.rightBarButtonItem.enabled=YES;
+                         self.navigationItem.rightBarButtonItem.enabled = YES;
                      }
                      else{
                          [self addQueueAfterCurrent:NO];
@@ -1699,13 +1699,13 @@ int h=0;
             if (error==nil && methodError==nil){
                 [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
             }
-            self.navigationItem.rightBarButtonItem.enabled=YES;
+            self.navigationItem.rightBarButtonItem.enabled = YES;
         }];
     }
 }
 
 -(void)addPlayback:(float)resumePointLocal{
-    self.navigationItem.rightBarButtonItem.enabled=NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [activityIndicatorView startAnimating];
     NSDictionary *item = self.detailItem;
     [jsonRPC callMethod:@"Playlist.Clear" withParameters:@{@"playlistid": item[@"playlistid"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
@@ -1724,19 +1724,19 @@ int h=0;
                         }
                         else {
                             [activityIndicatorView stopAnimating];
-                            self.navigationItem.rightBarButtonItem.enabled=YES;
+                            self.navigationItem.rightBarButtonItem.enabled = YES;
                         }
                     }];
                 }
                 else {
                     [activityIndicatorView stopAnimating];
-                    self.navigationItem.rightBarButtonItem.enabled=YES;
+                    self.navigationItem.rightBarButtonItem.enabled = YES;
                 }
             }];
         }
         else {
             [activityIndicatorView stopAnimating];
-            self.navigationItem.rightBarButtonItem.enabled=YES;
+            self.navigationItem.rightBarButtonItem.enabled = YES;
         }
     }];
 }
@@ -1801,7 +1801,7 @@ int h=0;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    alreadyPush=NO;
+    alreadyPush = NO;
     self.slidingViewController.underRightViewController = nil;
     self.slidingViewController.anchorLeftPeekAmount     = 0;
     self.slidingViewController.anchorLeftRevealAmount   = 0;
@@ -1932,11 +1932,11 @@ int h=0;
     [self.kenView removeFromSuperview];
     kenView = nil;
     clearLogoImageView = nil;
-    nowPlaying=nil;
-    jsonRPC=nil;
-    fanartView=nil;
-    coverView=nil;
-    scrollView=nil;
+    nowPlaying = nil;
+    jsonRPC = nil;
+    fanartView = nil;
+    coverView = nil;
+    scrollView = nil;
     self.nowPlaying = nil;
     self.kenView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver: self];

@@ -22,7 +22,7 @@
 		[_tableView setDelegate:self];
 		[_tableView setDataSource:self];
         [_tableView setBackgroundColor:[UIColor clearColor]];
-        mainMenuItems=menu;
+        mainMenuItems = menu;
         UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
 		_tableView.tableFooterView = footerView;
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
