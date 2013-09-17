@@ -36,15 +36,15 @@
 	UIView* viewToReturn=nil;
 	CGPoint pointToReturn;
 	
-	UIView* uiRightView = (UIView*)[[self subviews] objectAtIndex:1];
+	UIView* uiRightView = (UIView*)[self subviews][1];
 	
-	if ([[uiRightView subviews] objectAtIndex:0]) {
+	if ([uiRightView subviews][0]) {
 		
-		UIView* uiStackScrollView = [[uiRightView subviews] objectAtIndex:0];	
+		UIView* uiStackScrollView = [uiRightView subviews][0];	
 		
-		if ([[uiStackScrollView subviews] objectAtIndex:1]) {	 
+		if ([uiStackScrollView subviews][1]) {	 
 			
-			UIView* uiSlideView = [[uiStackScrollView subviews] objectAtIndex:1];	
+			UIView* uiSlideView = [uiStackScrollView subviews][1];	
 			
 			for (UIView* subView in [uiSlideView subviews]) {
 				CGPoint point  = [subView convertPoint:pt fromView:self];
@@ -92,13 +92,13 @@
 
 -(void)selectServerAtIndexPath:(NSIndexPath *)indexPath{
     storeServerSelection = indexPath;
-    NSDictionary *item = [[AppDelegate instance].arrayServerList objectAtIndex:indexPath.row];
-    [AppDelegate instance].obj.serverDescription = [item objectForKey:@"serverDescription"];
-    [AppDelegate instance].obj.serverUser = [item objectForKey:@"serverUser"];
-    [AppDelegate instance].obj.serverPass = [item objectForKey:@"serverPass"];
-    [AppDelegate instance].obj.serverIP = [item objectForKey:@"serverIP"];
-    [AppDelegate instance].obj.serverPort = [item objectForKey:@"serverPort"];
-    [AppDelegate instance].obj.tcpPort = [[item objectForKey:@"tcpPort"] intValue];
+    NSDictionary *item = ([AppDelegate instance].arrayServerList)[indexPath.row];
+    [AppDelegate instance].obj.serverDescription = item[@"serverDescription"];
+    [AppDelegate instance].obj.serverUser = item[@"serverUser"];
+    [AppDelegate instance].obj.serverPass = item[@"serverPass"];
+    [AppDelegate instance].obj.serverIP = item[@"serverIP"];
+    [AppDelegate instance].obj.serverPort = item[@"serverPort"];
+    [AppDelegate instance].obj.tcpPort = [item[@"tcpPort"] intValue];
 }
 
 -(void)wakeUp:(NSString *)macAddress{
@@ -249,11 +249,11 @@
     NSString *destructive = nil;
     NSArray *sheetActions = nil;
     if (![AppDelegate instance].serverOnLine){
-        sheetActions=[NSArray arrayWithObjects:NSLocalizedString(@"Wake On Lan", nil), nil];
+        sheetActions=@[NSLocalizedString(@"Wake On Lan", nil)];
     }
     else{
         destructive = NSLocalizedString(@"Power off System", nil);
-        sheetActions=[NSArray arrayWithObjects: NSLocalizedString(@"Hibernate", nil), NSLocalizedString(@"Suspend", nil), NSLocalizedString(@"Reboot", nil), NSLocalizedString(@"Quit XBMC application", nil), NSLocalizedString(@"Update Audio Library", nil), NSLocalizedString(@"Update Video Library", nil), nil];
+        sheetActions=@[NSLocalizedString(@"Hibernate", nil), NSLocalizedString(@"Suspend", nil), NSLocalizedString(@"Reboot", nil), NSLocalizedString(@"Quit XBMC application", nil), NSLocalizedString(@"Update Audio Library", nil), NSLocalizedString(@"Update Video Library", nil)];
     }
     int numActions=[sheetActions count];
     if (numActions){
@@ -264,7 +264,7 @@
                                                    otherButtonTitles:nil];
         actionSheetPower.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         for (int i = 0; i < numActions; i++) {
-            [actionSheetPower addButtonWithTitle:[sheetActions objectAtIndex:i]];
+            [actionSheetPower addButtonWithTitle:sheetActions[i]];
         }
         actionSheetPower.cancelButtonIndex = [actionSheetPower addButtonWithTitle:@"Cancel"];
        [actionSheetPower showFromRect:CGRectMake(powerButton.frame.origin.x + powerButton.frame.size.width/2, powerButton.frame.origin.y, 1, 1) inView:self.view animated:YES];
@@ -303,25 +303,25 @@
             }
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Power off System", nil)]){
-            [self powerAction:@"System.Shutdown" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"System.Shutdown" params:@{}];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Quit XBMC application", nil)]){
-            [self powerAction:@"Application.Quit" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"Application.Quit" params:@{}];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Hibernate", nil)]){
-            [self powerAction:@"System.Hibernate" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"System.Hibernate" params:@{}];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Suspend", nil)]){
-            [self powerAction:@"System.Suspend" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"System.Suspend" params:@{}];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Reboot", nil)]){
-            [self powerAction:@"System.Reboot" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"System.Reboot" params:@{}];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Update Audio Library", nil)]){
-            [self powerAction:@"AudioLibrary.Scan" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"AudioLibrary.Scan" params:@{}];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Update Video Library", nil)]){
-            [self powerAction:@"VideoLibrary.Scan" params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:@"VideoLibrary.Scan" params:@{}];
         }
     }
 }
@@ -479,10 +479,11 @@
     
     xbmcInfo = [[UIButton alloc] initWithFrame:CGRectMake(428, 966, 190, 33)]; //225
     [xbmcInfo setTitle:NSLocalizedString(@"No connection", nil) forState:UIControlStateNormal];
-    xbmcInfo.titleLabel.font = [UIFont systemFontOfSize:11];
-    xbmcInfo.titleLabel.minimumFontSize = 6.0f;
+    CGFloat fontsize = 11;
+    xbmcInfo.titleLabel.font = [UIFont systemFontOfSize:fontsize];
+    xbmcInfo.titleLabel.minimumScaleFactor = 6.0/fontsize;
     xbmcInfo.titleLabel.numberOfLines = 2;
-    xbmcInfo.titleLabel.textAlignment=UITextAlignmentCenter;
+    xbmcInfo.titleLabel.textAlignment=NSTextAlignmentCenter;
     xbmcInfo.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 3);
     xbmcInfo.titleLabel.shadowColor = [UIColor blackColor];
     xbmcInfo.titleLabel.shadowOffset = CGSizeMake (1.0, 1.0);
@@ -612,7 +613,7 @@
         thumbWidth = PAD_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PAD_TV_SHOWS_POSTER_HEIGHT;
     }
-    mainMenu *menuItem=[self.mainMenu objectAtIndex:3];
+    mainMenu *menuItem=(self.mainMenu)[3];
     menuItem.thumbWidth=thumbWidth;
     menuItem.rowHeight=tvshowHeight;
     [[AppDelegate instance].windowController.stackScrollViewController offView];

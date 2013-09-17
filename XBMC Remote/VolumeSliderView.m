@@ -19,7 +19,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"VolumeSliderView" owner:self options:nil];
-		self = [nib objectAtIndex:0];
+		self = nib[0];
         CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * -0.5);
         volumeSlider.transform = trans;
         pg_thumb_name = @"pgbar_thumb";
@@ -123,7 +123,7 @@
 }
 
 -(void)handleApplicationOnVolumeChanged:(NSNotification *)sender{
-    [AppDelegate instance].serverVolume = [[[[[sender userInfo] valueForKey:@"params"] objectForKey:@"data"] objectForKey:@"volume"] intValue];
+    [AppDelegate instance].serverVolume = [[[sender userInfo] valueForKey:@"params"][@"data"][@"volume"] intValue];
     volumeLabel.text = [NSString stringWithFormat:@"%d", [AppDelegate instance].serverVolume];
     volumeSlider.value = [AppDelegate instance].serverVolume;
 }
@@ -144,7 +144,7 @@
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC 
      callMethod:@"Application.SetVolume" 
-     withParameters:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:(int)volumeSlider.value], @"volume", nil]];
+     withParameters:@{@"volume": @((int)volumeSlider.value)}];
     if ([sender tag] == 10){
         [self startTimer];
     }

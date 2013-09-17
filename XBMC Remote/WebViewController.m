@@ -127,7 +127,7 @@
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
     for (int i=0;i<numelement-1;i+=2){
-        [mutableDictionary setObject:[array objectAtIndex:i] forKey:[array objectAtIndex:i+1]];
+        mutableDictionary[array[i+1]] = array[i];
     }
     return (NSDictionary *)mutableDictionary;
 }
@@ -136,7 +136,7 @@
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
     int numelement=[array count];
     for (int i=0;i<numelement-1;i+=2){
-        [mutableDictionary setObject:[array objectAtIndex:i] forKey:[array objectAtIndex:i+1]];
+        mutableDictionary[array[i+1]] = array[i];
     }
     return (NSMutableDictionary *)mutableDictionary;
 }
@@ -146,41 +146,41 @@
     mainMenu *MenuItem = nil;
     int choosedTab = 0;
     NSString *notificationName = nil;
-    if ([[item objectForKey:@"family"] isEqualToString:@"albumid"]){
+    if ([item[@"family"] isEqualToString:@"albumid"]){
         notificationName = @"UIApplicationEnableMusicSection";
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
     }
-    else if ([[item objectForKey:@"family"] isEqualToString:@"artistid"]){
+    else if ([item[@"family"] isEqualToString:@"artistid"]){
         notificationName = @"UIApplicationEnableMusicSection";
         choosedTab = 1;
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
     }
-    MenuItem.subItem.mainLabel=[NSString stringWithFormat:@"%@", [item objectForKey:@"label"]];
-    NSDictionary *methods=[self indexKeyedDictionaryFromArray:[[MenuItem.subItem mainMethod] objectAtIndex:choosedTab]];
-    if ([methods objectForKey:@"method"]!=nil){ // THERE IS A CHILD
-        NSDictionary *mainFields=[[MenuItem mainFields] objectAtIndex:choosedTab];
-        NSMutableDictionary *parameters=[self indexKeyedMutableDictionaryFromArray:[[MenuItem.subItem mainParameters] objectAtIndex:choosedTab]];
+    MenuItem.subItem.mainLabel=[NSString stringWithFormat:@"%@", item[@"label"]];
+    NSDictionary *methods=[self indexKeyedDictionaryFromArray:[MenuItem.subItem mainMethod][choosedTab]];
+    if (methods[@"method"]!=nil){ // THERE IS A CHILD
+        NSDictionary *mainFields=[MenuItem mainFields][choosedTab];
+        NSMutableDictionary *parameters=[self indexKeyedMutableDictionaryFromArray:[MenuItem.subItem mainParameters][choosedTab]];
         NSString *key=@"null";
-        if ([item objectForKey:[mainFields objectForKey:@"row15"]]!=nil){
-            key=[mainFields objectForKey:@"row15"];
+        if (item[mainFields[@"row15"]]!=nil){
+            key=mainFields[@"row15"];
         }
-        id obj = [NSNumber numberWithInt:[[item objectForKey:[mainFields objectForKey:@"row6"]] intValue]];
-        id objKey = [mainFields objectForKey:@"row6"];
-        if ([AppDelegate instance].serverVersion>11 && [[parameters objectForKey:@"disableFilterParameter"] boolValue] == FALSE){
-            obj = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[[item objectForKey:[mainFields objectForKey:@"row6"]] intValue]],[mainFields objectForKey:@"row6"], nil];
+        id obj = @([item[mainFields[@"row6"]] intValue]);
+        id objKey = mainFields[@"row6"];
+        if ([AppDelegate instance].serverVersion>11 && [parameters[@"disableFilterParameter"] boolValue] == FALSE){
+            obj = @{mainFields[@"row6"]: @([item[mainFields[@"row6"]] intValue])};
             objKey = @"filter";
         }
         NSMutableArray *newParameters=[NSMutableArray arrayWithObjects:
                                        [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                         obj,objKey,
-                                        [[parameters objectForKey:@"parameters"] objectForKey:@"properties"], @"properties",
-                                        [[parameters objectForKey:@"parameters"] objectForKey:@"sort"],@"sort",
-                                        nil], @"parameters", [parameters objectForKey:@"label"], @"label",
-                                       [parameters objectForKey:@"extra_info_parameters"], @"extra_info_parameters",
+                                        parameters[@"parameters"][@"properties"], @"properties",
+                                        parameters[@"parameters"][@"sort"],@"sort",
+                                        nil], @"parameters", parameters[@"label"], @"label",
+                                       parameters[@"extra_info_parameters"], @"extra_info_parameters",
                                        nil];
-        [[MenuItem.subItem mainParameters] replaceObjectAtIndex:choosedTab withObject:newParameters];
+        [MenuItem.subItem mainParameters][choosedTab] = newParameters;
         MenuItem.subItem.chooseTab=choosedTab;
-        if (![[item objectForKey:@"disableNowPlaying"] boolValue]){
+        if (![item[@"disableNowPlaying"] boolValue]){
             MenuItem.subItem.disableNowPlaying = NO;
         }
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
@@ -217,12 +217,12 @@
     NSDictionary *item = self.detailItem;
     UIBarButtonItem *extraButton = nil;
     int titleWidth = 310;
-    if ([[item objectForKey:@"family"] isEqualToString:@"albumid"]){
+    if ([item[@"family"] isEqualToString:@"albumid"]){
         UIImage* extraButtonImg = [UIImage imageNamed:@"st_song_icon"];
         extraButton =[[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         titleWidth = 254;
     }
-    else if ([[item objectForKey:@"family"] isEqualToString:@"artistid"]){
+    else if ([item[@"family"] isEqualToString:@"artistid"]){
         UIImage* extraButtonImg = [UIImage imageNamed:@"st_album_icon"];
         extraButton =[[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         titleWidth = 254;
@@ -233,11 +233,12 @@
     topNavigationLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     topNavigationLabel.tag = 1;
     topNavigationLabel.backgroundColor = [UIColor clearColor];
-    topNavigationLabel.font = [UIFont boldSystemFontOfSize:12];
-    topNavigationLabel.minimumFontSize=10.0;
+    CGFloat fontsize = 12;
+    topNavigationLabel.font = [UIFont boldSystemFontOfSize:fontsize];
+    topNavigationLabel.minimumScaleFactor=10.0/fontsize;
     topNavigationLabel.numberOfLines=0;
     topNavigationLabel.adjustsFontSizeToFitWidth = YES;
-    topNavigationLabel.textAlignment = UITextAlignmentLeft;
+    topNavigationLabel.textAlignment = NSTextAlignmentLeft;
     topNavigationLabel.textColor = [UIColor whiteColor];
     topNavigationLabel.shadowOffset    = CGSizeMake (0.0, -1.0);
     topNavigationLabel.highlightedTextColor = [UIColor blackColor];
@@ -272,10 +273,8 @@
         [toolbar addSubview:titleView];
         [self.view addSubview:toolbar];
         UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        NSArray *items = [NSArray arrayWithObjects:
-                          spacer,
-                          extraButton,
-                          nil];
+        NSArray *items = @[spacer,
+                          extraButton];
         toolbar.items = items;
         Twitterweb.autoresizingMask = UIViewAutoresizingNone;
         [Twitterweb setFrame:CGRectMake(Twitterweb.frame.origin.x, Twitterweb.frame.origin.y + 44, Twitterweb.frame.size.width, Twitterweb.frame.size.height-44)];
@@ -283,9 +282,7 @@
     }
     else {
         self.navigationItem.titleView = titleView;
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:
-                                                   extraButton,
-                                                   nil];
+        self.navigationItem.rightBarButtonItems = @[extraButton];
     }
     [Twitterweb loadRequest:self.urlRequest];
 }

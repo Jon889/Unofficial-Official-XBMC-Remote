@@ -67,13 +67,13 @@
     [cellLabel setFont:[UIFont systemFontOfSize:18]];
     [cellLabel setTextColor:[UIColor blackColor]];
     [cellLabel setHighlightedTextColor:[UIColor whiteColor]];
-    NSDictionary *item = [mainMenuItems objectAtIndex:indexPath.row];
-    [cellLabel setText:[item objectForKey:@"label"]];
+    NSDictionary *item = mainMenuItems[indexPath.row];
+    [cellLabel setText:item[@"label"]];
     [cell.contentView addSubview:cellLabel];
-    if (![[item objectForKey:@"icon"] isEqualToString:@""]){
+    if (![item[@"icon"] isEqualToString:@""]){
         CGRect iconImageViewRect = CGRectMake(8.0f, 6.0f, 34.0f, 30.0f);
         UIImageView *iconImage = [[UIImageView alloc] initWithFrame:iconImageViewRect];
-        [iconImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_black", [item objectForKey:@"icon"]]]];
+        [iconImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_black", item[@"icon"]]]];
         [cell.contentView addSubview:iconImage];
     }
     return cell;

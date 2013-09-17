@@ -97,7 +97,7 @@
     
     // Fill the buffer.
     for (uint i=0; i<bufferSize; i++) {
-        NSString *url = [[NSString alloc] initWithString:[urls objectAtIndex:i]];
+        NSString *url = [[NSString alloc] initWithString:urls[i]];
         [self.imagesArray addObject:[self _downloadImageFrom:url]];
     }
     
@@ -116,7 +116,7 @@
     for (uint i = 0; i < [images count]; i++) {
         
         [self performSelectorOnMainThread:@selector(_animate:)
-                               withObject:[NSNumber numberWithInt:i]
+                               withObject:@(i)
                             waitUntilDone:YES];
         
         sleep(self.timeTransition);
@@ -138,11 +138,11 @@
     for (int urlIndex=self.imagesArray.count; urlIndex < [urls count]; urlIndex++) {
         
         [self performSelectorOnMainThread:@selector(_animate:)
-                               withObject:[NSNumber numberWithInt:0]
+                               withObject:@0
                             waitUntilDone:YES];            
         
         [self.imagesArray removeObjectAtIndex:0];
-        [self.imagesArray addObject:[self _downloadImageFrom:[urls objectAtIndex: urlIndex]]];
+        [self.imagesArray addObject:[self _downloadImageFrom:urls[urlIndex]]];
         
         if ( bufferIndex == self.imagesArray.count -1)
         {
@@ -159,7 +159,7 @@
 }
 
 - (void) _animate:(NSNumber*)num{
-    UIImage* image = [self.imagesArray objectAtIndex:[num intValue]];
+    UIImage* image = (self.imagesArray)[[num intValue]];
     UIImageView *imageView;
     
     float resizeRatio   = -1;
@@ -300,7 +300,7 @@
     
     // Remove the previous view
     if ([[self subviews] count] > 0){
-        [[[self subviews] objectAtIndex:0] removeFromSuperview];
+        [[self subviews][0] removeFromSuperview];
     }
     
     [self addSubview:imageView];

@@ -106,11 +106,11 @@ NSOutputStream	*outStream;
                                 NSString *method = @"";
                                 NSString *params = @"";
                                 NSDictionary *paramsDict;
-                                if (((NSNull *)[notification objectForKey:@"method"] != [NSNull null])){
-                                        method = [notification objectForKey:@"method"];
-                                    if (((NSNull *)[notification objectForKey:@"params"] != [NSNull null])){
-                                        params = [notification objectForKey:@"params"];
-                                        paramsDict = [NSDictionary dictionaryWithObject:[notification objectForKey:@"params"] forKey:@"params"];
+                                if (((NSNull *)notification[@"method"] != [NSNull null])){
+                                        method = notification[@"method"];
+                                    if (((NSNull *)notification[@"params"] != [NSNull null])){
+                                        params = notification[@"params"];
+                                        paramsDict = @{@"params": notification[@"params"]};
                                     }
                                     [[NSNotificationCenter defaultCenter] postNotificationName:method object:nil userInfo:paramsDict];
                                 }
@@ -145,10 +145,8 @@ NSOutputStream	*outStream;
 
 -(void)noConnectionNotifications{
     NSString *infoText = NSLocalizedString(@"No connection", nil);
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSNumber numberWithBool:NO], @"status",
-                            infoText, @"message",
-                            nil];
+    NSDictionary *params = @{@"status": @NO,
+                            @"message": infoText};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCChangeServerStatus" object:nil userInfo:params];
 }
 
@@ -156,7 +154,7 @@ NSOutputStream	*outStream;
     if (inCheck) return;
     jsonRPC=nil;
     if ([[AppDelegate instance].obj.serverIP length] == 0){
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"showSetup", nil];
+        NSDictionary *params = @{@"showSetup": @YES};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCShowSetup" object:nil userInfo:params];
         if ([AppDelegate instance].serverOnLine){
             [self noConnectionNotifications];
@@ -170,7 +168,7 @@ NSOutputStream	*outStream;
     NSString *userPassword = [[AppDelegate instance].obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", [AppDelegate instance].obj.serverPass];
     NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", [AppDelegate instance].obj.serverUser, userPassword, [AppDelegate instance].obj.serverIP, [AppDelegate instance].obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
-    NSDictionary *checkServerParams = [NSDictionary dictionaryWithObjectsAndKeys: [[NSArray alloc] initWithObjects:@"version", @"volume", nil], @"properties", nil];
+    NSDictionary *checkServerParams = @{@"properties": @[@"version", @"volume"]};
     [jsonRPC
      callMethod:@"Application.GetProperties"
      withParameters:checkServerParams
@@ -178,30 +176,28 @@ NSOutputStream	*outStream;
      onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
          inCheck = FALSE;
          if (error==nil && methodError==nil){
-             [AppDelegate instance].serverVolume = [[methodResult objectForKey:@"volume"] intValue];
+             [AppDelegate instance].serverVolume = [methodResult[@"volume"] intValue];
              if (![AppDelegate instance].serverOnLine){
                  if( [NSJSONSerialization isValidJSONObject:methodResult]){
-                     NSDictionary *serverInfo=[methodResult objectForKey:@"version"];
-                     [AppDelegate instance].serverVersion = [[serverInfo objectForKey:@"major"] intValue];
-                     [AppDelegate instance].serverMinorVersion = [[serverInfo objectForKey:@"minor"] intValue];
+                     NSDictionary *serverInfo=methodResult[@"version"];
+                     [AppDelegate instance].serverVersion = [serverInfo[@"major"] intValue];
+                     [AppDelegate instance].serverMinorVersion = [serverInfo[@"minor"] intValue];
                      NSString *infoTitle=[NSString stringWithFormat:@"%@ v%@.%@ %@",
                                           [AppDelegate instance].obj.serverDescription,
-                                          [serverInfo objectForKey:@"major"],
-                                          [serverInfo objectForKey:@"minor"],
-                                          [serverInfo objectForKey:@"tag"]];//, [serverInfo objectForKey:@"revision"]
-                     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                             [NSNumber numberWithBool:YES], @"status",
-                                             infoTitle, @"message",
-                                             nil];
+                                          serverInfo[@"major"],
+                                          serverInfo[@"minor"],
+                                          serverInfo[@"tag"]];//, [serverInfo objectForKey:@"revision"]
+                     NSDictionary *params = @{@"status": @YES,
+                                             @"message": infoTitle};
                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCChangeServerStatus" object:nil userInfo:params];
-                     params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], @"showSetup", nil];
+                     params = @{@"showSetup": @NO};
                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCShowSetup" object:nil userInfo:params];
                  }
                  else{
                      if ([AppDelegate instance].serverOnLine){
                          [self noConnectionNotifications];            
                      }
-                     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"showSetup", nil];
+                     NSDictionary *params = @{@"showSetup": @YES};
                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCShowSetup" object:nil userInfo:params];
                  }
              }
@@ -211,7 +207,7 @@ NSOutputStream	*outStream;
              if ([AppDelegate instance].serverOnLine){
                  [self noConnectionNotifications];
              }
-             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"showSetup", nil];
+             NSDictionary *params = @{@"showSetup": @YES};
              [[NSNotificationCenter defaultCenter] postNotificationName:@"TcpJSONRPCShowSetup" object:nil userInfo:params];
          }
      }];

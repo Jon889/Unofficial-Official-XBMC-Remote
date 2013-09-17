@@ -49,10 +49,10 @@
 #pragma mark Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:@"ServerInfo"]){
+    if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]){
         return 44;
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:@"RemoteControl"]){
+    else if ([labelsList[indexPath.row] isEqualToString:@"RemoteControl"]){
         return 532;
     }
     return 50;
@@ -67,10 +67,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[colorsList objectAtIndex:indexPath.row] count]){        
-        cell.backgroundColor = [UIColor colorWithRed:[[[colorsList objectAtIndex:indexPath.row] objectForKey:@"red"] floatValue]
-                                               green:[[[colorsList objectAtIndex:indexPath.row] objectForKey:@"green"] floatValue]
-                                                blue:[[[colorsList objectAtIndex:indexPath.row] objectForKey:@"blue"] floatValue]
+    if ([colorsList[indexPath.row] count]){        
+        cell.backgroundColor = [UIColor colorWithRed:[colorsList[indexPath.row][@"red"] floatValue]
+                                               green:[colorsList[indexPath.row][@"green"] floatValue]
+                                                blue:[colorsList[indexPath.row][@"blue"] floatValue]
                                                alpha:1];
     }
 }
@@ -79,12 +79,12 @@
     UITableViewCell *cell=nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"rightMenuCell"];
     [[NSBundle mainBundle] loadNibNamed:@"rightCellView" owner:self options:NULL];
-    if (cell==nil || [[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    if (cell==nil || [labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
         cell = rightMenuCell;
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
         [backgroundView setBackgroundColor:[UIColor colorWithRed:.086 green:.086 blue:.086 alpha:1]];
         cell.selectedBackgroundView = backgroundView;
-        if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:@"ServerInfo"]){
+        if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]){
             [backgroundView setBackgroundColor:[UIColor colorWithRed:.208f green:.208f blue:.208f alpha:1]];
             cell.selectedBackgroundView = backgroundView;
             UIImageView *xbmc_logo = [[UIImageView alloc] initWithFrame:CGRectMake(165, (int)((44/2) - (36/2)) - 2, 145, 36)];
@@ -97,7 +97,7 @@
     UILabel *title = (UILabel*) [cell viewWithTag:3];
     UIImageView *line = (UIImageView*) [cell viewWithTag:4];
     NSString *iconName = @"";
-    if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:@"ServerInfo"]){
+    if ([labelsList[indexPath.row] isEqualToString:@"ServerInfo"]){
         if (putXBMClogo == YES){
             UIImageView *xbmc_logo = [[UIImageView alloc] initWithFrame:CGRectMake(165, (int)((44/2) - (36/2)) - 2, 145, 36)];
             xbmc_logo. alpha = .25f;
@@ -120,7 +120,7 @@
         UIImageView *arrowRight = (UIImageView*) [cell viewWithTag:5];
         [arrowRight setFrame:CGRectMake(arrowRight.frame.origin.x, (int)((cellHeight/2) - (arrowRight.frame.size.height/2)), arrowRight.frame.size.width, arrowRight.frame.size.height)];
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:@"VolumeControl"]){
+    else if ([labelsList[indexPath.row] isEqualToString:@"VolumeControl"]){
         [title setText:@""];
         if (volumeSliderView == nil){
             volumeSliderView = [[VolumeSliderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0, 0)];
@@ -128,7 +128,7 @@
         }
         [cell.contentView addSubview:volumeSliderView];
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:@"RemoteControl"]){
+    else if ([labelsList[indexPath.row] isEqualToString:@"RemoteControl"]){
         [title setText:@""];
         if (remoteControllerView == nil){
             remoteControllerView = [[RemoteController alloc] initWithNibName:@"RemoteController" bundle:nil];
@@ -140,17 +140,17 @@
 
     else{
         icon.alpha = .6f;
-        iconName = [iconsList objectAtIndex:indexPath.row];
+        iconName = iconsList[indexPath.row];
         [title setFont:[UIFont fontWithName:@"Roboto-Regular" size:20]];
-        [title setText:[labelsList objectAtIndex:indexPath.row]];
+        [title setText:labelsList[indexPath.row]];
     }
-    if ([[hideLineSeparator objectAtIndex:indexPath.row] boolValue] == YES){
+    if ([hideLineSeparator[indexPath.row] boolValue] == YES){
         line.hidden = YES;
     }
-    if ([[fontColorList objectAtIndex:indexPath.row] count]){
-        UIColor *fontColor = [UIColor colorWithRed:[[[fontColorList objectAtIndex:indexPath.row] objectForKey:@"red"] floatValue]
-                                             green:[[[fontColorList objectAtIndex:indexPath.row] objectForKey:@"green"] floatValue]
-                                              blue:[[[fontColorList objectAtIndex:indexPath.row] objectForKey:@"blue"] floatValue]
+    if ([fontColorList[indexPath.row] count]){
+        UIColor *fontColor = [UIColor colorWithRed:[fontColorList[indexPath.row][@"red"] floatValue]
+                                             green:[fontColorList[indexPath.row][@"green"] floatValue]
+                                              blue:[fontColorList[indexPath.row][@"blue"] floatValue]
                                              alpha:1];
         [title setTextColor:fontColor];
         [title setHighlightedTextColor:fontColor];
@@ -160,7 +160,7 @@
         [title setTextColor:fontColor];
         [title setHighlightedTextColor:fontColor];
     }
-    if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
         icon.alpha = .8f;
         if (torchIsOn){
             iconName = @"torch_on";
@@ -187,23 +187,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ([[actionsList objectAtIndex:indexPath.row] count]){
-        NSString *message=[[actionsList objectAtIndex:indexPath.row] objectForKey:@"message"];
+    if ([actionsList[indexPath.row] count]){
+        NSString *message=actionsList[indexPath.row][@"message"];
         if (message != nil){
-            NSString *countdown_message = [[actionsList objectAtIndex:indexPath.row] objectForKey:@"countdown_message"];
+            NSString *countdown_message = actionsList[indexPath.row][@"countdown_message"];
             if (countdown_message != nil){
-                countdown_message = [NSString stringWithFormat:@"%@ %d seconds.", countdown_message, [[[actionsList objectAtIndex:indexPath.row] objectForKey:@"countdown_time"] intValue]];
+                countdown_message = [NSString stringWithFormat:@"%@ %d seconds.", countdown_message, [actionsList[indexPath.row][@"countdown_time"] intValue]];
             }
-            NSString *cancel_button = [[actionsList objectAtIndex:indexPath.row] objectForKey:@"cancel_button"];
+            NSString *cancel_button = actionsList[indexPath.row][@"cancel_button"];
             if (cancel_button == nil) cancel_button = NSLocalizedString(@"Cancel", nil);
-            NSString *ok_button = [[actionsList objectAtIndex:indexPath.row] objectForKey:@"ok_button"];
+            NSString *ok_button = actionsList[indexPath.row][@"ok_button"];
             if (ok_button == nil) ok_button = NSLocalizedString(@"Yes", nil);
             actionAlertView = [[UIAlertView alloc] initWithTitle:message message:countdown_message delegate:self cancelButtonTitle:cancel_button otherButtonTitles:ok_button, nil];
             
             [actionAlertView show];
         }
         else{
-            NSString *command = [[actionsList objectAtIndex:indexPath.row] objectForKey:@"command"];
+            NSString *command = actionsList[indexPath.row][@"command"];
             if ([command isEqualToString:@"System.WOL"]){
                 NSString *serverMAC = [AppDelegate instance].obj.serverHWAddr;
                 if (serverMAC != nil && ![serverMAC isEqualToString:@":::::"]){
@@ -217,31 +217,31 @@
                 }
             }
             else if (command != nil){
-                [self powerAction:command params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+                [self powerAction:command params:@{}];
             }
         }
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"Keyboard", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Keyboard", nil)]){
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleVirtualKeyboard" object:nil userInfo:nil];
-        if ([[revealTopView objectAtIndex:indexPath.row] boolValue] == YES){
+        if ([revealTopView[indexPath.row] boolValue] == YES){
             [self.slidingViewController resetTopView];
         }
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"Help Screen", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Help Screen", nil)]){
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleQuickHelp" object:nil userInfo:nil];
         [self.slidingViewController resetTopView];
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"Gesture Zone", nil)]){
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"forceGestureZone"];
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Gesture Zone", nil)]){
+        NSDictionary *userInfo = @{@"forceGestureZone": @YES};
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleGestureZone" object:nil userInfo:userInfo];
         [self.slidingViewController resetTopView];
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"Button Pad", nil)]){
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"forceGestureZone"];
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"Button Pad", nil)]){
+        NSDictionary *userInfo = @{@"forceGestureZone": @NO};
         [[NSNotificationCenter defaultCenter] postNotificationName: @"UIToggleGestureZone" object:nil userInfo:userInfo];
         [self.slidingViewController resetTopView];
     }
-    else if ([[labelsList objectAtIndex:indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    else if ([labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
         UIImageView *torchIcon = (UIImageView *)[[tableView cellForRowAtIndexPath:indexPath] viewWithTag:1];
         [[tableView cellForRowAtIndexPath:indexPath] viewWithTag:1];
         [self turnTorchOn:!torchIsOn icon:torchIcon];
@@ -279,12 +279,12 @@
         NSString *userChoice = [alertView buttonTitleAtIndex:buttonIndex];
         NSString *command = @"";
         for (NSDictionary *commands in actionsList){
-            if ([[commands objectForKey:@"ok_button"] isEqualToString:userChoice]){
-                command = [commands objectForKey:@"command"];
+            if ([commands[@"ok_button"] isEqualToString:userChoice]){
+                command = commands[@"command"];
             }
         }
         if (![command isEqualToString:@""]){
-            [self powerAction:command params:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+            [self powerAction:command params:@{}];
         }
     }
 }
@@ -333,7 +333,7 @@
     [menuTableView setDataSource:self];
     [menuTableView setBackgroundColor:[UIColor clearColor]];
     [menuTableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-    [menuTableView setScrollEnabled:[[self.rightMenuItems objectAtIndex:0] enableSection]];
+    [menuTableView setScrollEnabled:[(self.rightMenuItems)[0] enableSection]];
     if([[UIScreen mainScreen ] bounds].size.height >= 568){
         [menuTableView setScrollEnabled:NO];
     }
@@ -380,7 +380,7 @@
 }
 
 - (void)setRightMenuOption:(NSString *)key{
-    mainMenu *menuItems = [self.rightMenuItems objectAtIndex:0];
+    mainMenu *menuItems = (self.rightMenuItems)[0];
     labelsList = [[NSMutableArray alloc] initWithCapacity:0];
     colorsList = [[NSMutableArray alloc] initWithCapacity:0];
     hideLineSeparator = [[NSMutableArray alloc] initWithCapacity:0];
@@ -389,35 +389,35 @@
     actionsList = [[NSMutableArray alloc] initWithCapacity:0];
     revealTopView = [[NSMutableArray alloc] initWithCapacity:0];
 
-    for (NSDictionary *item in [[[menuItems mainMethod] objectAtIndex:0] objectForKey:key]){
-        NSString *label = [item objectForKey:@"label"];
+    for (NSDictionary *item in [menuItems mainMethod][0][key]){
+        NSString *label = item[@"label"];
         if (label == nil) label = @"";
         [labelsList addObject:label];
-        NSMutableDictionary *bgColor = [item objectForKey:@"bgColor"];
+        NSMutableDictionary *bgColor = item[@"bgColor"];
         if (bgColor == nil) {
             bgColor = [[NSMutableDictionary alloc] initWithCapacity:0];
         }
         [colorsList addObject:bgColor];
         
-        NSNumber *hideLine = [item objectForKey:@"hideLineSeparator"];
-        if (hideLine == nil) hideLine = [NSNumber numberWithBool:NO];
+        NSNumber *hideLine = item[@"hideLineSeparator"];
+        if (hideLine == nil) hideLine = @NO;
         [hideLineSeparator addObject:hideLine];
         
-        NSMutableDictionary *fontColor = [item objectForKey:@"fontColor"];
+        NSMutableDictionary *fontColor = item[@"fontColor"];
         if (fontColor == nil) {
             fontColor = [[NSMutableDictionary alloc] initWithCapacity:0];
         }
         [fontColorList addObject:fontColor];
-        NSString *icon = [item objectForKey:@"icon"];
+        NSString *icon = item[@"icon"];
         if (icon == nil) icon = @"";
         [iconsList addObject:icon];
         
-        NSMutableDictionary *action = [item objectForKey:@"action"];
+        NSMutableDictionary *action = item[@"action"];
         if (action == nil) action = [[NSMutableDictionary alloc] initWithCapacity:0];
         [actionsList addObject:action];
         
-        NSNumber *showTop = [item objectForKey:@"revealViewTop"];
-        if (showTop == nil) showTop = [NSNumber numberWithBool:NO];
+        NSNumber *showTop = item[@"revealViewTop"];
+        if (showTop == nil) showTop = @NO;
         [revealTopView addObject:showTop];
     }
     [UIView animateWithDuration:0.2
@@ -448,7 +448,7 @@
 - (void)connectionSuccess:(NSNotification *)note {
     NSDictionary *theData = [note userInfo];
     if (theData != nil) {
-        NSString *serverTxt = [theData objectForKey:@"infoText"];
+        NSString *serverTxt = theData[@"infoText"];
         UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[labelsList indexOfObject:@"ServerInfo"] inSection:0]];
         UILabel *title = (UILabel*) [cell viewWithTag:3];
         [title setText:serverTxt];
@@ -462,7 +462,7 @@
 - (void)connectionFailed:(NSNotification *)note {
     NSDictionary *theData = [note userInfo];
     if (theData != nil) {
-        NSString *serverTxt = [theData objectForKey:@"infoText"];
+        NSString *serverTxt = theData[@"infoText"];
         UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[labelsList indexOfObject:@"ServerInfo"] inSection:0]];
         UILabel *title = (UILabel*) [cell viewWithTag:3];
         [title setText:serverTxt];

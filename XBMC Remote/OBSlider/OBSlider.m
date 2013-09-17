@@ -37,7 +37,7 @@
     {
         self.scrubbingSpeeds = [self defaultScrubbingSpeeds];
         self.scrubbingSpeedChangePositions = [self defaultScrubbingSpeedChangePositions];
-        self.scrubbingSpeed = [[self.scrubbingSpeeds objectAtIndex:0] floatValue];
+        self.scrubbingSpeed = [(self.scrubbingSpeeds)[0] floatValue];
     }
     return self;
 }
@@ -62,7 +62,7 @@
             self.scrubbingSpeedChangePositions = [self defaultScrubbingSpeedChangePositions];
         }
         
-        self.scrubbingSpeed = [[self.scrubbingSpeeds objectAtIndex:0] floatValue];
+        self.scrubbingSpeed = [(self.scrubbingSpeeds)[0] floatValue];
     }
     return self;
 }
@@ -114,7 +114,7 @@
         if (scrubbingSpeedChangePosIndex == NSNotFound) {
             scrubbingSpeedChangePosIndex = [self.scrubbingSpeeds count];
         }
-        self.scrubbingSpeed = [[self.scrubbingSpeeds objectAtIndex:scrubbingSpeedChangePosIndex - 1] floatValue];
+        self.scrubbingSpeed = [(self.scrubbingSpeeds)[scrubbingSpeedChangePosIndex - 1] floatValue];
          
         CGRect trackRect = [self trackRectForBounds:self.bounds];
         self.realPositionValue = self.realPositionValue + (self.maximumValue - self.minimumValue) * (trackingOffset / trackRect.size.width);
@@ -140,7 +140,7 @@
 {
     if (self.tracking) 
     {
-        self.scrubbingSpeed = [[self.scrubbingSpeeds objectAtIndex:0] floatValue];
+        self.scrubbingSpeed = [(self.scrubbingSpeeds)[0] floatValue];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
@@ -153,7 +153,7 @@
 - (NSUInteger) indexOfLowerScrubbingSpeed:(NSArray*)scrubbingSpeedPositions forOffset:(CGFloat)verticalOffset 
 {
     for (NSUInteger i = 0; i < [scrubbingSpeedPositions count]; i++) {
-        NSNumber *scrubbingSpeedOffset = [scrubbingSpeedPositions objectAtIndex:i];
+        NSNumber *scrubbingSpeedOffset = scrubbingSpeedPositions[i];
         if (verticalOffset < [scrubbingSpeedOffset floatValue]) {
             return i;
         }
@@ -167,26 +167,22 @@
 // Used in -initWithFrame: and -initWithCoder:
 - (NSArray *) defaultScrubbingSpeeds
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:1.0f],
-            [NSNumber numberWithFloat:0.5f],
-            [NSNumber numberWithFloat:0.25f],
-            [NSNumber numberWithFloat:0.1f],
-            [NSNumber numberWithFloat:0.05f],
-            [NSNumber numberWithFloat:0.025f],
-            nil];
+    return @[@1.0f,
+            @0.5f,
+            @0.25f,
+            @0.1f,
+            @0.05f,
+            @0.025f];
 }
 
 - (NSArray *) defaultScrubbingSpeedChangePositions
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:0.0f],
-            [NSNumber numberWithFloat:50.0f],
-            [NSNumber numberWithFloat:100.0f],
-            [NSNumber numberWithFloat:150.0f],
-            [NSNumber numberWithFloat:200.0f],
-            [NSNumber numberWithFloat:250.0f],
-            nil];
+    return @[@0.0f,
+            @50.0f,
+            @100.0f,
+            @150.0f,
+            @200.0f,
+            @250.0f];
 }
 
 @end

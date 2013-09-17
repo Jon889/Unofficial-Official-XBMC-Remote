@@ -116,17 +116,17 @@
     }
     NSDictionary *params;
     if (note!=nil){
-        params = [[note userInfo] objectForKey:@"params"];
+        params = [note userInfo][@"params"];
     }
     keyboardTitle.text = @"";
     if (params != nil){
-        if (((NSNull *)[params objectForKey:@"data"] != [NSNull null])){
-            if (((NSNull *)[[params objectForKey:@"data"] objectForKey:@"title"] != [NSNull null])){
-                keyboardTitle.text = [[params objectForKey:@"data"] objectForKey:@"title"];
+        if (((NSNull *)params[@"data"] != [NSNull null])){
+            if (((NSNull *)params[@"data"][@"title"] != [NSNull null])){
+                keyboardTitle.text = params[@"data"][@"title"];
             }
-            if (((NSNull *)[[params objectForKey:@"data"] objectForKey:@"value"] != [NSNull null])){
-                if (![[[params objectForKey:@"data"] objectForKey:@"value"] isEqualToString:@""]){
-                    xbmcVirtualKeyboard.text = [[params objectForKey:@"data"] objectForKey:@"value"];
+            if (((NSNull *)params[@"data"][@"value"] != [NSNull null])){
+                if (![params[@"data"][@"value"] isEqualToString:@""]){
+                    xbmcVirtualKeyboard.text = params[@"data"][@"value"];
                 }
             }
         }
@@ -178,7 +178,7 @@
         else{ // CHARACTER
             int x = (unichar) [string characterAtIndex: 0];
             if (x==10) {
-                [self GUIAction:@"Input.Select" params:[NSDictionary dictionaryWithObjectsAndKeys:nil] httpAPIcallback:nil];
+                [self GUIAction:@"Input.Select" params:@{} httpAPIcallback:nil];
                 [xbmcVirtualKeyboard resignFirstResponder];
             }
             else if (x<1000){
@@ -197,13 +197,13 @@
         if ([string length] != 0){
             int x = (unichar) [string characterAtIndex: 0];
             if (x==10) {
-                [self GUIAction:@"Input.SendText" params:[NSDictionary dictionaryWithObjectsAndKeys:stringToSend, @"text", [NSNumber numberWithBool:TRUE], @"done", nil] httpAPIcallback:nil];
+                [self GUIAction:@"Input.SendText" params:@{ @"text": stringToSend, @"done": @YES } httpAPIcallback:nil];
                 [xbmcVirtualKeyboard resignFirstResponder];
                 theTextField.text = @"";
                 return YES;
             }
         }
-        [self GUIAction:@"Input.SendText" params:[NSDictionary dictionaryWithObjectsAndKeys:stringToSend, @"text", [NSNumber numberWithBool:FALSE], @"done", nil] httpAPIcallback:nil];
+        [self GUIAction:@"Input.SendText" params:@{ @"text": stringToSend, @"done": @NO } httpAPIcallback:nil];
         return YES;
     }
 }

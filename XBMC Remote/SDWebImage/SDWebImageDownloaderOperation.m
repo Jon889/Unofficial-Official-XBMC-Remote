@@ -291,9 +291,9 @@
             dispatch_async(self.queue, ^
             {
 //                CGSize size = CGSizeFromString([self.userInfo objectForKey:@"size"]);
-                if ([[self.userInfo objectForKey:@"transformation"] isEqualToString:@"resize"])
+                if ([(self.userInfo)[@"transformation"] isEqualToString:@"resize"])
                 {
-                    CGSize size = CGSizeFromString([self.userInfo objectForKey:@"size"]);
+                    CGSize size = CGSizeFromString((self.userInfo)[@"size"]);
                     UIImage *elab = [UIImage imageWithData:self.imageData];
                     NSData *elabData = UIImageJPEGRepresentation([elab resizedImage:elab.CGImage size:size interpolationQuality:kCGInterpolationHigh],(CGFloat)0.8);
                     self.imageData = [NSMutableData dataWithData:elabData];

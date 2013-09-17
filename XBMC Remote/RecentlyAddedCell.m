@@ -53,7 +53,7 @@
         [_posterLabel setShadowColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6]];
         [_posterLabel setShadowOffset:CGSizeMake(0,1)];
         [_posterLabel setNumberOfLines:1];
-        [_posterLabel setMinimumFontSize:8.0f];
+        [_posterLabel setMinimumScaleFactor:8.0/[[_posterLabel font] pointSize]];
         [_posterLabel setAdjustsFontSizeToFitWidth:YES];
         [labelImageView addSubview:_posterLabel];
         
@@ -64,7 +64,7 @@
         [_posterGenre setShadowColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6]];
         [_posterGenre setShadowOffset:CGSizeMake(0,1)];
         [_posterGenre setNumberOfLines:1];
-        [_posterGenre setMinimumFontSize:8.0f];
+        [_posterGenre setMinimumScaleFactor:8.0/[[_posterGenre font] pointSize]];
         [_posterGenre setAdjustsFontSizeToFitWidth:YES];
         [labelImageView addSubview:_posterGenre];
         
@@ -75,7 +75,7 @@
         [_posterYear setShadowColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6]];
         [_posterYear setShadowOffset:CGSizeMake(0,1)];
         [_posterYear setNumberOfLines:1];
-        [_posterYear setMinimumFontSize:8.0f];
+        [_posterYear setMinimumScaleFactor:8.0/[[_posterYear font] pointSize]];
         [_posterYear setAdjustsFontSizeToFitWidth:YES];
         [labelImageView addSubview:_posterYear];
         [self.contentView addSubview:labelImageView];

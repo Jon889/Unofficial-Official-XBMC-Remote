@@ -32,7 +32,7 @@
 
         CAGradientLayer *gradient = [CAGradientLayer layer];
         gradient.frame = labelView.bounds;
-        gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
+        gradient.colors = @[(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor]];
         [labelView.layer addSublayer:gradient];
         
         CGRect posterFrame = labelView.bounds;
@@ -48,9 +48,8 @@
         [_posterLabel setShadowColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6]];
         [_posterLabel setShadowOffset:CGSizeMake(0,1)];
         [_posterLabel setNumberOfLines:2];
-        [_posterLabel setMinimumFontSize:8.0f];
+        [_posterLabel setMinimumScaleFactor:8.0/[[_posterLabel font] pointSize]];
         [_posterLabel setAdjustsFontSizeToFitWidth:YES];
-        [_posterLabel setMinimumScaleFactor:1.0f];
 
         [labelView addSubview:_posterLabel];
         [self.contentView addSubview:labelView];

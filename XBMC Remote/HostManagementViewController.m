@@ -50,7 +50,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerHasChanged" object: nil]; 
         NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
         if (standardUserDefaults) {
-            [standardUserDefaults setObject:[NSNumber numberWithInt:-1] forKey:@"lastServer"];
+            [standardUserDefaults setObject:@-1 forKey:@"lastServer"];
             [standardUserDefaults synchronize];
         }
         [connectingActivityIndicator stopAnimating];
@@ -89,7 +89,7 @@
         [(UIImageView*) [cell viewWithTag:1] setHidden:TRUE];
         UILabel *cellLabel=(UILabel*) [cell viewWithTag:2];
         UILabel *cellIP=(UILabel*) [cell viewWithTag:3];
-        cellLabel.textAlignment=UITextAlignmentCenter;
+        cellLabel.textAlignment=NSTextAlignmentCenter;
         [cellLabel setText:NSLocalizedString(@"No saved hosts found", nil)];
         [cellIP setText:@""];
         CGRect frame=cellLabel.frame;
@@ -111,10 +111,10 @@
         frame.size.width=166;
         frame.size.height=44;
         cellLabel.frame=frame;
-        cellLabel.textAlignment=UITextAlignmentLeft;
-        NSDictionary *item=[[AppDelegate instance].arrayServerList objectAtIndex:indexPath.row];
-        [cellLabel setText:[item objectForKey:@"serverDescription"]];
-        [cellIP setText:[item objectForKey:@"serverIP"]];
+        cellLabel.textAlignment=NSTextAlignmentLeft;
+        NSDictionary *item=([AppDelegate instance].arrayServerList)[indexPath.row];
+        [cellLabel setText:item[@"serverDescription"]];
+        [cellIP setText:item[@"serverIP"]];
         NSIndexPath *selection = [serverListTableView indexPathForSelectedRow];
         if (selection && indexPath.row == selection.row){
             cell.accessoryType=UITableViewCellAccessoryCheckmark;
@@ -131,15 +131,15 @@
 }
 
 -(void)selectServerAtIndexPath:(NSIndexPath *)indexPath{
-    NSDictionary *item = [[AppDelegate instance].arrayServerList objectAtIndex:indexPath.row];
-    [AppDelegate instance].obj.serverDescription = [item objectForKey:@"serverDescription"];
-    [AppDelegate instance].obj.serverUser = [item objectForKey:@"serverUser"];
-    [AppDelegate instance].obj.serverPass = [item objectForKey:@"serverPass"];
-    [AppDelegate instance].obj.serverIP = [item objectForKey:@"serverIP"];
-    [AppDelegate instance].obj.serverPort = [item objectForKey:@"serverPort"];
-    [AppDelegate instance].obj.serverHWAddr = [item objectForKey:@"serverMacAddress"];
-    [AppDelegate instance].obj.preferTVPosters = [[item objectForKey:@"preferTVPosters"] boolValue];
-    [AppDelegate instance].obj.tcpPort = [[item objectForKey:@"tcpPort"] intValue];
+    NSDictionary *item = ([AppDelegate instance].arrayServerList)[indexPath.row];
+    [AppDelegate instance].obj.serverDescription = item[@"serverDescription"];
+    [AppDelegate instance].obj.serverUser = item[@"serverUser"];
+    [AppDelegate instance].obj.serverPass = item[@"serverPass"];
+    [AppDelegate instance].obj.serverIP = item[@"serverIP"];
+    [AppDelegate instance].obj.serverPort = item[@"serverPort"];
+    [AppDelegate instance].obj.serverHWAddr = item[@"serverMacAddress"];
+    [AppDelegate instance].obj.preferTVPosters = [item[@"preferTVPosters"] boolValue];
+    [AppDelegate instance].obj.tcpPort = [item[@"tcpPort"] intValue];
 }
 
 -(void)deselectServerAtIndexPath:(NSIndexPath *)indexPath{
@@ -158,7 +158,7 @@
     [AppDelegate instance].obj.tcpPort = 0;
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     if (standardUserDefaults) {
-        [standardUserDefaults setObject:[NSNumber numberWithInt:-1] forKey:@"lastServer"];
+        [standardUserDefaults setObject:@-1 forKey:@"lastServer"];
         [standardUserDefaults synchronize];
     }
     [(UIImageView *)[cell viewWithTag:1] setImage:[UIImage imageNamed:@"connection_off"]];
@@ -186,7 +186,7 @@
             [self selectServerAtIndexPath:indexPath];
             NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
             if (standardUserDefaults) {
-                [standardUserDefaults setObject:[NSNumber numberWithInt:indexPath.row] forKey:@"lastServer"];
+                [standardUserDefaults setObject:@(indexPath.row) forKey:@"lastServer"];
                 [standardUserDefaults synchronize];
             }
         }
@@ -220,7 +220,7 @@
             if (indexPath.row<storeServerSelection.row){
                 storeServerSelection=[NSIndexPath  indexPathForRow:storeServerSelection.row-1 inSection:storeServerSelection.section];
                 if (standardUserDefaults) {
-                    [standardUserDefaults setObject:[NSNumber numberWithInt:storeServerSelection.row] forKey:@"lastServer"];
+                    [standardUserDefaults setObject:@(storeServerSelection.row) forKey:@"lastServer"];
                     [standardUserDefaults synchronize];
                 }
             }
@@ -234,11 +234,11 @@
                 [AppDelegate instance].obj.serverHWAddr = @"";
                 [AppDelegate instance].obj.tcpPort = 0;
                 [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerHasChanged" object: nil];
-                [standardUserDefaults setObject:[NSNumber numberWithInt:-1] forKey:@"lastServer"];
+                [standardUserDefaults setObject:@-1 forKey:@"lastServer"];
                 [standardUserDefaults synchronize];
             }
         }
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
 	}   
 }
 
@@ -327,7 +327,7 @@
         appInfoView = [[AppInfoViewController alloc] initWithNibName:@"AppInfoViewController" bundle:nil] ;
     appInfoView.modalTransitionStyle = UIModalTransitionStylePartialCurl;
 	appInfoView.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentModalViewController:appInfoView animated:YES];
+    [self presentViewController:appInfoView animated:YES completion:nil];
 }
 
 

@@ -58,30 +58,30 @@
         self.navigationItem.title=NSLocalizedString(@"Modify XBMC Server", nil);
         NSIndexPath *idx=self.detailItem;
         
-        descriptionUI.text=[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"serverDescription"];
+        descriptionUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverDescription"];
         
-        usernameUI.text=[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"serverUser"];
+        usernameUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverUser"];
 
-        passwordUI.text=[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"serverPass"];
+        passwordUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverPass"];
 
-        ipUI.text=[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"serverIP"];
+        ipUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverIP"];
 
-        portUI.text=[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"serverPort"];
+        portUI.text=([AppDelegate instance].arrayServerList)[idx.row][@"serverPort"];
         
-        NSString *macAddress = [[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"serverMacAddress"];
+        NSString *macAddress = ([AppDelegate instance].arrayServerList)[idx.row][@"serverMacAddress"];
         NSArray *mac_octect = [macAddress componentsSeparatedByString:@":"];
         int num_octects = [mac_octect count];
-        if (num_octects>0) mac_0_UI.text = [mac_octect objectAtIndex:0];
-        if (num_octects>1) mac_1_UI.text = [mac_octect objectAtIndex:1];
-        if (num_octects>2) mac_2_UI.text = [mac_octect objectAtIndex:2];
-        if (num_octects>3) mac_3_UI.text = [mac_octect objectAtIndex:3];
-        if (num_octects>4) mac_4_UI.text = [mac_octect objectAtIndex:4];
-        if (num_octects>5) mac_5_UI.text = [mac_octect objectAtIndex:5];
+        if (num_octects>0) mac_0_UI.text = mac_octect[0];
+        if (num_octects>1) mac_1_UI.text = mac_octect[1];
+        if (num_octects>2) mac_2_UI.text = mac_octect[2];
+        if (num_octects>3) mac_3_UI.text = mac_octect[3];
+        if (num_octects>4) mac_4_UI.text = mac_octect[4];
+        if (num_octects>5) mac_5_UI.text = mac_octect[5];
 
-        preferTVPostersUI.on = [[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"preferTVPosters"] boolValue];
-        tcpPortUI.text = [[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"tcpPort"];
+        preferTVPostersUI.on = [([AppDelegate instance].arrayServerList)[idx.row][@"preferTVPosters"] boolValue];
+        tcpPortUI.text = ([AppDelegate instance].arrayServerList)[idx.row][@"tcpPort"];
     }
-    NSArray *textFields = [NSArray arrayWithObjects:descriptionUI, ipUI, portUI, usernameUI, passwordUI, mac_0_UI, mac_1_UI, mac_2_UI, mac_3_UI, mac_4_UI, mac_5_UI, tcpPortUI, nil];
+    NSArray *textFields = @[descriptionUI, ipUI, portUI, usernameUI, passwordUI, mac_0_UI, mac_1_UI, mac_2_UI, mac_3_UI, mac_4_UI, mac_5_UI, tcpPortUI];
     for (UITextField *textField in textFields) {
 //        textField.layer.borderColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
 //        textField.layer.borderWidth = 1;
@@ -114,32 +114,26 @@
     [self textFieldDoneEditing:nil];
     NSString *macAddress = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@", mac_0_UI.text, mac_1_UI.text, mac_2_UI.text, mac_3_UI.text, mac_4_UI.text, mac_5_UI.text];
     if (self.detailItem==nil){
-        [[AppDelegate instance].arrayServerList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                           descriptionUI.text, @"serverDescription",
-                                                           usernameUI.text, @"serverUser",
-                                                           passwordUI.text, @"serverPass",
-                                                           ipUI.text, @"serverIP",
-                                                           portUI.text, @"serverPort",
-                                                           macAddress, @"serverMacAddress",
-                                                           [NSNumber numberWithBool:preferTVPostersUI.on], @"preferTVPosters",
-                                                           tcpPortUI.text, @"tcpPort",
-                                                           nil
-                                                           ]];
+        [[AppDelegate instance].arrayServerList addObject:@{@"serverDescription": descriptionUI.text,
+                                                           @"serverUser": usernameUI.text,
+                                                           @"serverPass": passwordUI.text,
+                                                           @"serverIP": ipUI.text,
+                                                           @"serverPort": portUI.text,
+                                                           @"serverMacAddress": macAddress,
+                                                           @"preferTVPosters": @(preferTVPostersUI.on),
+                                                           @"tcpPort": tcpPortUI.text}];
     }
     else{
         NSIndexPath *idx = self.detailItem;
         [[AppDelegate instance].arrayServerList removeObjectAtIndex:idx.row];
-        [[AppDelegate instance].arrayServerList insertObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                              descriptionUI.text, @"serverDescription",
-                                                              usernameUI.text, @"serverUser",
-                                                              passwordUI.text, @"serverPass",
-                                                              ipUI.text, @"serverIP",
-                                                              portUI.text, @"serverPort",
-                                                              macAddress, @"serverMacAddress",
-                                                              [NSNumber numberWithBool:preferTVPostersUI.on], @"preferTVPosters",
-                                                              tcpPortUI.text, @"tcpPort",
-                                                              nil
-                                                              ] atIndex:idx.row];
+        [[AppDelegate instance].arrayServerList insertObject:@{@"serverDescription": descriptionUI.text,
+                                                              @"serverUser": usernameUI.text,
+                                                              @"serverPass": passwordUI.text,
+                                                              @"serverIP": ipUI.text,
+                                                              @"serverPort": portUI.text,
+                                                              @"serverMacAddress": macAddress,
+                                                              @"preferTVPosters": @(preferTVPostersUI.on),
+                                                              @"tcpPort": tcpPortUI.text} atIndex:idx.row];
     }
     [[AppDelegate instance] saveServerList];
     [self.navigationController popViewControllerAnimated:YES];
@@ -212,7 +206,7 @@
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didNotSearch:(NSDictionary *)errorDict{
     searching = NO;
-    [self handleError:[errorDict objectForKey:NSNetServicesErrorCode]];
+    [self handleError:errorDict[NSNetServicesErrorCode]];
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser
@@ -246,7 +240,7 @@
                 [self AnimLabel:noInstances AnimDuration:0.3 Alpha:1.0 XPos:0];
                 break;
             case 1:
-                [self resolveIPAddress:[services objectAtIndex:0]];
+                [self resolveIPAddress:services[0]];
                 break;
             default:
                 [discoveredInstancesTableView reloadData];
@@ -334,7 +328,7 @@
 	if (count == 0) {
 		return cell;
 	}
-    NSNetService* service = [services objectAtIndex:indexPath.row];
+    NSNetService* service = services[indexPath.row];
 	cell.textLabel.text = [service name];
 	cell.textLabel.textColor = [UIColor blackColor];
 	cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
@@ -342,7 +336,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self resolveIPAddress:[services objectAtIndex:indexPath.row]];
+    [self resolveIPAddress:services[indexPath.row]];
 }
 
 #pragma mark - LifeCycle

@@ -32,14 +32,14 @@
     NSDictionary *item=self.detailItem;
     NSLog(@"%@", item);
  
-    [jsonRPC callMethod:@"Files.PrepareDownload" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:[item objectForKey:@"file"], @"path", nil] onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
+    [jsonRPC callMethod:@"Files.PrepareDownload" withParameters:@{@"path": item[@"file"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         if (error==nil && methodError==nil){
             if( [methodResult count] > 0){
                 GlobalData *obj=[GlobalData getInstance];     
                 //NSDictionary *itemid = [methodResult objectForKey:@"details"]; 
 
                 NSString *serverURL=[NSString stringWithFormat:@"%@:%@", obj.serverIP, obj.serverPort];
-                NSString *stringURL = [NSString stringWithFormat:@"%@://%@/%@",(NSArray*)[methodResult objectForKey:@"protocol"], serverURL, [(NSDictionary*)[methodResult objectForKey:@"details"] objectForKey:@"path"]];                
+                NSString *stringURL = [NSString stringWithFormat:@"%@://%@/%@",(NSArray*)methodResult[@"protocol"], serverURL, ((NSDictionary*)methodResult[@"details"])[@"path"]];                
                 NSLog(@"RESULT %@", stringURL);
                 NSURLRequest *request = [[NSURLRequest alloc] initWithURL: [NSURL URLWithString: stringURL] cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];  
                 [webPlayView loadRequest: request];  

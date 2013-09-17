@@ -43,7 +43,7 @@
 }
 	
 -(void)changeServerStatus:(BOOL)status infoText:(NSString *)infoText{
-    NSDictionary *dataDict = [NSDictionary dictionaryWithObject:infoText forKey:@"infoText"];
+    NSDictionary *dataDict = @{@"infoText": infoText};
     if (status==YES){
         [self.tcpJSONRPCconnection startNetworkCommunicationWithServer:[AppDelegate instance].obj.serverIP serverPort:[AppDelegate instance].obj.tcpPort];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionSuccess" object:nil userInfo:dataDict];
@@ -145,7 +145,7 @@
             [cell insertSubview:xbmc_logo atIndex:0];
         }
     }
-    mainMenu *item = [self.mainMenu objectAtIndex:indexPath.row];
+    mainMenu *item = (self.mainMenu)[indexPath.row];
     UIImageView *icon = (UIImageView*) [cell viewWithTag:1];
     UILabel *upperTitle = (UILabel*) [cell viewWithTag:2];
     UILabel *title = (UILabel*) [cell viewWithTag:3];
@@ -186,7 +186,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    mainMenu *item = [self.mainMenu objectAtIndex:indexPath.row];
+    mainMenu *item = (self.mainMenu)[indexPath.row];
     if (![AppDelegate instance].serverOnLine && item.family!=4) {
         [menuList selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section] animated:YES scrollPosition:UITableViewScrollPositionNone];
         return;
@@ -359,7 +359,7 @@
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
     [AppDelegate instance].obj=[GlobalData getInstance];
-    checkServerParams=[NSDictionary dictionaryWithObjectsAndKeys: [[NSArray alloc] initWithObjects:@"version", @"volume", nil], @"properties", nil];
+    checkServerParams=@{@"properties": @[@"version", @"volume"]};
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(handleWillResignActive:)
@@ -416,7 +416,7 @@
         thumbWidth = PHONE_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PHONE_TV_SHOWS_POSTER_HEIGHT;
     }
-    mainMenu *menuItem=[self.mainMenu objectAtIndex:3];
+    mainMenu *menuItem=(self.mainMenu)[3];
     menuItem.thumbWidth=thumbWidth;
     menuItem.rowHeight=tvshowHeight;
     [self changeServerStatus:NO infoText:NSLocalizedString(@"No connection", nil)];

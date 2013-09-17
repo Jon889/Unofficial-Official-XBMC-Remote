@@ -59,7 +59,7 @@
 -(IBAction)CloseView{
     [audioPlayer stop];
     audioPlayer = nil;
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
