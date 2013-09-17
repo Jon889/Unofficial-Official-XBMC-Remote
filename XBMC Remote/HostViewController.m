@@ -9,6 +9,7 @@
 #import "HostViewController.h"
 #import "AppDelegate.h"
 #include <arpa/inet.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define serviceType @"_xbmc-jsonrpc-h._tcp"
 #define domainName @"local"
@@ -49,7 +50,7 @@
     [UIView commitAnimations];
 }
 
-- (void)configureView{
+- (void)configureView {
     if (self.detailItem==nil){
         self.navigationItem.title=NSLocalizedString(@"New XBMC Server", nil);
     }
@@ -77,9 +78,28 @@
         if (num_octects>4) mac_4_UI.text = [mac_octect objectAtIndex:4];
         if (num_octects>5) mac_5_UI.text = [mac_octect objectAtIndex:5];
 
-        preferTVPostersUI.on=[[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"preferTVPosters"] boolValue];
+        preferTVPostersUI.on = [[[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"preferTVPosters"] boolValue];
         tcpPortUI.text = [[[AppDelegate instance].arrayServerList objectAtIndex:idx.row] objectForKey:@"tcpPort"];
+    }
+    NSArray *textFields = [NSArray arrayWithObjects:descriptionUI, ipUI, portUI, usernameUI, passwordUI, mac_0_UI, mac_1_UI, mac_2_UI, mac_3_UI, mac_4_UI, mac_5_UI, tcpPortUI, nil];
+    for (UITextField *textField in textFields) {
+//        textField.layer.borderColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
+//        textField.layer.borderWidth = 1;
+        UIColor *color = [UIColor colorWithWhite:0.5 alpha:1];
+        textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName: color}];
 
+        [textField setTintColor:[UIColor whiteColor]];
+        CALayer *bottomBorder = [CALayer layer];
+        
+        bottomBorder.frame = CGRectMake(0, textField.bounds.size.height-1, textField.bounds.size.width, 1);
+        
+        bottomBorder.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1].CGColor;
+        
+        [textField.layer addSublayer:bottomBorder];
+        //textField.layer.cornerRadius = 4;
+        textField.borderStyle = UITextBorderStyleNone;
+        textField.backgroundColor = [UIColor clearColor];
+        textField.textColor = [UIColor whiteColor];
     }
 }
 
@@ -126,9 +146,9 @@
 }
 #pragma mark - UITextFieldDelegate Methods
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [textField setTextColor:[UIColor blackColor]];
-}
+//- (void)textFieldDidBeginEditing:(UITextField *)textField{
+//    [textField setTextColor:[UIColor blackColor]];
+//}
 -(void)resignKeyboard{
     [descriptionUI resignFirstResponder];
     [ipUI resignFirstResponder];
@@ -220,19 +240,18 @@
 }
 
 - (void)updateUI{
-    if(!searching){
-        int j = [services  count];
-        if (j==1){
-            [self resolveIPAddress:[services objectAtIndex:0]];
-        }
-        else {
-            if (j==0){
+    if (!searching) {
+        switch ([services count]) {
+            case 0:
                 [self AnimLabel:noInstances AnimDuration:0.3 Alpha:1.0 XPos:0];
-            }
-            else{
+                break;
+            case 1:
+                [self resolveIPAddress:[services objectAtIndex:0]];
+                break;
+            default:
                 [discoveredInstancesTableView reloadData];
                 [self AnimView:discoveredInstancesView AnimDuration:0.3 Alpha:1.0 XPos:0];
-            }
+                break;
         }
     }
 }

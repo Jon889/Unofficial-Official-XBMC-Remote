@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4488.2" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NowPlaying">
@@ -92,7 +92,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="53" sectionHeaderHeight="22" sectionFooterHeight="22" id="100">
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="53" sectionHeaderHeight="22" sectionFooterHeight="22" id="100">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="374"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -140,7 +140,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </imageView>
                                 <view alpha="0.0" contentMode="scaleToFill" id="104" userLabel="Song Details View">
-                                    <rect key="frame" x="50" y="42" width="237" height="239"/>
+                                    <rect key="frame" x="50" y="42" width="237" height="240"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="codec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="106">
@@ -153,7 +153,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="bit rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="107">
-                                            <rect key="frame" x="0.0" y="109" width="109" height="21"/>
+                                            <rect key="frame" x="0.0" y="110" width="109" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -162,7 +162,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sample rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="109">
-                                            <rect key="frame" x="0.0" y="148" width="109" height="21"/>
+                                            <rect key="frame" x="0.0" y="149" width="109" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -180,7 +180,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="111">
-                                            <rect key="frame" x="123" y="109" width="114" height="21"/>
+                                            <rect key="frame" x="123" y="110" width="114" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -189,7 +189,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="112">
-                                            <rect key="frame" x="123" y="148" width="114" height="21"/>
+                                            <rect key="frame" x="123" y="149" width="114" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -214,7 +214,7 @@ details</string>
                                             </state>
                                         </button>
                                         <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" id="203" userLabel="Button AlbumTracks">
-                                            <rect key="frame" x="64" y="6" width="46" height="41"/>
+                                            <rect key="frame" x="63.999999999999993" y="6" width="46" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                             <inset key="titleEdgeInsets" minX="0.0" minY="16" maxX="0.0" maxY="0.0"/>
@@ -262,7 +262,7 @@ albums</string>
                                             </state>
                                         </button>
                                         <button hidden="YES" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="179" userLabel="Button Repeat">
-                                            <rect key="frame" x="66" y="187" width="41" height="41"/>
+                                            <rect key="frame" x="66" y="188" width="41" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" backgroundImage="button_repeat.png">
@@ -277,7 +277,7 @@ albums</string>
                                             </connections>
                                         </button>
                                         <button hidden="YES" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="176" userLabel="Button Shuffle">
-                                            <rect key="frame" x="130" y="187" width="41" height="41"/>
+                                            <rect key="frame" x="130" y="188" width="41" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" backgroundImage="button_shuffle.png">
@@ -295,7 +295,7 @@ albums</string>
                                     <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                 </view>
                                 <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" id="4" userLabel="Image View - jewel case or thumb">
-                                    <rect key="frame" x="10" y="31" width="302" height="266"/>
+                                    <rect key="frame" x="10" y="31" width="303" height="266"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="6" userLabel="Label Title">
@@ -426,7 +426,7 @@ albums</string>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="123">
-                            <rect key="frame" x="90.000000000000014" y="8" width="70.000000000000014" height="28"/>
+                            <rect key="frame" x="90" y="8" width="70" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                             <size key="titleShadowOffset" width="1" height="1"/>
@@ -450,7 +450,7 @@ albums</string>
                             </connections>
                         </button>
                         <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="122">
-                            <rect key="frame" x="159" y="8" width="70.000000000000014" height="28"/>
+                            <rect key="frame" x="159" y="8" width="70" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                             <size key="titleShadowOffset" width="1" height="1"/>
@@ -473,7 +473,7 @@ albums</string>
                             </connections>
                         </button>
                         <button opaque="NO" tag="88" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="117">
-                            <rect key="frame" x="241" y="8" width="72.000000000000043" height="28"/>
+                            <rect key="frame" x="241" y="8" width="72" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <gestureRecognizers/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -704,7 +704,7 @@ albums</string>
         <image name="button_edit_down.png" width="72" height="28"/>
         <image name="button_party_off.png" width="72" height="28"/>
         <image name="button_party_on.png" width="72" height="28"/>
-        <image name="button_repeat.png" width="14.307870864868164" height="14.307870864868164"/>
+        <image name="button_repeat.png" width="41" height="41"/>
         <image name="button_shuffle.png" width="41" height="41"/>
         <image name="icon_dark.png" width="50" height="50"/>
         <image name="now_playing_empty_down.png" width="38" height="33"/>

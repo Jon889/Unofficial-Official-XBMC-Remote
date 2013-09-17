@@ -18,7 +18,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         float labelHeight = (int)(frame.size.height * 0.19f);
-        float borderWidth = [self halfSizeIfRetina:1.0f];
+        float labelTop = 10;
+        float borderWidth = 0;//[self halfSizeIfRetina:1.0f];
         self.restorationIdentifier = @"posterCell";
         _posterThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(borderWidth, borderWidth, frame.size.width - borderWidth * 2, frame.size.height - borderWidth * 2)];
         [_posterThumbnail setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
@@ -26,15 +27,24 @@
         [_posterThumbnail setContentMode:UIViewContentModeScaleAspectFill];
         [self.contentView addSubview:_posterThumbnail];
         
-        UIImageView *labelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(borderWidth, frame.size.height - labelHeight, frame.size.width - borderWidth * 2, labelHeight - borderWidth)];
-        [labelImageView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
-        [labelImageView setImage:[UIImage imageNamed:@"cell_bg"]];
-        [labelImageView setHighlightedImage:[UIImage imageNamed:@"cell_bg_selected"]];
+        UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(borderWidth, frame.size.height - labelHeight - labelTop, frame.size.width - borderWidth * 2, labelHeight + labelTop - borderWidth)];
+        [labelView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
 
-        _posterLabel = [[PosterLabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width - borderWidth * 2, labelHeight - borderWidth)];
+        CAGradientLayer *gradient = [CAGradientLayer layer];
+        gradient.frame = labelView.bounds;
+        gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
+        [labelView.layer addSublayer:gradient];
+        
+        CGRect posterFrame = labelView.bounds;
+        posterFrame.origin.y = labelTop;
+        posterFrame.size.height = labelHeight;
+        _posterLabel = [[PosterLabel alloc] initWithFrame:posterFrame];
         [_posterLabel setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
         [_posterLabel setBackgroundColor:[UIColor clearColor]];
-        [_posterLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
+        [_posterLabel setTextColor:[UIColor whiteColor]];
+        [_posterLabel setTextAlignment:NSTextAlignmentCenter];
+
+        
         [_posterLabel setShadowColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6]];
         [_posterLabel setShadowOffset:CGSizeMake(0,1)];
         [_posterLabel setNumberOfLines:2];
@@ -42,8 +52,8 @@
         [_posterLabel setAdjustsFontSizeToFitWidth:YES];
         [_posterLabel setMinimumScaleFactor:1.0f];
 
-        [labelImageView addSubview:_posterLabel];
-        [self.contentView addSubview:labelImageView];
+        [labelView addSubview:_posterLabel];
+        [self.contentView addSubview:labelView];
         
         _busyView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         _busyView.hidesWhenStopped = YES;

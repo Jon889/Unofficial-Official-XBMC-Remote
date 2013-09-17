@@ -244,7 +244,7 @@ NSMutableArray *hostRightMenuItems;
                            [NSMutableDictionary dictionaryWithObjectsAndKeys:
                             [NSDictionary dictionaryWithObjectsAndKeys:
                              @"ascending",@"order",
-                             [NSNumber numberWithBool:FALSE],@"ignorearticle",
+                             @NO,@"ignorearticle",
                              @"label", @"method",
                              nil],@"sort",
                             [NSArray arrayWithObjects: @"thumbnail", @"genre", nil], @"properties",

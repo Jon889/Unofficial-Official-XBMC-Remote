@@ -125,7 +125,7 @@
         else {
             cell.accessoryType=UITableViewCellAccessoryNone;
         }
-        cell.editingAccessoryType=UITableViewCellAccessoryDetailDisclosureButton;
+        cell.editingAccessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
     return cell;
 }
@@ -165,6 +165,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([tableView isEditing]) {
+        [self modifyHost:indexPath];
+        return;
+    }
     doRevealMenu = YES;
     if ([[AppDelegate instance].arrayServerList count] == 0){
         [serverListTableView deselectRowAtIndexPath:indexPath animated:YES];

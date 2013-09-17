@@ -20,7 +20,12 @@
 #import "ActorCell.h"
 #import "Utilities.h"
 
+#import "ShowInfoCollectionViewCell.h"
+#import "ShowInfoCollectionViewTrailerCell.h"
+
 @interface ShowInfoViewController ()
+@property (nonatomic, strong) NSArray *collectionViewData;
+@property (nonatomic, strong) NSDictionary *reuseIdentifierClassMap;
 @end
 
 @implementation ShowInfoViewController
@@ -42,6 +47,110 @@
     }
     return self;
 }
+-(NSString *)presentableStringFromObject:(id)stringOrArray {
+    if ([stringOrArray isKindOfClass:[NSArray class]]) {
+        return [stringOrArray componentsJoinedByString:@" / "];
+    } else if (!!stringOrArray) {
+        return stringOrArray;
+    }
+    return @"-";
+}
+-(NSString *)urlForTrailer:(NSString *)input {
+    if (!input || [input length] == 0) {
+        return nil;
+    }
+     if ([input rangeOfString:@"plugin://plugin.video.youtube"].location != NSNotFound) {
+         NSRange videoidRange = [input rangeOfString:@"videoid="];
+         if (videoidRange.location != NSNotFound) {
+             input = [input stringByReplacingCharactersInRange:NSMakeRange(0, videoidRange.location + videoidRange.length) withString:@""];
+             NSRange nextParamRange = [input rangeOfString:@"&"];
+             NSString *videoID = nil;
+             if (nextParamRange.location != NSNotFound) {
+                 videoID = [input substringToIndex:nextParamRange.location];
+             } else if (!!input && [input length] > 0) {
+                 videoID = input;
+             }
+             if (!!videoID) {
+                 return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", videoID];
+             }
+         }
+     } else if ([NSURLConnection canHandleRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:input]]]) {
+         return input;
+     }
+    return nil;
+}
+
+
+#define LS(str) NSLocalizedString(str, nil)
+NSString *const TitleKey = @"title";
+NSString *const ContentKey = @"content";
+NSString *const ReuseIdKey = @"reuseid";
+-(void)createCollectionViewData {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 0;
+    self.reuseIdentifierClassMap = @{ @"basicInfoCell" : [ShowInfoCollectionViewCell class],
+                                      @"trailerCell" :  [ShowInfoCollectionViewTrailerCell class] };
+    //Cells must be the same class as the nib name.
+    for (NSString *key in [self.reuseIdentifierClassMap allKeys]) {
+        [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(self.reuseIdentifierClassMap[key]) bundle:nil] forCellWithReuseIdentifier:key];
+    }
+    NSDictionary *d = self.detailItem;
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:@{ TitleKey : LS(@"Directed By"),
+                        ContentKey : [self presentableStringFromObject:d[@"director"]],
+                        ReuseIdKey : @"basicInfoCell" }];
+    [array addObject:@{ TitleKey : LS(@"Genre"),
+                        ContentKey : [self presentableStringFromObject:d[@"genre"]],
+                        ReuseIdKey : @"basicInfoCell" }];
+    if (![d[@"family"] isEqualToString:@"tvshowid"]) {
+        [array addObject:@{ TitleKey : LS(@"Runtime"),
+                            ContentKey : [self presentableStringFromObject:d[@"runtime"]],
+                            ReuseIdKey : @"basicInfoCell" }];
+    }
+    [array addObject:@{ TitleKey : LS(@"Studio"),
+                        ContentKey : [self presentableStringFromObject:d[@"studio"]],
+                        ReuseIdKey : @"basicInfoCell" }];
+    [array addObject:@{ TitleKey : LS(@"Summary"),
+                        ContentKey : [self presentableStringFromObject:d[@"plot"]],
+                        ReuseIdKey : @"basicInfoCell" }];
+    [array addObject:@{ TitleKey : LS(@"Parental Rating"),
+                        ContentKey : [self presentableStringFromObject:d[@"mpaa"]],
+                        ReuseIdKey : @"basicInfoCell" }];
+    NSString *trailerUrl = [self urlForTrailer:d[@"trailer"]];
+    if (trailerUrl) {
+        [array addObject:@{ TitleKey : LS(@"Trailer"),
+                            ContentKey : trailerUrl,
+                            ReuseIdKey : @"trailerCell" }];
+    }
+    self.collectionViewData = array;
+}
+
+#pragma mark - Collection View
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.collectionViewData.count;
+}
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *data = self.collectionViewData[indexPath.row];
+    ShowInfoCollectionViewCell *cell = (ShowInfoCollectionViewCell *)[cView dequeueReusableCellWithReuseIdentifier:data[ReuseIdKey] forIndexPath:indexPath];
+    [cell setTitle:data[TitleKey]];
+    [cell setContent:data[ContentKey]];
+    return cell;
+}
+- (CGSize)collectionView:(UICollectionView *)cView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
+    CGSize isize = [flowLayout itemSize];
+    ShowInfoCollectionViewBaseCell *cell = (ShowInfoCollectionViewBaseCell *)[cView cellForItemAtIndexPath:indexPath];
+    if (!!cell) {
+        isize.height = [cell heightOfCellForWidth:collectionView.frame.size.width];
+    } else {
+        [collectionViewLayout performSelector:@selector(invalidateLayout) withObject:nil afterDelay:0];
+    }
+    isize.width = cView.frame.size.width - flowLayout.sectionInset.left - flowLayout.sectionInset.right;
+    return isize;
+}
+
 
 double round(double d){
     return floor(d + 0.5);
@@ -54,12 +163,9 @@ int count=0;
         NSDictionary *item=self.detailItem;
         CGRect frame = CGRectMake(0, 0, 140, 40);
         UILabel *viewTitle = [[UILabel alloc] initWithFrame:frame] ;
-        viewTitle.numberOfLines=0;
         viewTitle.font = [UIFont boldSystemFontOfSize:11];
-        viewTitle.minimumFontSize=6;
         viewTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         viewTitle.backgroundColor = [UIColor clearColor];
-        viewTitle.shadowColor = [UIColor colorWithWhite:0.0 alpha:0];
         viewTitle.textAlignment = UITextAlignmentCenter;
         viewTitle.textColor = [UIColor whiteColor];
         viewTitle.text = [item objectForKey:@"label"];
@@ -1351,6 +1457,7 @@ int h=0;
     [scrollView addSubview:clearlogoButton];
     startY = startY + clearLogoHeight + 20;
     scrollView.contentSize=CGSizeMake(320, startY);
+    [self createCollectionViewData];
 }
 
 -(void)buildTrailerView{
@@ -1457,7 +1564,7 @@ int h=0;
     }
 }
 
-- (void) scrollViewDidScroll: (UIScrollView *) theScrollView{
+- (void)scrollViewDidScroll:(UIScrollView *)theScrollView {
     if (arrow_continue_down.alpha && theScrollView.contentOffset.y>40){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
@@ -1784,6 +1891,7 @@ int h=0;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+
     fanartView.tag = 1;
     fanartView.userInteractionEnabled = YES;
     UITapGestureRecognizer *touchOnKenView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showBackground:)];
@@ -1791,11 +1899,16 @@ int h=0;
     [touchOnKenView setNumberOfTouchesRequired:1];
     [fanartView addGestureRecognizer:touchOnKenView];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
-        float iOSYDelta = - [[UIApplication sharedApplication] statusBarFrame].size.height;
+        float topOffset = 44 + [[UIApplication sharedApplication] statusBarFrame].size.height;
         UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
-        tableViewInsets.top = 44 + fabs(iOSYDelta);
-        scrollView.contentInset = tableViewInsets;
-        scrollView.scrollIndicatorInsets = tableViewInsets;
+        tableViewInsets.top = topOffset;
+        for (UIView *view in self.view.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]] && view.frame.origin.y == 0) {
+                UIScrollView *sView = (UIScrollView *)view;
+                sView.contentInset = tableViewInsets;
+                sView.scrollIndicatorInsets = tableViewInsets;
+            }
+        }
     }
     [self disableScrollsToTopPropertyOnAllSubviewsOf:self.slidingViewController.view];
     scrollView.scrollsToTop = YES;

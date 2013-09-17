@@ -698,6 +698,11 @@
 		8E1B3AFF16EAABB50089A043 /* remote quick help.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1B3B0116EAABB50089A043 /* remote quick help.png */; };
 		8ED18E8316B6C08F00CA03F4 /* AppInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ED18E8516B6C08F00CA03F4 /* AppInfoViewController.xib */; };
 		8ED18ECD16B6D17D00CA03F4 /* ShowInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ED18ECF16B6D17D00CA03F4 /* ShowInfoViewController.xib */; };
+		AB01004717E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01004617E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.m */; };
+		AB01004917E7F3B4003C819E /* ShowInfoCollectionViewTrailerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01004817E7F3B4003C819E /* ShowInfoCollectionViewTrailerCell.xib */; };
+		AB52BD8E17E76D550096D8EC /* ShowInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52BD8D17E76D550096D8EC /* ShowInfoCollectionViewCell.m */; };
+		AB9D442117E7548F00E326DD /* ShowInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9D442017E7548F00E326DD /* ShowInfoCollectionViewCell.xib */; };
+		AB9E22C617E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E22C517E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1498,6 +1503,15 @@
 		8ED18ECE16B6D17D00CA03F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ShowInfoViewController.xib; sourceTree = "<group>"; };
 		8ED18ED116B6D18300CA03F4 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ShowInfoViewController.xib; sourceTree = "<group>"; };
 		8ED18ED216B6D18400CA03F4 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ShowInfoViewController.xib; sourceTree = "<group>"; };
+		AB01004517E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowInfoCollectionViewTrailerCell.h; sourceTree = "<group>"; };
+		AB01004617E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowInfoCollectionViewTrailerCell.m; sourceTree = "<group>"; };
+		AB01004817E7F3B4003C819E /* ShowInfoCollectionViewTrailerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowInfoCollectionViewTrailerCell.xib; sourceTree = "<group>"; };
+		AB26592917E24ED500FD2F44 /* PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateMethods.h; sourceTree = "<group>"; };
+		AB52BD8C17E76D550096D8EC /* ShowInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowInfoCollectionViewCell.h; sourceTree = "<group>"; };
+		AB52BD8D17E76D550096D8EC /* ShowInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowInfoCollectionViewCell.m; sourceTree = "<group>"; };
+		AB9D442017E7548F00E326DD /* ShowInfoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowInfoCollectionViewCell.xib; sourceTree = "<group>"; };
+		AB9E22C417E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowInfoCollectionViewBaseCell.h; sourceTree = "<group>"; };
+		AB9E22C517E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowInfoCollectionViewBaseCell.m; sourceTree = "<group>"; };
 		B1FD2267170B337B00FB1669 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/remote quick help_ipad@2x.png"; sourceTree = "<group>"; };
 		B1FD2268170B33C300FB1669 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/remote quick help_ipad.png"; sourceTree = "<group>"; };
 		B1FD2269170B33DE00FB1669 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/remote quick help.png"; sourceTree = "<group>"; };
@@ -1558,6 +1572,12 @@
 		0F175F13154D45B300C1C61F /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				AB52BD8C17E76D550096D8EC /* ShowInfoCollectionViewCell.h */,
+				AB52BD8D17E76D550096D8EC /* ShowInfoCollectionViewCell.m */,
+				AB01004517E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.h */,
+				AB01004617E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.m */,
+				AB9E22C417E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.h */,
+				AB9E22C517E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.m */,
 				0F55490C151D1187007E633F /* MasterViewController.h */,
 				0F55490D151D1187007E633F /* MasterViewController.m */,
 				0F680CB717103DB60092298A /* ClearCacheView.h */,
@@ -1611,6 +1631,8 @@
 		0F175F14154D45C200C1C61F /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				AB01004817E7F3B4003C819E /* ShowInfoCollectionViewTrailerCell.xib */,
+				AB9D442017E7548F00E326DD /* ShowInfoCollectionViewCell.xib */,
 				1AFC88EF16CFC5C500E2FB2B /* cellView.xib */,
 				1AFC88EB16CFC57A00E2FB2B /* rightCellView.xib */,
 				0FB16163151F156A001BA2D4 /* jsonDataCell.xib */,
@@ -2340,6 +2362,7 @@
 				0F7F0DC71703490A0098FF75 /* BDKCollectionIndexView */,
 				0F05FB66170D79B000BBA833 /* NSString+MD5 */,
 				0FDC8917170DCAEA00419F58 /* SVPullToRefresh */,
+				AB26592917E24ED500FD2F44 /* PrivateMethods.h */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -2735,6 +2758,7 @@
 				0F554C11151D13CA007E633F /* stars_10.png in Resources */,
 				0F554C12151D13CA007E633F /* stars_2.png in Resources */,
 				0F554C13151D13CA007E633F /* stars_3.png in Resources */,
+				AB9D442117E7548F00E326DD /* ShowInfoCollectionViewCell.xib in Resources */,
 				0F554C14151D13CA007E633F /* stars_4.png in Resources */,
 				0F554C15151D13CA007E633F /* stars_5.png in Resources */,
 				0F554C16151D13CA007E633F /* stars_6.png in Resources */,
@@ -2874,6 +2898,7 @@
 				0FE5190F15716AE800AE5D95 /* remote_button_right_up@2x.png in Resources */,
 				0FE5191015716AE800AE5D95 /* remote_button_skip_backward_up@2x.png in Resources */,
 				0FE5191115716AE800AE5D95 /* remote_button_skip_forward_up@2x.png in Resources */,
+				AB01004917E7F3B4003C819E /* ShowInfoCollectionViewTrailerCell.xib in Resources */,
 				0FE5191215716AE800AE5D95 /* remote_button_stop_up@2x.png in Resources */,
 				0FE5191315716AE800AE5D95 /* remote_button_sub_up@2x.png in Resources */,
 				0FE5191415716AE800AE5D95 /* remote_button_tv_up@2x.png in Resources */,
@@ -3253,10 +3278,12 @@
 				0F40F5A7164D5FA000AF9DE9 /* RightMenuViewController.m in Sources */,
 				0FA39CBD165419F400A61E4A /* gradientUIView.m in Sources */,
 				0FB133AA165EC1E5003756C1 /* tcpJSONRPC.m in Sources */,
+				AB01004717E7EBAB003C819E /* ShowInfoCollectionViewTrailerCell.m in Sources */,
 				0FEA79FC165FBBED00BB281F /* XBMCVirtualKeyboard.m in Sources */,
 				0F90904516E53C590021EFA9 /* Utilities.m in Sources */,
 				0FEAE76816EA632800387DED /* ActorCell.m in Sources */,
 				0F00207816EE247A003822B5 /* OBSlider.m in Sources */,
+				AB52BD8E17E76D550096D8EC /* ShowInfoCollectionViewCell.m in Sources */,
 				0F284A5216F63C9A00AFC1EF /* PosterLabel.m in Sources */,
 				0F284A5516F6419700AFC1EF /* PosterCell.m in Sources */,
 				0F8E308816FA536C009DEE72 /* PosterHeaderView.m in Sources */,
@@ -3272,6 +3299,7 @@
 				0F7F0DCC1703490A0098FF75 /* BDKCollectionIndexView.m in Sources */,
 				0FEE08161704819A00EC9BC7 /* FloatingHeaderFlowLayout.m in Sources */,
 				0F7B951A1708975500880F33 /* UIImage+Resize.m in Sources */,
+				AB9E22C617E7C743008EB5A5 /* ShowInfoCollectionViewBaseCell.m in Sources */,
 				0F4205D217099AE500EA533C /* RecentlyAddedCell.m in Sources */,
 				0F05FB69170D79D400BBA833 /* NSString+MD5.m in Sources */,
 				0FDC891A170DCAEA00419F58 /* UIScrollView+SVPullToRefresh.m in Sources */,
@@ -3580,7 +3608,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XBMC Remote/XBMC Remote-Prefix.pch";
 				INFOPLIST_FILE = "XBMC Remote/XBMC Remote-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3601,7 +3629,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XBMC Remote/XBMC Remote-Prefix.pch";
 				INFOPLIST_FILE = "XBMC Remote/XBMC Remote-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

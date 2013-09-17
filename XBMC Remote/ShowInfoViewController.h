@@ -14,7 +14,7 @@
 @class NowPlaying;
 @class DetailViewController;
 
-@interface ShowInfoViewController : UIViewController <UIScrollViewDelegate, UIActionSheetDelegate, KenBurnsViewDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate>{
+@interface ShowInfoViewController : UIViewController <UIScrollViewDelegate, UIActionSheetDelegate, KenBurnsViewDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>{
     IBOutlet UIImageView *coverView;
     IBOutlet UIImageView *starsView;
     IBOutlet UILabel *voteLabel;
@@ -47,6 +47,8 @@
     IBOutlet UIImageView *jewelView;
     IBOutlet UIImageView *fanartView;
 
+    IBOutlet UICollectionView *collectionView;
+    
     BOOL alreadyPush;
     
     UIToolbar *toolbar;

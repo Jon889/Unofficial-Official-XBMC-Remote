@@ -1959,7 +1959,9 @@ int originYear = 0;
 }
 
 // iOS7 scrolling performance boost for a UITableView/UICollectionView with a custom UISearchBar header
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
+    
     if (!hideSearchBarActive || [scrollView isEqual:self.searchDisplayController.searchResultsTableView]) return;
     NSArray *paths;
     NSIndexPath *searchBarPath;
@@ -2342,7 +2344,7 @@ NSIndexPath *selected;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [self.detailItem enableSection]){
             UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 244, 44)];
             titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            topNavigationLabel.textAlignment = UITextAlignmentRight;
+            topNavigationLabel.textAlignment = NSTextAlignmentRight;
             topNavigationLabel.font = [UIFont boldSystemFontOfSize:14];
             [titleView addSubview:topNavigationLabel];
             titleView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
@@ -2353,19 +2355,16 @@ NSIndexPath *selected;
             UIBarButtonItem *nowPlayingButtonItem = nil;
             if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
                 nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Now Playing", nil) style:UIBarButtonItemStylePlain target:self action:@selector(showNowPlaying)];
-                [nowPlayingButtonItem setTitleTextAttributes:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIFont systemFontOfSize:12], UITextAttributeFont,
-                  nil] 
-                forState:UIControlStateNormal];
-            }
-            else{
+                [nowPlayingButtonItem setTitleTextAttributes:@{ UITextAttributeFont : [UIFont systemFontOfSize:12] }
+                                                     forState:UIControlStateNormal];
+            } else {
                 UIImage* nowPlayingImg = [UIImage imageNamed:@"button_now_playing_empty.png"];
-                CGRect frameimg = CGRectMake(0, 0, nowPlayingImg.size.width, nowPlayingImg.size.height);
-                UIButton *nowPlayingButton = [[UIButton alloc] initWithFrame:frameimg];
-                [nowPlayingButton setBackgroundImage:nowPlayingImg forState:UIControlStateNormal];
-                [nowPlayingButton addTarget:self action:@selector(showNowPlaying) forControlEvents:UIControlEventTouchUpInside];
-                nowPlayingButtonItem =[[UIBarButtonItem alloc] initWithCustomView:nowPlayingButton];
+//                CGRect frameimg = CGRectMake(0, 0, nowPlayingImg.size.width, nowPlayingImg.size.height);
+//                UIButton *nowPlayingButton = [[UIButton alloc] initWithFrame:frameimg];
+//                [nowPlayingButton setBackgroundImage:nowPlayingImg forState:UIControlStateNormal];
+//                [nowPlayingButton addTarget:self action:@selector(showNowPlaying) forControlEvents:UIControlEventTouchUpInside];
+//                nowPlayingButtonItem =[[UIBarButtonItem alloc] initWithCustomView:nowPlayingButton];
+                nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithImage:nowPlayingImg style:UIBarButtonItemStylePlain target:self action:@selector(showNowPlaying)];
             }
             self.navigationItem.rightBarButtonItem=nowPlayingButtonItem;
             
@@ -3848,7 +3847,7 @@ NSIndexPath *selected;
             dataList.contentInset = tableViewInsets;
             dataList.scrollIndicatorInsets = tableViewInsets;
         }
-        [self.searchDisplayController.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
+        //[self.searchDisplayController.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
         [dataList setSectionIndexBackgroundColor:[UIColor clearColor]];
         [dataList setSectionIndexTrackingBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.3]];
         [dataList setSeparatorInset:UIEdgeInsetsMake(0, 53, 0, 0)];
