@@ -220,7 +220,7 @@
     UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"mainMenuCell"];
     [[NSBundle mainBundle] loadNibNamed:@"cellViewIPad" owner:self options:NULL];
-    if (cell==nil){
+    if (cell == nil){
         cell = resultMenuCell;
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
         [backgroundView setBackgroundColor:[UIColor colorWithRed:.086 green:.086 blue:.086 alpha:1]];
@@ -286,7 +286,7 @@
         [[AppDelegate instance].windowController.stackScrollViewController offView];
     }
     else{
-        if (lastSelected==indexPath.row){
+        if (lastSelected == indexPath.row){
             [[AppDelegate instance].windowController.stackScrollViewController offView];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             lastSelected = -1;
@@ -299,7 +299,7 @@
             [[AppDelegate instance].windowController.stackScrollViewController enablePanGestureRecognizer];
         }   
         else if (item.family == 3){
-            RemoteController *remoteController=[[RemoteController alloc] initWithNibName:@"RemoteController" bundle:nil]; 
+            RemoteController *remoteController = [[RemoteController alloc] initWithNibName:@"RemoteController" bundle:nil]; 
             [remoteController.view setFrame:CGRectMake(0, 0, STACKSCROLL_WIDTH, self.view.frame.size.height)];
             [[AppDelegate instance].windowController.stackScrollViewController addViewInSlider:remoteController invokeByController:self isStackStartView:TRUE];
             [[AppDelegate instance].windowController.stackScrollViewController disablePanGestureRecognizer:remoteController.panFallbackImageView];

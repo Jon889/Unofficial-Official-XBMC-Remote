@@ -44,7 +44,7 @@
 	
 -(void)changeServerStatus:(BOOL)status infoText:(NSString *)infoText{
     NSDictionary *dataDict = @{@"infoText": infoText};
-    if (status==YES){
+    if (status == YES){
         [self.tcpJSONRPCconnection startNetworkCommunicationWithServer:[AppDelegate instance].obj.serverIP serverPort:[AppDelegate instance].obj.tcpPort];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionSuccess" object:nil userInfo:dataDict];
         [AppDelegate instance].serverOnLine = YES;
@@ -59,7 +59,7 @@
         int n = [menuList numberOfRowsInSection:0];
         for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            if (cell!=nil){
+            if (cell != nil){
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
                 [(UIImageView*) [cell viewWithTag:1] setAlpha:1.0];
@@ -68,8 +68,8 @@
                 [UIView commitAnimations];
             }
         }
-//        NSString *userPassword=[[AppDelegate instance].obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", [AppDelegate instance].obj.serverPass];
-//        NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", [AppDelegate instance].obj.serverUser, userPassword, [AppDelegate instance].obj.serverIP, [AppDelegate instance].obj.serverPort];
+//        NSString *userPassword = [[AppDelegate instance].obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", [AppDelegate instance].obj.serverPass];
+//        NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", [AppDelegate instance].obj.serverUser, userPassword, [AppDelegate instance].obj.serverIP, [AppDelegate instance].obj.serverPort];
 //        jsonRPC = nil;
 //        jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
 //
@@ -95,7 +95,7 @@
         int n = [menuList numberOfRowsInSection:0];
         for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            if (cell!=nil){
+            if (cell != nil){
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
                 [(UIImageView*) [cell viewWithTag:1] setAlpha:0.3];
@@ -187,7 +187,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     mainMenu *item = (self.mainMenu)[indexPath.row];
-    if (![AppDelegate instance].serverOnLine && item.family!=4) {
+    if (![AppDelegate instance].serverOnLine && item.family != 4) {
         [menuList selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section] animated:YES scrollPosition:UITableViewScrollPositionNone];
         return;
     }
@@ -346,8 +346,8 @@
     }
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
-    BOOL clearCache=[[userDefaults objectForKey:@"clearcache_preference"] boolValue];
-    if (clearCache==YES){
+    BOOL clearCache = [[userDefaults objectForKey:@"clearcache_preference"] boolValue];
+    if (clearCache == YES){
         ClearCacheView *clearView = [[ClearCacheView alloc] initWithFrame:self.view.frame border:40];
         [clearView startActivityIndicator];
         [self.view addSubview:clearView];
@@ -358,7 +358,7 @@
     [self.view addSubview:virtualKeyboard];
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
-    [AppDelegate instance].obj=[GlobalData getInstance];
+    [AppDelegate instance].obj = [GlobalData getInstance];
     checkServerParams = @{@"properties": @[@"version", @"volume"]};
     
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -412,7 +412,7 @@
 - (void) handleXBMCServerHasChanged: (NSNotification*) sender{
     int thumbWidth = PHONE_TV_SHOWS_BANNER_WIDTH;
     int tvshowHeight = PHONE_TV_SHOWS_BANNER_HEIGHT;
-    if ([AppDelegate instance].obj.preferTVPosters==YES){
+    if ([AppDelegate instance].obj.preferTVPosters == YES){
         thumbWidth = PHONE_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PHONE_TV_SHOWS_POSTER_HEIGHT;
     }

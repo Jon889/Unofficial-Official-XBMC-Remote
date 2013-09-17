@@ -78,7 +78,7 @@
     UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"serverListCell"];
     [[NSBundle mainBundle] loadNibNamed:@"serverListCellView" owner:self options:NULL];
-    if (cell==nil){
+    if (cell == nil){
         cell = serverListCell;
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
             [(UILabel*) [cell viewWithTag:2] setHighlightedTextColor:[UIColor blackColor]];
@@ -218,13 +218,13 @@
         if (storeServerSelection){
             NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
             if (indexPath.row<storeServerSelection.row){
-                storeServerSelection=[NSIndexPath  indexPathForRow:storeServerSelection.row-1 inSection:storeServerSelection.section];
+                storeServerSelection = [NSIndexPath  indexPathForRow:storeServerSelection.row-1 inSection:storeServerSelection.section];
                 if (standardUserDefaults) {
                     [standardUserDefaults setObject:@(storeServerSelection.row) forKey:@"lastServer"];
                     [standardUserDefaults synchronize];
                 }
             }
-            else if (storeServerSelection.row==indexPath.row){
+            else if (storeServerSelection.row == indexPath.row){
                 storeServerSelection = nil;
                 [AppDelegate instance].obj.serverDescription = @"";
                 [AppDelegate instance].obj.serverUser = @"";
@@ -272,7 +272,7 @@
 
 -(IBAction)editTable:(id)sender forceClose:(BOOL)forceClose{
     if ([[AppDelegate instance].arrayServerList count]==0 && !serverListTableView.editing) return;
-    if (serverListTableView.editing || forceClose==YES){
+    if (serverListTableView.editing || forceClose == YES){
         [serverListTableView setEditing:NO animated:YES];
         [editTableButton setSelected:NO];
         if ([[AppDelegate instance].arrayServerList count] == 0)
@@ -323,7 +323,7 @@
 }
 
 - (void)infoView{
-    if (appInfoView==nil)
+    if (appInfoView == nil)
         appInfoView = [[AppInfoViewController alloc] initWithNibName:@"AppInfoViewController" bundle:nil] ;
     appInfoView.modalTransitionStyle = UIModalTransitionStylePartialCurl;
 	appInfoView.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -448,9 +448,9 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     int lastServer;
     if ([userDefaults objectForKey:@"lastServer"]!=nil){
-        lastServer=[[userDefaults objectForKey:@"lastServer"] intValue];
+        lastServer = [[userDefaults objectForKey:@"lastServer"] intValue];
         if (lastServer > -1 && lastServer < [[AppDelegate instance].arrayServerList count]){
-            NSIndexPath *lastServerIndexPath=[NSIndexPath indexPathForRow:lastServer inSection:0];
+            NSIndexPath *lastServerIndexPath = [NSIndexPath indexPathForRow:lastServer inSection:0];
             if (![AppDelegate instance].serverOnLine){
                 [self selectIndex:lastServerIndexPath reloadData:NO];
                 [connectingActivityIndicator startAnimating];
@@ -501,7 +501,7 @@
 - (void)connectionSuccess:(NSNotification *)note {
 //    [iOS7navBarEffect setBackgroundColor:[UIColor greenColor]];
 //    [self.view setNeedsDisplay];
-    if (storeServerSelection!=nil){
+    if (storeServerSelection != nil){
         UITableViewCell *cell  = [serverListTableView cellForRowAtIndexPath:storeServerSelection];
         [(UIImageView *)[cell viewWithTag:1] setImage:[UIImage imageNamed:@"connection_on"]];
     }
@@ -512,7 +512,7 @@
 - (void)connectionFailed:(NSNotification *)note {
 //    [iOS7navBarEffect setBackgroundColor:[UIColor redColor]];
 //    [self.view setNeedsDisplay];
-    if (storeServerSelection!=nil){
+    if (storeServerSelection != nil){
         UITableViewCell *cell  = [serverListTableView cellForRowAtIndexPath:storeServerSelection];
         [(UIImageView *)[cell viewWithTag:1] setImage:[UIImage imageNamed:@"connection_off"]];
     }

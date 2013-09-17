@@ -79,7 +79,7 @@
             frame_tmp.origin.x = 22;
             volumeLabel.frame = frame_tmp;
             [volumeLabel setFont:[UIFont boldSystemFontOfSize:15]];
-            UIColor *darkShadow =[UIColor colorWithRed:.2 green:.2 blue:.2 alpha:.6];
+            UIColor *darkShadow = [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:.6];
             [volumeLabel setTextColor:[UIColor colorWithRed:.1 green:.1 blue:.1 alpha:.8]];
             [volumeLabel setShadowColor:darkShadow];
             [volumeLabel setShadowOffset:CGSizeMake(.5f, .7f)];
@@ -138,9 +138,9 @@
 
 -(void)changeServerVolume:(id)sender{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC 
      callMethod:@"Application.SetVolume" 
@@ -158,7 +158,7 @@
 }
 
 -(void)stopTimer{
-    if (self.timer!=nil){
+    if (self.timer != nil){
         [self.timer invalidate];
         self.timer = nil;
     }
@@ -194,7 +194,7 @@ NSInteger action;
 }
 
 -(IBAction)stopVolume:(id)sender{
-    if (self.holdVolumeTimer!=nil){
+    if (self.holdVolumeTimer != nil){
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
     }
@@ -208,16 +208,16 @@ NSInteger action;
         self.holdVolumeTimer = nil;
         self.holdVolumeTimer = [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(changeVolume) userInfo:nil repeats:YES];        
     }
-    if (action==1){ //Volume Raise
+    if (action == 1){ //Volume Raise
        volumeSlider.value = (int)volumeSlider.value+2; 
         
     }
-    else if (action==2) { // Volume Lower
+    else if (action == 2) { // Volume Lower
         volumeSlider.value = (int)volumeSlider.value-2;
 
     }
     [AppDelegate instance].serverVolume = volumeSlider.value;
-    volumeLabel.text=[NSString  stringWithFormat:@"%.0f", volumeSlider.value];
+    volumeLabel.text = [NSString  stringWithFormat:@"%.0f", volumeSlider.value];
     [self changeServerVolume:nil];
 }
 

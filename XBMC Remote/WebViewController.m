@@ -70,11 +70,11 @@
 
 - (void)webViewDidFinishLoad: (UIWebView *)webView {
     [TwitterwebLoadIndicator stopAnimating];
-    BOOL blank_page=[[[Twitterweb.request URL] absoluteString] isEqualToString:@"about:blank"];
+    BOOL blank_page = [[[Twitterweb.request URL] absoluteString] isEqualToString:@"about:blank"];
     [webBackButton setEnabled:[Twitterweb canGoBack] && !blank_page]; // Enable or disable back
     [webForwardButton setEnabled:[Twitterweb canGoForward]];
-    tweetURL.text=[[Twitterweb.request URL] absoluteString];
-    topNavigationLabel.text=[Twitterweb stringByEvaluatingJavaScriptFromString:@"document.title"];
+    tweetURL.text = [[Twitterweb.request URL] absoluteString];
+    topNavigationLabel.text = [Twitterweb stringByEvaluatingJavaScriptFromString:@"document.title"];
     [self fade:topNavigationLabel AnimDuration:0.2 startAlpha:0 endAlpha:1];
     UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
     tableViewInsets = Twitterweb.scrollView.contentInset;
@@ -125,7 +125,7 @@
 
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
-    int numelement=[array count];
+    int numelement = [array count];
     for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
@@ -134,7 +134,7 @@
 
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
-    int numelement=[array count];
+    int numelement = [array count];
     for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
@@ -155,11 +155,11 @@
         choosedTab = 1;
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
     }
-    MenuItem.subItem.mainLabel=[NSString stringWithFormat:@"%@", item[@"label"]];
-    NSDictionary *methods=[self indexKeyedDictionaryFromArray:[MenuItem.subItem mainMethod][choosedTab]];
+    MenuItem.subItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
+    NSDictionary *methods = [self indexKeyedDictionaryFromArray:[MenuItem.subItem mainMethod][choosedTab]];
     if (methods[@"method"]!=nil){ // THERE IS A CHILD
-        NSDictionary *mainFields=[MenuItem mainFields][choosedTab];
-        NSMutableDictionary *parameters=[self indexKeyedMutableDictionaryFromArray:[MenuItem.subItem mainParameters][choosedTab]];
+        NSDictionary *mainFields = [MenuItem mainFields][choosedTab];
+        NSMutableDictionary *parameters = [self indexKeyedMutableDictionaryFromArray:[MenuItem.subItem mainParameters][choosedTab]];
         NSString *key = @"null";
         if (item[mainFields[@"row15"]]!=nil){
             key = mainFields[@"row15"];
@@ -170,7 +170,7 @@
             obj = @{mainFields[@"row6"]: @([item[mainFields[@"row6"]] intValue])};
             objKey = @"filter";
         }
-        NSMutableArray *newParameters=[NSMutableArray arrayWithObjects:
+        NSMutableArray *newParameters = [NSMutableArray arrayWithObjects:
                                        [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                         obj,objKey,
                                         parameters[@"parameters"][@"properties"], @"properties",
@@ -219,12 +219,12 @@
     int titleWidth = 310;
     if ([item[@"family"] isEqualToString:@"albumid"]){
         UIImage* extraButtonImg = [UIImage imageNamed:@"st_song_icon"];
-        extraButton =[[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
+        extraButton = [[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         titleWidth = 254;
     }
     else if ([item[@"family"] isEqualToString:@"artistid"]){
         UIImage* extraButtonImg = [UIImage imageNamed:@"st_album_icon"];
-        extraButton =[[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
+        extraButton = [[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         titleWidth = 254;
     }
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 244, 44)];

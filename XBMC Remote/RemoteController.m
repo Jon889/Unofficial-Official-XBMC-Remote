@@ -84,7 +84,7 @@
     UIImage* gestureSwitchImg = [UIImage imageNamed:@"finger"];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
-    BOOL showGesture=[[userDefaults objectForKey:@"gesture_preference"] boolValue];
+    BOOL showGesture = [[userDefaults objectForKey:@"gesture_preference"] boolValue];
     if (showGesture){
         gestureSwitchImg = [UIImage imageNamed:@"circle"];
         frame = [gestureZoneView frame];
@@ -283,9 +283,9 @@
 - (void)handleTouchpadLongPress:(UILongPressGestureRecognizer*)gestureRecognizer { 
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
         jsonRPC = nil;
-        GlobalData *obj=[GlobalData getInstance]; 
-        NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-        NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+        GlobalData *obj = [GlobalData getInstance]; 
+        NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+        NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
         jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
 
         [jsonRPC 
@@ -293,7 +293,7 @@
          withParameters:@{@"booleans": @[@"Window.IsActive(fullscreenvideo)", @"Window.IsActive(visualisation)", @"Window.IsActive(slideshow)"]} 
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
              
-             if (error==nil && methodError==nil && [methodResult isKindOfClass: [NSDictionary class]]){
+             if (error == nil && methodError == nil && [methodResult isKindOfClass: [NSDictionary class]]){
                  NSNumber *fullscreenActive = 0;
                  NSNumber *visualisationActive = 0;
                  NSNumber *slideshowActive = 0;
@@ -372,7 +372,7 @@
     //then fade out again after timeout seconds
     if ([fadeoutTimer isValid])
         [fadeoutTimer invalidate];
-    fadeoutTimer=[NSTimer scheduledTimerWithTimeInterval:timeout target:self selector:@selector(fadeoutSubs) userInfo:nil repeats:NO];
+    fadeoutTimer = [NSTimer scheduledTimerWithTimeInterval:timeout target:self selector:@selector(fadeoutSubs) userInfo:nil repeats:NO];
 }
 
 
@@ -448,7 +448,7 @@
 
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
-    int numelement=[array count];
+    int numelement = [array count];
     for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
@@ -463,13 +463,13 @@
 */
 -(void)subtitlesAction{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error==nil && methodError==nil){
+        if (error == nil && methodError == nil){
             if( [methodResult count] > 0){
                 NSNumber *response;
                 if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])){
@@ -480,7 +480,7 @@
                  withParameters:@{@"playerid": response,
                                  @"properties": @[@"subtitleenabled", @"currentsubtitle", @"subtitles"]} 
                  onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                     if (error==nil && methodError==nil){
+                     if (error == nil && methodError == nil){
                          if( [NSJSONSerialization isValidJSONObject:methodResult]){
                              if ([methodResult count]){
                                  NSDictionary *currentSubtitle = methodResult[@"currentsubtitle"];
@@ -532,13 +532,13 @@
   */
 -(void)audiostreamAction:(NSString *)action params:(NSArray *)parameters{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error==nil && methodError==nil){
+        if (error == nil && methodError == nil){
             if( [methodResult count] > 0){
                 NSNumber *response;
                 if (((NSNull *)methodResult[0][@"playerid"] != [NSNull null])){
@@ -549,7 +549,7 @@
                  withParameters:@{@"playerid": response,
                                  @"properties": @[@"currentaudiostream", @"audiostreams"]} 
                  onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                     if (error==nil && methodError==nil){
+                     if (error == nil && methodError == nil){
                          if( [NSJSONSerialization isValidJSONObject:methodResult]){
                              if ([methodResult count]){
                                  NSDictionary *currentAudiostream = methodResult[@"currentaudiostream"];
@@ -588,19 +588,19 @@
 
 -(void)playbackAction:(NSString *)action params:(NSArray *)parameters{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:@"Player.GetActivePlayers" withParameters:@{} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error==nil && methodError==nil){
+        if (error == nil && methodError == nil){
             if( [methodResult count] > 0){
                 NSNumber *response = methodResult[0][@"playerid"];
-                NSMutableArray *commonParams=[NSMutableArray arrayWithObjects:response, @"playerid", nil];
-                if (parameters!=nil)
+                NSMutableArray *commonParams = [NSMutableArray arrayWithObjects:response, @"playerid", nil];
+                if (parameters != nil)
                     [commonParams addObjectsFromArray:parameters];
                 [jsonRPC callMethod:action withParameters:[self indexKeyedDictionaryFromArray:commonParams] onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-//                    if (error==nil && methodError==nil){
+//                    if (error == nil && methodError == nil){
 //                        NSLog(@"comando %@ eseguito. Risultato: %@", action, methodResult);
 //                    }
 //                    else {
@@ -617,26 +617,26 @@
 
 -(void)GUIAction:(NSString *)action params:(NSDictionary *)params httpAPIcallback:(NSString *)callback{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
 //        NSLog(@"Action %@ ok with %@ ", action , methodResult);
-//        if (methodError!=nil || error != nil){
+//        if (methodError != nil || error != nil){
 //            NSLog(@"method error %@ %@", methodError, error);
 //        }
-        if ((methodError!=nil || error != nil) && callback!=nil){ // Backward compatibility
+        if ((methodError != nil || error != nil) && callback != nil){ // Backward compatibility
             [self sendXbmcHttp:callback];
         }
     }];
 }
 
 -(void)sendXbmcHttp:(NSString *) command{
-    GlobalData *obj=[GlobalData getInstance];
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    GlobalData *obj = [GlobalData getInstance];
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
 
-    NSString *serverHTTP=[NSString stringWithFormat:@"http://%@%@@%@:%@/xbmcCmds/xbmcHttp?command=%@", obj.serverUser, userPassword, obj.serverIP, obj.serverPort, command];
+    NSString *serverHTTP = [NSString stringWithFormat:@"http://%@%@@%@:%@/xbmcCmds/xbmcHttp?command=%@", obj.serverUser, userPassword, obj.serverIP, obj.serverPort, command];
     NSURL *url = [NSURL  URLWithString:serverHTTP];
     NSString *requestANS = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:NULL];  
     requestANS = nil;
@@ -651,15 +651,15 @@
     }
 
 //    jsonRPC = nil;
-//    GlobalData *obj=[GlobalData getInstance]; 
-//    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-//    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+//    GlobalData *obj = [GlobalData getInstance]; 
+//    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+//    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
 //    jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
 //    [jsonRPC 
 //     callMethod:@"Application.GetProperties" 
 //     withParameters:[NSDictionary dictionaryWithObjectsAndKeys: [[NSArray alloc] initWithObjects:@"volume", nil], @"properties", nil]
 //     onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-//         if (error==nil && methodError==nil){
+//         if (error == nil && methodError == nil){
 //             if( [NSJSONSerialization isValidJSONObject:methodResult] && [methodResult count]){
 //                 audioVolume =  [[methodResult objectForKey:@"volume"] intValue];
 //             }
@@ -669,9 +669,9 @@
 
 -(void)changeServerVolume{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC 
      callMethod:@"Application.SetVolume" 
@@ -692,7 +692,7 @@ NSInteger buttonAction;
 -(IBAction)holdKey:(id)sender{
     buttonAction = [sender tag];
     [self sendAction];
-    if (self.holdVolumeTimer!=nil){
+    if (self.holdVolumeTimer != nil){
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
     }
@@ -700,7 +700,7 @@ NSInteger buttonAction;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     
-    BOOL startVibrate=[[userDefaults objectForKey:@"vibrate_preference"] boolValue];
+    BOOL startVibrate = [[userDefaults objectForKey:@"vibrate_preference"] boolValue];
     if (startVibrate){
         [[UIDevice currentDevice] playInputClick];
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
@@ -708,7 +708,7 @@ NSInteger buttonAction;
 }
 
 -(IBAction)stopHoldKey:(id)sender{
-    if (self.holdVolumeTimer!=nil){
+    if (self.holdVolumeTimer != nil){
         [self.holdVolumeTimer invalidate];
         self.holdVolumeTimer = nil;
     }
@@ -729,16 +729,16 @@ NSInteger buttonAction;
 -(void)playerStep:(NSString *)step musicPlayerGo:(NSString *)musicAction{
     if ([AppDelegate instance].serverVersion>11){
         if (jsonRPC == nil){
-            GlobalData *obj=[GlobalData getInstance];
-            NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-            NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+            GlobalData *obj = [GlobalData getInstance];
+            NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+            NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
             jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
         }
         [jsonRPC
          callMethod:@"GUI.GetProperties"
          withParameters:@{@"properties": @[@"currentwindow", @"fullscreen"]}
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-             if (error==nil && methodError==nil && [methodResult isKindOfClass: [NSDictionary class]]){
+             if (error == nil && methodError == nil && [methodResult isKindOfClass: [NSDictionary class]]){
                  if (((NSNull *)methodResult[@"currentwindow"] != [NSNull null])){
                      int winID = [methodResult[@"currentwindow"][@"id"] intValue];
                      if ([methodResult[@"fullscreen"] boolValue] == YES && (winID == 12005 || winID == 12006)){
@@ -937,7 +937,7 @@ NSInteger buttonAction;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
     
-    BOOL startVibrate=[[userDefaults objectForKey:@"vibrate_preference"] boolValue];
+    BOOL startVibrate = [[userDefaults objectForKey:@"vibrate_preference"] boolValue];
     if (startVibrate){
         [[UIDevice currentDevice] playInputClick];
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
@@ -1142,7 +1142,7 @@ NSInteger buttonAction;
     UIImage* gestureSwitchImg = [UIImage imageNamed:@"finger.png"];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
-    BOOL showGesture=[[userDefaults objectForKey:@"gesture_preference"] boolValue];
+    BOOL showGesture = [[userDefaults objectForKey:@"gesture_preference"] boolValue];
     if (showGesture){
         gestureSwitchImg = [UIImage imageNamed:@"circle.png"];
         CGRect frame = [gestureZoneView frame];

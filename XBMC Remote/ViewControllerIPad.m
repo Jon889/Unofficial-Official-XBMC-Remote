@@ -106,7 +106,7 @@
 }
 
 -(void)changeServerStatus:(BOOL)status infoText:(NSString *)infoText{
-    if (status==YES){
+    if (status == YES){
         [self.tcpJSONRPCconnection startNetworkCommunicationWithServer:[AppDelegate instance].obj.serverIP serverPort:[AppDelegate instance].obj.tcpPort];
         [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCServerConnectionSuccess" object: nil];
         [AppDelegate instance].serverOnLine = YES;
@@ -120,7 +120,7 @@
         int n = [menuViewController.tableView numberOfRowsInSection:0];
         for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            if (cell!=nil){
+            if (cell != nil){
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
@@ -144,7 +144,7 @@
         int n = [menuViewController.tableView numberOfRowsInSection:0];
         for (int i = 1;i<n;i++){
             UITableViewCell *cell = [menuViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-            if (cell!=nil){
+            if (cell != nil){
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:0.3];
@@ -163,7 +163,7 @@
 -(void) offStackView{
     if (![AppDelegate instance].serverOnLine){
         [[AppDelegate instance].windowController.stackScrollViewController offView];
-        NSIndexPath *selection=[menuViewController.tableView indexPathForSelectedRow];
+        NSIndexPath *selection = [menuViewController.tableView indexPathForSelectedRow];
         if (selection){
             [menuViewController.tableView deselectRowAtIndexPath:selection animated:YES];
             [menuViewController setLastSelected:-1];
@@ -217,11 +217,11 @@
 -(void) showSetup:(BOOL)show{
     firstRun = NO;
     if ([self.serverPickerPopover isPopoverVisible]) {
-        if (show==NO)
+        if (show == NO)
             [self.serverPickerPopover dismissPopoverAnimated:YES];
     }
     else{
-        if (show==YES){
+        if (show == YES){
             [self toggleSetup];
         }
     }
@@ -245,7 +245,7 @@
         [self toggleSetup];
         return;
     }
-    NSString *title=[NSString stringWithFormat:@"%@\n%@", [AppDelegate instance].obj.serverDescription, [AppDelegate instance].obj.serverIP];
+    NSString *title = [NSString stringWithFormat:@"%@\n%@", [AppDelegate instance].obj.serverDescription, [AppDelegate instance].obj.serverIP];
     NSString *destructive = nil;
     NSArray *sheetActions = nil;
     if (![AppDelegate instance].serverOnLine){
@@ -255,7 +255,7 @@
         destructive = NSLocalizedString(@"Power off System", nil);
         sheetActions = @[NSLocalizedString(@"Hibernate", nil), NSLocalizedString(@"Suspend", nil), NSLocalizedString(@"Reboot", nil), NSLocalizedString(@"Quit XBMC application", nil), NSLocalizedString(@"Update Audio Library", nil), NSLocalizedString(@"Update Video Library", nil)];
     }
-    int numActions=[sheetActions count];
+    int numActions = [sheetActions count];
     if (numActions){
         actionSheetPower = [[UIActionSheet alloc] initWithTitle:title
                                                             delegate:self
@@ -273,12 +273,12 @@
 
 -(void)powerAction:(NSString *)action params:(NSDictionary *)params{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance]; 
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance]; 
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (methodError==nil && error == nil){
+        if (methodError == nil && error == nil){
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Command executed", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alertView show];
         }
@@ -290,7 +290,7 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    if (buttonIndex!=actionSheet.cancelButtonIndex){
+    if (buttonIndex != actionSheet.cancelButtonIndex){
         if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"Wake On Lan", nil)]){
             if ([AppDelegate instance].obj.serverHWAddr != nil){
                 [self wakeUp:[AppDelegate instance].obj.serverHWAddr];
@@ -385,7 +385,7 @@
     XBMCVirtualKeyboard *virtualKeyboard = [[XBMCVirtualKeyboard alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     [self.view addSubview:virtualKeyboard];
     firstRun = YES;
-    [AppDelegate instance].obj=[GlobalData getInstance]; 
+    [AppDelegate instance].obj = [GlobalData getInstance]; 
 
     int cellHeight = 56;
     int infoHeight = 22;
@@ -519,8 +519,8 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults synchronize];
-    BOOL clearCache=[[userDefaults objectForKey:@"clearcache_preference"] boolValue];
-    if (clearCache==YES){
+    BOOL clearCache = [[userDefaults objectForKey:@"clearcache_preference"] boolValue];
+    if (clearCache == YES){
         ClearCacheView *clearView = [[ClearCacheView alloc] initWithFrame:self.view.frame];
         [clearView startActivityIndicator];
         [self.view addSubview:clearView];
@@ -609,7 +609,7 @@
 - (void) handleXBMCServerHasChanged: (NSNotification*) sender{
     int thumbWidth = PAD_TV_SHOWS_BANNER_WIDTH;
     int tvshowHeight = PAD_TV_SHOWS_BANNER_HEIGHT;
-    if ([AppDelegate instance].obj.preferTVPosters==YES){
+    if ([AppDelegate instance].obj.preferTVPosters == YES){
         thumbWidth = PAD_TV_SHOWS_POSTER_WIDTH;
         tvshowHeight = PAD_TV_SHOWS_POSTER_HEIGHT;
     }
@@ -617,7 +617,7 @@
     menuItem.thumbWidth = thumbWidth;
     menuItem.rowHeight = tvshowHeight;
     [[AppDelegate instance].windowController.stackScrollViewController offView];
-    NSIndexPath *selection=[menuViewController.tableView indexPathForSelectedRow];
+    NSIndexPath *selection = [menuViewController.tableView indexPathForSelectedRow];
     if (selection){
         [menuViewController.tableView deselectRowAtIndexPath:selection animated:YES];
         [menuViewController setLastSelected:-1];

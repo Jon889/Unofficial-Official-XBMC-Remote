@@ -115,7 +115,7 @@
         xbmcVirtualKeyboard.text = @" ";
     }
     NSDictionary *params;
-    if (note!=nil){
+    if (note != nil){
         params = [note userInfo][@"params"];
     }
     keyboardTitle.text = @"";
@@ -177,7 +177,7 @@
         }
         else{ // CHARACTER
             int x = (unichar) [string characterAtIndex: 0];
-            if (x==10) {
+            if (x == 10) {
                 [self GUIAction:@"Input.Select" params:@{} httpAPIcallback:nil];
                 [xbmcVirtualKeyboard resignFirstResponder];
             }
@@ -196,7 +196,7 @@
         verboseOutput.text = stringToSend;
         if ([string length] != 0){
             int x = (unichar) [string characterAtIndex: 0];
-            if (x==10) {
+            if (x == 10) {
                 [self GUIAction:@"Input.SendText" params:@{ @"text": stringToSend, @"done": @YES } httpAPIcallback:nil];
                 [xbmcVirtualKeyboard resignFirstResponder];
                 theTextField.text = @"";
@@ -212,16 +212,16 @@
 
 -(void)GUIAction:(NSString *)action params:(NSDictionary *)params httpAPIcallback:(NSString *)callback{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance];
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance];
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         //        NSLog(@"Action %@ ok with %@ ", action , methodResult);
-        //        if (methodError!=nil || error != nil){
+        //        if (methodError != nil || error != nil){
         //            NSLog(@"method error %@", methodError);
         //        }
-        if ((methodError!=nil || error != nil) && callback!=nil){ // Backward compatibility
+        if ((methodError != nil || error != nil) && callback != nil){ // Backward compatibility
             //            NSLog(@"method error %@", methodError);
             [self sendXbmcHttp:callback];
         }
@@ -229,10 +229,10 @@
 }
 
 -(void)sendXbmcHttp:(NSString *) command{
-    GlobalData *obj=[GlobalData getInstance];
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    GlobalData *obj = [GlobalData getInstance];
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
     
-    NSString *serverHTTP=[NSString stringWithFormat:@"http://%@%@@%@:%@/xbmcCmds/xbmcHttp?command=%@", obj.serverUser, userPassword, obj.serverIP, obj.serverPort, command];
+    NSString *serverHTTP = [NSString stringWithFormat:@"http://%@%@@%@:%@/xbmcCmds/xbmcHttp?command=%@", obj.serverUser, userPassword, obj.serverIP, obj.serverPort, command];
     NSURL *url = [NSURL  URLWithString:serverHTTP];
     NSString *requestANS = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:NULL];
     requestANS = nil;

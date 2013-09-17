@@ -79,7 +79,7 @@
     UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:@"rightMenuCell"];
     [[NSBundle mainBundle] loadNibNamed:@"rightCellView" owner:self options:NULL];
-    if (cell==nil || [labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
+    if (cell == nil || [labelsList[indexPath.row] isEqualToString:NSLocalizedString(@"LED Torch", nil)]){
         cell = rightMenuCell;
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
         [backgroundView setBackgroundColor:[UIColor colorWithRed:.086 green:.086 blue:.086 alpha:1]];
@@ -252,12 +252,12 @@
 
 -(void)powerAction:(NSString *)action params:(NSDictionary *)params{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance];
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance];
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (methodError==nil && error == nil){
+        if (methodError == nil && error == nil){
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Command executed", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alertView show];
         }
@@ -425,7 +425,7 @@
                          int n = [menuTableView numberOfRowsInSection:0];
                          for (int i = 1;i<n;i++){
                              UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                             if (cell!=nil){
+                             if (cell != nil){
                                  cell.alpha = 0;
                              }
                          }
@@ -437,7 +437,7 @@
                                               int n = [menuTableView numberOfRowsInSection:0];
                                               for (int i = 1;i<n;i++){
                                                   UITableViewCell *cell = [menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                                                  if (cell!=nil){
+                                                  if (cell != nil){
                                                       cell.alpha = 1;
                                                   }
                                               }

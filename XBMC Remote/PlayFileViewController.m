@@ -33,12 +33,12 @@
     NSLog(@"%@", item);
  
     [jsonRPC callMethod:@"Files.PrepareDownload" withParameters:@{@"path": item[@"file"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error==nil && methodError==nil){
+        if (error == nil && methodError == nil){
             if( [methodResult count] > 0){
-                GlobalData *obj=[GlobalData getInstance];     
+                GlobalData *obj = [GlobalData getInstance];     
                 //NSDictionary *itemid = [methodResult objectForKey:@"details"]; 
 
-                NSString *serverURL=[NSString stringWithFormat:@"%@:%@", obj.serverIP, obj.serverPort];
+                NSString *serverURL = [NSString stringWithFormat:@"%@:%@", obj.serverIP, obj.serverPort];
                 NSString *stringURL = [NSString stringWithFormat:@"%@://%@/%@",(NSArray*)methodResult[@"protocol"], serverURL, ((NSDictionary*)methodResult[@"details"])[@"path"]];                
                 NSLog(@"RESULT %@", stringURL);
                 NSURLRequest *request = [[NSURLRequest alloc] initWithURL: [NSURL URLWithString: stringURL] cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];  
@@ -57,9 +57,9 @@
 - (void)viewDidLoad{
     
     
-    GlobalData *obj=[GlobalData getInstance];     
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance];     
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [self createPlayback];
     [super viewDidLoad];

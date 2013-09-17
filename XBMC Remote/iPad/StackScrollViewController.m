@@ -53,7 +53,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 
 -(id)init {
 	
-	if(self= [super init]) {
+	if(self = [super init]) {
 		
 		viewControllersStack = [[NSMutableArray alloc] init];
         stackViewsFrames = [[NSMutableArray alloc] init];
@@ -223,8 +223,8 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 
 -(void)offView{
     
-    int orientation= [[UIApplication sharedApplication] statusBarOrientation];
-    int posX = (orientation==1 || orientation==2) ? 468 : 724;
+    int orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    int posX = (orientation == 1 || orientation == 2) ? 468 : 724;
     
     [UIView animateWithDuration:0.2
                      animations:^{ 
@@ -658,9 +658,9 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 							viewAtRight = nil;
 							viewAtRight2 = nil;
                             // MODDED BY JOE
-                            int orientation= [[UIApplication sharedApplication] statusBarOrientation];
-//                            int marginPosX = (orientation==1 || orientation==2) ? 468 : 724; // OFF SHOW THE STACK
-                            int marginPosX = (orientation==1 || orientation==2) ? 415 : 671; // SHOW A LITTLE PIECE OF THE STACK
+                            int orientation = [[UIApplication sharedApplication] statusBarOrientation];
+//                            int marginPosX = (orientation == 1 || orientation == 2) ? 468 : 724; // OFF SHOW THE STACK
+                            int marginPosX = (orientation == 1 || orientation == 2) ? 415 : 671; // SHOW A LITTLE PIECE OF THE STACK
                             if ((((UIView*)[slideViews subviews][0]).frame.origin.x+marginPosX/2) >= marginPosX) {
                                 posX = marginPosX;
                             }
@@ -874,13 +874,13 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 - (void)addViewInSlider:(UIViewController*)controller invokeByController:(UIViewController*)invokeByController isStackStartView:(BOOL)isStackStartView{
     float animX = 0;
 	if (isStackStartView) {
-        int numViews=[[slideViews subviews]count];
-        if (numViews==0){
-            int orientation= [[UIApplication sharedApplication] statusBarOrientation];
-            animX = (orientation==1 || orientation==2) ? 468 : 724;
+        int numViews = [[slideViews subviews]count];
+        if (numViews == 0){
+            int orientation = [[UIApplication sharedApplication] statusBarOrientation];
+            animX = (orientation == 1 || orientation == 2) ? 468 : 724;
         }
         else {
-            animX=[[slideViews subviews][0] frame].origin.x;
+            animX = [[slideViews subviews][0] frame].origin.x;
         }
 		slideStartPosition = SLIDE_VIEWS_START_X_POS;
 		viewXPosition = slideStartPosition;
@@ -936,7 +936,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	}
 	
 	[viewControllersStack addObject:controller];
-	if (invokeByController !=nil) {
+	if (invokeByController != nil) {
 //        NSLog(@"CINQUE"); //FIRST
 		viewXPosition = invokeByController.view.frame.origin.x + invokeByController.view.frame.size.width;			
 	}
@@ -1052,7 +1052,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	BOOL isViewOutOfScreen = FALSE; 
     int posX = SLIDE_VIEWS_START_X_POS;
     if ([viewControllersStack count]==1){
-        posX=[[slideViews subviews][0] frame].origin.x;
+        posX = [[slideViews subviews][0] frame].origin.x;
     }
 	for (UIViewController* subController in viewControllersStack) {
 		if (viewAtRight != nil && [viewAtRight isEqual:subController.view]) {
@@ -1106,10 +1106,10 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	for (UIViewController* subController in viewControllersStack) {
 		[subController didRotateFromInterfaceOrientation:fromInterfaceOrientation];                
 	}
-	if (viewAtLeft !=nil) {
+	if (viewAtLeft != nil) {
 		[viewAtLeft setHidden:FALSE];
 	}
-	if (viewAtRight !=nil) {
+	if (viewAtRight != nil) {
 		[viewAtRight setHidden:FALSE];
 	}	
 	if (viewAtLeft2 !=nil) {

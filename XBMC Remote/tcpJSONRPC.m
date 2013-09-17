@@ -73,7 +73,7 @@ NSOutputStream	*outStream;
 
 -(void)stopNetworkCommunication{
     [AppDelegate instance].serverTCPConnectionOpen = NO;
-    NSStreamStatus current_status =[inStream streamStatus];
+    NSStreamStatus current_status = [inStream streamStatus];
     if (current_status == NSStreamStatusOpen){
         [inStream close];
         [inStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -175,14 +175,14 @@ NSOutputStream	*outStream;
      withTimeout: SERVER_TIMEOUT
      onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
          inCheck = FALSE;
-         if (error==nil && methodError==nil){
+         if (error == nil && methodError == nil){
              [AppDelegate instance].serverVolume = [methodResult[@"volume"] intValue];
              if (![AppDelegate instance].serverOnLine){
                  if( [NSJSONSerialization isValidJSONObject:methodResult]){
                      NSDictionary *serverInfo = methodResult[@"version"];
                      [AppDelegate instance].serverVersion = [serverInfo[@"major"] intValue];
                      [AppDelegate instance].serverMinorVersion = [serverInfo[@"minor"] intValue];
-                     NSString *infoTitle=[NSString stringWithFormat:@"%@ v%@.%@ %@",
+                     NSString *infoTitle = [NSString stringWithFormat:@"%@ v%@.%@ %@",
                                           [AppDelegate instance].obj.serverDescription,
                                           serverInfo[@"major"],
                                           serverInfo[@"minor"],

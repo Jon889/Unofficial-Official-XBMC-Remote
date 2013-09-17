@@ -51,7 +51,7 @@
 }
 
 - (void)configureView {
-    if (self.detailItem==nil){
+    if (self.detailItem == nil){
         self.navigationItem.title = NSLocalizedString(@"New XBMC Server", nil);
     }
     else {
@@ -113,7 +113,7 @@
     
     [self textFieldDoneEditing:nil];
     NSString *macAddress = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@", mac_0_UI.text, mac_1_UI.text, mac_2_UI.text, mac_3_UI.text, mac_4_UI.text, mac_5_UI.text];
-    if (self.detailItem==nil){
+    if (self.detailItem == nil){
         [[AppDelegate instance].arrayServerList addObject:@{@"serverDescription": descriptionUI.text,
                                                            @"serverUser": usernameUI.text,
                                                            @"serverPass": passwordUI.text,

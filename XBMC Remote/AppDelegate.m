@@ -103,7 +103,7 @@ NSMutableArray *hostRightMenuItems;
         filemodeMusicType = @"files";
     }
     
-    obj=[GlobalData getInstance];
+    obj = [GlobalData getInstance];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         thumbWidth = PHONE_TV_SHOWS_BANNER_WIDTH;
@@ -169,7 +169,7 @@ NSMutableArray *hostRightMenuItems;
     item1.enableSection = YES;
     item1.mainButtons = @[@"st_album", @"st_artist", @"st_genre", @"st_filemode", @"st_album_recently", @"st_songs_recently", @"st_album_top100", @"st_songs_top100", @"st_album_recently_played", @"st_songs_recently_played", @"st_song", @"st_addons", @"st_music_playlist"]; //
     
-    item1.mainMethod=[NSMutableArray arrayWithObjects:
+    item1.mainMethod = [NSMutableArray arrayWithObjects:
                       
                       @[@"AudioLibrary.GetAlbums", @"method",
                        @"AudioLibrary.GetAlbumDetails", @"extra_info_method"],
@@ -203,7 +203,7 @@ NSMutableArray *hostRightMenuItems;
                       
                       nil];
     
-    item1.mainParameters=[NSMutableArray arrayWithObjects:
+    item1.mainParameters = [NSMutableArray arrayWithObjects:
                           
                           [NSMutableArray arrayWithObjects:
                            [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -587,7 +587,7 @@ NSMutableArray *hostRightMenuItems;
                         @[],
                         [NSMutableArray arrayWithObjects:NSLocalizedString(@"Queue after current", nil), NSLocalizedString(@"Queue", nil), NSLocalizedString(@"Play", nil), NSLocalizedString(@"Show Content", nil), nil]];
     
-    item1.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item1.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                               
                               @[@"AudioLibrary.GetSongs", @"method", @"YES", @"albumView"],
                               
@@ -622,7 +622,7 @@ NSMutableArray *hostRightMenuItems;
 //                              [NSArray arrayWithObjects:@"Files.GetDirectory", @"method", nil],
                               
                               nil];
-    item1.subItem.mainParameters=[NSMutableArray arrayWithObjects:
+    item1.subItem.mainParameters = [NSMutableArray arrayWithObjects:
                                   [NSMutableArray arrayWithObjects:
                                    [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     @{@"order": @"ascending",
@@ -899,7 +899,7 @@ NSMutableArray *hostRightMenuItems;
                                @YES,
                                @YES];
     
-    item1.subItem.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item1.subItem.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                                       
                                       @[],
                                       
@@ -923,7 +923,7 @@ NSMutableArray *hostRightMenuItems;
                                       @[@"Files.GetDirectory", @"method"],
                                       nil];
     
-    item1.subItem.subItem.mainParameters=[NSMutableArray arrayWithObjects:
+    item1.subItem.subItem.mainParameters = [NSMutableArray arrayWithObjects:
                                           
                                           @[],
                                           
@@ -1052,7 +1052,7 @@ NSMutableArray *hostRightMenuItems;
     item2.enableSection = YES;
     item2.noConvertTime = YES;
     item2.mainButtons = @[@"st_movie", @"st_movie_genre", @"st_movie_set", @"st_movie_recently", @"st_concert", @"st_filemode", @"st_addons", @"st_livetv"];
-    item2.mainMethod=[NSMutableArray arrayWithObjects:
+    item2.mainMethod = [NSMutableArray arrayWithObjects:
                       @[@"VideoLibrary.GetMovies", @"method",
                        @"VideoLibrary.GetMovieDetails", @"extra_info_method"],
                       
@@ -1073,7 +1073,7 @@ NSMutableArray *hostRightMenuItems;
                       
                       nil];
     
-    item2.mainParameters=[NSMutableArray arrayWithObjects:
+    item2.mainParameters = [NSMutableArray arrayWithObjects:
                           [NSMutableArray arrayWithObjects:
                            @{@"sort": @{@"order": @"ascending",
                              @"ignorearticle": @NO,
@@ -1344,7 +1344,7 @@ NSMutableArray *hostRightMenuItems;
                         @{@"modes": @[],
                          @"icons": @[]}];
     
-    item2.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item2.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                               @[],
                               
                               @[@"VideoLibrary.GetMovies", @"method",
@@ -1361,7 +1361,7 @@ NSMutableArray *hostRightMenuItems;
                               nil];
     item2.subItem.noConvertTime = YES;
 
-    item2.subItem.mainParameters=[NSMutableArray arrayWithObjects:
+    item2.subItem.mainParameters = [NSMutableArray arrayWithObjects:
                                   
                                   @[],
                                   
@@ -1811,7 +1811,7 @@ NSMutableArray *hostRightMenuItems;
                         @{@"modes": @[],
                          @"icons": @[]}];
     
-    item3.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item3.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                               @[@"VideoLibrary.GetEpisodes", @"method",
                                @"VideoLibrary.GetEpisodeDetails", @"extra_info_method",
                                @"YES", @"episodesView",
@@ -1982,14 +1982,14 @@ NSMutableArray *hostRightMenuItems;
                               @YES,
                               @YES];
     
-    item3.subItem.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item3.subItem.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                                       @[],
 //                                      [NSArray arrayWithObjects:nil],
                                       @[],
                                       @[@"Files.GetDirectory", @"method"],
                                       @[@"Files.GetDirectory", @"method"],
                                       nil];
-    item3.subItem.subItem.mainParameters=[NSMutableArray arrayWithObjects:
+    item3.subItem.subItem.mainParameters = [NSMutableArray arrayWithObjects:
                                           @[],
                                           
 //                                          [NSArray arrayWithObjects:nil],
@@ -2041,7 +2041,7 @@ NSMutableArray *hostRightMenuItems;
     item4.enableSection = YES;
     item4.mainButtons = @[@"st_filemode", @"st_addons"];
     
-    item4.mainMethod=[NSMutableArray arrayWithObjects:
+    item4.mainMethod = [NSMutableArray arrayWithObjects:
                       
                       @[@"Files.GetSources", @"method"],
                       
@@ -2049,7 +2049,7 @@ NSMutableArray *hostRightMenuItems;
                       
                       nil];
     
-    item4.mainParameters=[NSMutableArray arrayWithObjects:
+    item4.mainParameters = [NSMutableArray arrayWithObjects:
                           [NSMutableArray arrayWithObjects:
                            [NSMutableDictionary dictionaryWithObjectsAndKeys:
                             @{@"order": @"ascending",
@@ -2094,7 +2094,7 @@ NSMutableArray *hostRightMenuItems;
     item4.thumbWidth = 53;
     item4.defaultThumb = @"jewel_dvd.table.png";
     
-    item4.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item4.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                               
                               @[@"Files.GetDirectory", @"method"],
                               
@@ -2102,7 +2102,7 @@ NSMutableArray *hostRightMenuItems;
                               
                               nil];
     
-    item4.subItem.mainParameters=[NSMutableArray arrayWithObjects:
+    item4.subItem.mainParameters = [NSMutableArray arrayWithObjects:
                                   
                                   [NSMutableArray arrayWithObjects:
                                    [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -2155,7 +2155,7 @@ NSMutableArray *hostRightMenuItems;
     item4.subItem.defaultThumb = @"nocover_tvshows_episode.png";
     
     
-    item4.subItem.subItem.mainMethod=[NSMutableArray arrayWithObjects:
+    item4.subItem.subItem.mainMethod = [NSMutableArray arrayWithObjects:
                                       
                                       @[@"Files.GetDirectory", @"method"],
                                       
@@ -2163,7 +2163,7 @@ NSMutableArray *hostRightMenuItems;
                                       
                                       nil];
     
-    item4.subItem.subItem.mainParameters=[NSMutableArray arrayWithObjects:
+    item4.subItem.subItem.mainParameters = [NSMutableArray arrayWithObjects:
                                           
                                           @[],
                                           

@@ -32,7 +32,7 @@
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event{
     UITouch *touch = [touches  anyObject];
-    if ([touch tapCount] > 15 && touch.view==creditsSign && creditsMask.hidden){
+    if ([touch tapCount] > 15 && touch.view == creditsSign && creditsMask.hidden){
         creditsMask.hidden = NO;
         if (audioPlayer == nil){
             NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle]

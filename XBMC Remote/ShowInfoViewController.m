@@ -206,7 +206,7 @@ int count = 0;
         }
         else if ([item[@"family"] isEqualToString:@"artistid"]){
             UIImage* extraButtonImg = [UIImage imageNamed:@"st_album_icon"];
-            extraButton =[[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
+            extraButton = [[UIBarButtonItem alloc] initWithImage:extraButtonImg style:UIBarButtonItemStyleBordered target:self action:@selector(showContent:)];
         }
         else if ([item[@"family"] isEqualToString:@"tvshowid"]){
             UIImage* extraButtonImg = [UIImage imageNamed:@"st_tv_icon"];
@@ -354,7 +354,7 @@ int count = 0;
 
 - (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
-    int numelement=[array count];
+    int numelement = [array count];
     for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
@@ -363,7 +363,7 @@ int count = 0;
 
 - (NSMutableDictionary *) indexKeyedMutableDictionaryFromArray:(NSArray *)array {
     NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
-    int numelement=[array count];
+    int numelement = [array count];
     for (int i = 0;i<numelement-1;i+=2){
         mutableDictionary[array[i+1]] = array[i];
     }
@@ -382,14 +382,14 @@ int count = 0;
         notificationName = @"UIApplicationEnableMusicSection";
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
         choosedMenuItem = MenuItem.subItem;
-        choosedMenuItem.mainLabel=[NSString stringWithFormat:@"%@", item[@"label"]];
+        choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
 
     }
     else if ([item[@"family"] isEqualToString:@"tvshowid"] && ![sender isKindOfClass:[NSString class]]){
         notificationName = @"UIApplicationEnableTvShowSection";
         MenuItem = [[AppDelegate instance].playlistTvShows copy];
         choosedMenuItem = MenuItem.subItem;
-        choosedMenuItem.mainLabel=[NSString stringWithFormat:@"%@", item[@"label"]];
+        choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
 
     }
     else if ([item[@"family"] isEqualToString:@"artistid"]){
@@ -397,7 +397,7 @@ int count = 0;
         choosedTab = 1;
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
         choosedMenuItem = MenuItem.subItem;
-        choosedMenuItem.mainLabel=[NSString stringWithFormat:@"%@", item[@"label"]];
+        choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
 
     }
     else if ([item[@"family"] isEqualToString:@"movieid"] && [AppDelegate instance].serverVersion>11){
@@ -422,7 +422,7 @@ int count = 0;
             choosedMenuItem.mainLabel = actorName;
             [MenuItem setEnableSection:NO];
             [MenuItem setMainButtons:nil];
-            if ([AppDelegate instance].obj.preferTVPosters==YES){
+            if ([AppDelegate instance].obj.preferTVPosters == YES){
                 thumbWidth = PHONE_TV_SHOWS_POSTER_WIDTH;
                 tvshowHeight = PHONE_TV_SHOWS_POSTER_HEIGHT;
             }
@@ -434,17 +434,17 @@ int count = 0;
     else{
         return;
     }
-    NSDictionary *methods=[self indexKeyedDictionaryFromArray:[choosedMenuItem mainMethod][choosedTab]];
+    NSDictionary *methods = [self indexKeyedDictionaryFromArray:[choosedMenuItem mainMethod][choosedTab]];
     if (methods[@"method"]!=nil){ // THERE IS A CHILD
-        NSDictionary *mainFields=[MenuItem mainFields][choosedTab];
-        NSMutableDictionary *parameters=[self indexKeyedMutableDictionaryFromArray:[choosedMenuItem mainParameters][choosedTab]];
+        NSDictionary *mainFields = [MenuItem mainFields][choosedTab];
+        NSMutableDictionary *parameters = [self indexKeyedMutableDictionaryFromArray:[choosedMenuItem mainParameters][choosedTab]];
         NSString *key = @"null";
         if (item[mainFields[@"row15"]]!=nil){
             key = mainFields[@"row15"];
         }
         id obj = @([item[mainFields[@"row6"]] intValue]);
         id objKey = mainFields[@"row6"];
-        if (movieObj!= nil && movieObjKey!=nil){
+        if (movieObj != nil && movieObjKey != nil){
             obj = movieObj;
             objKey = movieObjKey;
         }
@@ -461,7 +461,7 @@ int count = 0;
                                     item[mainFields[@"row6"]], mainFields[@"row6"],
                                     nil];
         }
-        NSMutableArray *newParameters=[NSMutableArray arrayWithObjects:
+        NSMutableArray *newParameters = [NSMutableArray arrayWithObjects:
                                        [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                         obj,objKey,
                                         parameters[@"parameters"][@"properties"], @"properties",
@@ -526,7 +526,7 @@ int count = 0;
         [actionSheetView dismissWithClickedButtonIndex:actionSheetView.cancelButtonIndex animated:YES];
         return;
     }
-    int numActions=[sheetActions count];
+    int numActions = [sheetActions count];
     if (numActions){
         NSDictionary *item = self.detailItem;
         actionSheetView = [[UIActionSheet alloc] initWithTitle:item[@"label"]
@@ -549,7 +549,7 @@ int count = 0;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    if (buttonIndex!=actionSheet.cancelButtonIndex){
+    if (buttonIndex != actionSheet.cancelButtonIndex){
         if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Queue after current", nil)]){
             [self addQueueAfterCurrent:YES];
 
@@ -560,7 +560,7 @@ int count = 0;
         else if([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Play", nil)]){
             [self addPlayback:0.0];
         }
-        else if ([sheetActions[buttonIndex] rangeOfString:NSLocalizedString(@"Resume from", nil)].location!= NSNotFound){
+        else if ([sheetActions[buttonIndex] rangeOfString:NSLocalizedString(@"Resume from", nil)].location != NSNotFound){
             [self addPlayback:resumePointPercentage];
             return;
         }
@@ -590,7 +590,7 @@ int count = 0;
 }
 
 -(void)moveLabel:(NSArray *)objects posY:(int)y{
-    int count=[objects count];
+    int count = [objects count];
     CGRect frame;
     for (int i = 0; i < count; i++){
         if ([objects[i] isKindOfClass:[UIImageView class]]){
@@ -610,7 +610,7 @@ int count = 0;
 }
 
 -(void)setAndMoveLabels:(NSArray *)arrayLabels size:(int)moveSize{
-    UIFont *fontFace=[UIFont systemFontOfSize:16];
+    UIFont *fontFace = [UIFont systemFontOfSize:16];
 
     int offset = moveSize;
     for (UILabel *label in arrayLabels) {
@@ -779,8 +779,8 @@ int h = 0;
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setLocale:locale];
         if ([item[@"family"] isEqualToString:@"tvshowid"]){
-            GlobalData *obj=[GlobalData getInstance];
-            if (obj.preferTVPosters==NO && [AppDelegate instance].serverVersion < 12){
+            GlobalData *obj = [GlobalData getInstance];
+            if (obj.preferTVPosters == NO && [AppDelegate instance].serverVersion < 12){
                 placeHolderImage = @"";
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
                     coverHeight = 70;
@@ -839,19 +839,19 @@ int h = 0;
             genreLabel.text = date == nil ? @"-" : [format stringFromDate:date];
             if ([item[@"genre"] isKindOfClass:NSClassFromString(@"JKArray")] ||
                 [item[@"genre"] isKindOfClass:[NSArray class]]){
-                runtimeLabel.text=[item[@"genre"] componentsJoinedByString:@" / "];
-                runtimeLabel.text=[runtimeLabel.text length]==0 ? @"-" : runtimeLabel.text;
+                runtimeLabel.text = [item[@"genre"] componentsJoinedByString:@" / "];
+                runtimeLabel.text = [runtimeLabel.text length]==0 ? @"-" : runtimeLabel.text;
             }
             else{
-                runtimeLabel.text=[item[@"genre"] length]==0 ? @"-" : item[@"genre"];
+                runtimeLabel.text = [item[@"genre"] length]==0 ? @"-" : item[@"genre"];
             }
             if ([item[@"studio"] isKindOfClass:NSClassFromString(@"JKArray")] ||
                 [item[@"studio"] isKindOfClass:[NSArray class]]){
-                studioLabel.text=[item[@"studio"] componentsJoinedByString:@" / "];
-                studioLabel.text=[studioLabel.text length]==0 ? @"-" : studioLabel.text;
+                studioLabel.text = [item[@"studio"] componentsJoinedByString:@" / "];
+                studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
             }
             else{
-                studioLabel.text=[item[@"studio"] length]==0 ? @"-" : item[@"studio"];
+                studioLabel.text = [item[@"studio"] length]==0 ? @"-" : item[@"studio"];
             }
             [self setTvShowsToolbar];
         }
@@ -920,7 +920,7 @@ int h = 0;
                 studioLabel.text = [studioLabel.text length]==0 ? @"-" : studioLabel.text;
             }
             else{
-                studioLabel.text=[item[@"writer"] length]==0 ? @"-" : item[@"writer"];
+                studioLabel.text = [item[@"writer"] length]==0 ? @"-" : item[@"writer"];
             }
             shiftParentalRating = 0;
         }
@@ -1156,7 +1156,7 @@ int h = 0;
         [activityIndicatorView startAnimating];
     }
     [[SDImageCache sharedImageCache] queryDiskCacheForKey:thumbnailPath done:^(UIImage *image, SDImageCacheType cacheType) {
-        if (image!=nil){
+        if (image != nil){
             if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
                 Utilities *utils = [[Utilities alloc] init];
                 foundTintColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
@@ -1180,7 +1180,7 @@ int h = 0;
                           placeholderImage:[UIImage imageNamed:placeHolderImage]
                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                      if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && error == nil){
-                         if (image !=nil){
+                         if (image != nil){
                              Utilities *utils = [[Utilities alloc] init];
                              newColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
                              [sf setIOS7barTintColor:newColor];
@@ -1195,7 +1195,7 @@ int h = 0;
                 [jewelView setImageWithURL:[NSURL URLWithString:thumbnailPath]
                           placeholderImage:[UIImage imageNamed:placeHolderImage]
                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                     if (image !=nil){
+                                     if (image != nil){
                                          if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && error == nil){
                                              Utilities *utils = [[Utilities alloc] init];
                                              newColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
@@ -1212,7 +1212,7 @@ int h = 0;
     
     NSString *fanartPath = item[@"fanart"];
     [[SDImageCache sharedImageCache] queryDiskCacheForKey:fanartPath done:^(UIImage *image, SDImageCacheType cacheType) {
-        if (image!=nil){
+        if (image != nil){
             fanartView.image = image;
             if (inEnableKenBurns){
                 fanartView.alpha = 0;
@@ -1236,19 +1236,19 @@ int h = 0;
 
     [fanartView setClipsToBounds:YES];
     
-    voteLabel.text=[item[@"rating"] length]==0 ? @"N.A." : item[@"rating"];
-    starsView.image=[UIImage imageNamed:[NSString stringWithFormat:@"stars_%.0f.png", round([item[@"rating"] doubleValue])]];
+    voteLabel.text = [item[@"rating"] length]==0 ? @"N.A." : item[@"rating"];
+    starsView.image = [UIImage imageNamed:[NSString stringWithFormat:@"stars_%.0f.png", round([item[@"rating"] doubleValue])]];
     
-    NSString *numVotes=[item[@"votes"] length]==0 ? @"" : item[@"votes"];
+    NSString *numVotes = [item[@"votes"] length]==0 ? @"" : item[@"votes"];
     if ([numVotes length]!=0){
         NSString *numVotesPlus = NSLocalizedString(([numVotes isEqualToString:@"1"]) ? @"vote" : @"votes",nil);
-        numVotesLabel.text=[NSString stringWithFormat:@"(%@ %@)",numVotes, numVotesPlus];
+        numVotesLabel.text = [NSString stringWithFormat:@"(%@ %@)",numVotes, numVotesPlus];
     }
     CGRect frame = summaryLabel.frame;
     summaryLabel.frame = frame;
-    summaryLabel.text=[item[@"plot"] length]==0 ? @"-" : item[@"plot"];
+    summaryLabel.text = [item[@"plot"] length]==0 ? @"-" : item[@"plot"];
     if ([item[@"family"] isEqualToString:@"albumid"] || [item[@"family"] isEqualToString:@"artistid"]){
-        summaryLabel.text=[item[@"description"] length]==0 ? @"-" : item[@"description"];
+        summaryLabel.text = [item[@"description"] length]==0 ? @"-" : item[@"description"];
     }
     CGSize maximunLabelSize = CGSizeMake(pageSize, 9999);
     CGSize expectedLabelSize = [summaryLabel.text 
@@ -1302,7 +1302,7 @@ int h = 0;
             NSString *param = nil;
             embedVideoURL = nil;
             
-            if (([item[@"trailer"] rangeOfString:@"plugin://plugin.video.youtube"].location!= NSNotFound)){
+            if (([item[@"trailer"] rangeOfString:@"plugin://plugin.video.youtube"].location != NSNotFound)){
                 NSString *url = [item[@"trailer"] lastPathComponent];
                 NSRange start = [url rangeOfString:@"videoid="];
                 if (start.location != NSNotFound){
@@ -1466,7 +1466,7 @@ int h = 0;
     else{
         foundTag = [sender tag];
     }
-    if (foundTag== 1){
+    if (foundTag == 1){
         self.view.clipsToBounds = NO;
         [self alphaView:closeButton AnimDuration:1.5 Alpha:0];
         [self alphaView:scrollView AnimDuration:1.5 Alpha:1];
@@ -1565,7 +1565,7 @@ int h = 0;
         arrow_continue_down.alpha = 0;
         [UIView commitAnimations];
     }
-    else if (arrow_continue_down.alpha==0 && theScrollView.contentOffset.y<40){
+    else if (arrow_continue_down.alpha == 0 && theScrollView.contentOffset.y<40){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView setAnimationDuration:1];
@@ -1662,7 +1662,7 @@ int h = 0;
          withParameters:@{@"playerid": item[@"playlistid"],
                          @"properties": @[@"percentage", @"time", @"totaltime", @"partymode", @"position"]}
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-             if (error==nil && methodError==nil){
+             if (error == nil && methodError == nil){
                  if( [NSJSONSerialization isValidJSONObject:methodResult]){
                      if ([methodResult count]){
                          [activityIndicatorView stopAnimating];
@@ -1672,7 +1672,7 @@ int h = 0;
                                                 @"item": @{item[@"family"]: item[item[@"family"]]},
                                                 @"position": @(newPos)};
                          [jsonRPC callMethod:action2 withParameters:params2 onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                             if (error==nil && methodError==nil){
+                             if (error == nil && methodError == nil){
                                  [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
                              }
                              
@@ -1696,7 +1696,7 @@ int h = 0;
         [activityIndicatorView startAnimating];
         [jsonRPC callMethod:@"Playlist.Add" withParameters:@{@"playlistid": item[@"playlistid"], @"item": @{item[@"family"]: item[item[@"family"]]}} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
             [activityIndicatorView stopAnimating];
-            if (error==nil && methodError==nil){
+            if (error == nil && methodError == nil){
                 [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
             }
             self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -1709,12 +1709,12 @@ int h = 0;
     [activityIndicatorView startAnimating];
     NSDictionary *item = self.detailItem;
     [jsonRPC callMethod:@"Playlist.Clear" withParameters:@{@"playlistid": item[@"playlistid"]} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-        if (error==nil && methodError==nil){
+        if (error == nil && methodError == nil){
             [jsonRPC callMethod:@"Playlist.Add" withParameters:@{@"playlistid": item[@"playlistid"], @"item": @{item[@"family"]: item[item[@"family"]]}} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                if (error==nil && methodError==nil){
+                if (error == nil && methodError == nil){
                     [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
                     [jsonRPC callMethod:@"Player.Open" withParameters:@{@"item": @{@"playlistid": item[@"playlistid"], @"position": @0}} onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
-                        if (error==nil && methodError==nil){
+                        if (error == nil && methodError == nil){
                             [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
                             [activityIndicatorView stopAnimating];
                             [self showNowPlaying];
@@ -1745,7 +1745,7 @@ int h = 0;
     [activityIndicatorView startAnimating];
     [jsonRPC callMethod:@"Player.Open" withParameters:params onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
         [activityIndicatorView stopAnimating];
-        if (error==nil && methodError==nil){
+        if (error == nil && methodError == nil){
             [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
             [self showNowPlaying];
         }
@@ -1754,9 +1754,9 @@ int h = 0;
 
 -(void)SimpleAction:(NSString *)action params:(NSDictionary *)parameters{
     jsonRPC = nil;
-    GlobalData *obj=[GlobalData getInstance];
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance];
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [jsonRPC callMethod:action withParameters:parameters];
 }
@@ -1824,7 +1824,7 @@ int h = 0;
         toolbar.tintColor = foundTintColor;
     }
     float alphaValue = 0.2;
-    if (closeButton.alpha==1){
+    if (closeButton.alpha == 1){
         alphaValue = 1;
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
             [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -1834,7 +1834,7 @@ int h = 0;
         [self alphaImage:fanartView AnimDuration:1.5 Alpha:alphaValue];// cool
     }
     else{
-        if (fanartView.image!=nil && self.kenView==nil){
+        if (fanartView.image != nil && self.kenView == nil){
             fanartView.alpha = 0;
             [self elabKenBurns:fanartView.image];
         }
@@ -1906,9 +1906,9 @@ int h = 0;
     enableKenBurns = kenBurns;
     self.kenView = nil;
     [self configureView];
-    GlobalData *obj=[GlobalData getInstance];
-    NSString *userPassword=[obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
-    NSString *serverJSON=[NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
+    GlobalData *obj = [GlobalData getInstance];
+    NSString *userPassword = [obj.serverPass isEqualToString:@""] ? @"" : [NSString stringWithFormat:@":%@", obj.serverPass];
+    NSString *serverJSON = [NSString stringWithFormat:@"http://%@%@@%@:%@/jsonrpc", obj.serverUser, userPassword, obj.serverIP, obj.serverPort];
     jsonRPC = [[DSJSONRPC alloc] initWithServiceEndpoint:[NSURL URLWithString:serverJSON]];
     [self createInfo];
 }
@@ -1957,7 +1957,7 @@ int h = 0;
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     if (self.kenView != nil){
         float alphaValue = 0.2;
-        if (closeButton.alpha==1){
+        if (closeButton.alpha == 1){
             alphaValue = 1;
         }
         [UIView animateWithDuration:0.2
