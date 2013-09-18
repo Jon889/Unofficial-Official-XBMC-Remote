@@ -71,7 +71,7 @@
                  videoID = input;
              }
              if (!!videoID) {
-                 return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd = 1&showinfo = 0&autohide = 1&rel = 0", videoID];
+                 return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", videoID];
              }
          }
      } else if ([NSURLConnection canHandleRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:input]]]) {
@@ -1323,7 +1323,7 @@ int h = 0;
                             param = [param substringToIndex:end.location];
                         }
                     }
-                    embedVideoURL = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd = 1&showinfo = 0&autohide = 1&rel = 0", param];
+                    embedVideoURL = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", param];
                     isYoutubeVideoLink = YES;
                 }
             }

@@ -17,10 +17,10 @@
     self.titleLabel.text = title;
 }
 -(void)setContent:(id)content {
-    content = @"http://download.wavetlan.com/SVV/Media/HTTP/MP4/ConvertedFiles/QuickTime/QuickTime_test1_4m3s_MPEG4SP_CBR_120kbps_480x320_30fps_AAC-LCv4_CBR_32kbps_Stereo_22050Hz.mp4";
+//    content = @"http://download.wavetlan.com/SVV/Media/HTTP/MP4/ConvertedFiles/QuickTime/QuickTime_test1_4m3s_MPEG4SP_CBR_120kbps_480x320_30fps_AAC-LCv4_CBR_32kbps_Stereo_22050Hz.mp4";
     NSURL *URL = [NSURL URLWithString:content];
     self.URLToLoad = URL;
-    if ([[URL host] rangeOfString:@"youtube"].location != NSNotFound) {
+    if (URL && [[URL host] rangeOfString:@"youtube"].location != NSNotFound) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:URL]];
     } else {
         [self.webView setHidden:YES];

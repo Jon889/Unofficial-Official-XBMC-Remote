@@ -52,7 +52,7 @@
 //@synthesize detailDescriptionLabel = _detailDescriptionLabel;
 #define SECTIONS_START_AT 100
 #define SHOW_ONLY_VISIBLE_THUMBNAIL_START_AT 50
-#define MAX_NORMAL_BUTTONS 4
+#define MAX_NORMAL_BUTTONS 0
 #define WARNING_TIMEOUT 30.0f
 #define COLLECTION_HEADER_HEIGHT 16
 
@@ -332,32 +332,24 @@
 #pragma mark - Tabbar management
 
 -(IBAction)showMore:(id)sender {
-//    if ([sender tag] == choosedTab) return;
     self.indexView.hidden = YES;
     [self alphaView:noFoundView AnimDuration:0.2 Alpha:0.0];
     [activityIndicatorView startAnimating];
-    NSArray *buttonsIB = @[button1, button2, button3, button4, button5];
-    if (choosedTab < [buttonsIB count]) {
-        [buttonsIB[choosedTab] setSelected:NO];
-    }
-    choosedTab = MAX_NORMAL_BUTTONS;
-    [buttonsIB[choosedTab] setSelected:YES];
-    [self AnimTable:(UITableView *)activeLayoutView AnimDuration:0.3 Alpha:1.0 XPos:viewWidth];
     int i;
     int count = [[self.detailItem mainParameters] count];
     NSMutableArray *mainMenu = [[NSMutableArray alloc] init];
     int numIcons = [[self.detailItem mainButtons] count];
-    for (i = MAX_NORMAL_BUTTONS; i < count; i++) {
+    for (i = 0; i < count; i++) {
         NSString *icon = @"";
         if (i < numIcons) {
             icon = [self.detailItem mainButtons][i];
         }
         [mainMenu addObject: 
-         @{@"label": [NSString stringWithFormat:@"%@",[self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][i]][@"morelabel"]], 
+         @{@"label": [NSString stringWithFormat:@"%@",[self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][i]][@"label"]], 
           @"icon": icon}];
     }
     if (moreItemsViewController == nil) {
-        moreItemsViewController = [[MoreItemsViewController alloc] initWithFrame:CGRectMake(dataList.bounds.size.width, 0, dataList.bounds.size.width, dataList.bounds.size.height) mainMenu:mainMenu];
+        moreItemsViewController = [[MoreItemsViewController alloc] initWithFrame:CGRectMake(0, -dataList.bounds.size.height, dataList.bounds.size.width, dataList.bounds.size.height) mainMenu:mainMenu];
         [moreItemsViewController.view setBackgroundColor:[UIColor clearColor]];
         [moreItemsViewController viewWillAppear:FALSE];
         [moreItemsViewController viewDidAppear:FALSE];
@@ -372,7 +364,7 @@
         [detailView insertSubview:moreItemsViewController.view aboveSubview:dataList];
     }
 
-    [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 XPos:0];
+    [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:0];
     self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"More (%d)", nil), (count - MAX_NORMAL_BUTTONS)];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [UIView beginAnimations:nil context:nil];
@@ -393,10 +385,7 @@
     NSArray *buttons = [self.detailItem mainButtons];
     if (![buttons count]) return;
     NSIndexPath *choice = notification.object;
-    choosedTab = 0;
-    int selectedIdx = MAX_NORMAL_BUTTONS + choice.row;
-    selectedMoreTab.tag = selectedIdx;
-    [self changeTab:selectedMoreTab];
+    [self changeTab:choice.row];
 }
 
 -(void)changeViewMode:(int)newWatchMode forceRefresh:(BOOL)refresh {
@@ -500,62 +489,33 @@
     }
 }
 
--(IBAction)changeTab:(id)sender {
+-(void)changeTab:(int)tab {
     if (activityIndicatorView.hidden == NO) return;
     [activeLayoutView setUserInteractionEnabled:YES];
     [((UITableView *)activeLayoutView).pullToRefreshView stopAnimating];
-    if ([sender tag] == choosedTab) {
-        NSArray *watchedCycle = [self.detailItem watchModes];
-        int num_modes = [watchedCycle[choosedTab][@"modes"] count];
-        if (num_modes) {
-            if (watchMode < num_modes - 1) {
-                watchMode ++;
-            }
-            else {
-                watchMode = 0;
-            }
-            [self changeViewMode:watchMode forceRefresh:FALSE];
-            return;
-        }
-        else {
-            return;
-        }
-    }
-    self.indexView.indexTitles = nil;
-    self.indexView.hidden = YES;
-    NSArray *buttonsIB = @[button1, button2, button3, button4, button5];
-    if (choosedTab < [buttonsIB count]) {
-        [buttonsIB[choosedTab] setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
-    }
-    watchMode = 0;
-    startTime = 0;
-    [countExecutionTime invalidate];
-    countExecutionTime = nil;
-    if (longTimeout != nil) {
-        [longTimeout removeFromSuperview];
-        longTimeout = nil;
-    }
-    [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 XPos:viewWidth];
-    numTabs = [[self.detailItem mainMethod] count];
-    int newChoosedTab = [sender tag];
-    if (newChoosedTab >= numTabs) {
-        newChoosedTab = 0;
-    }
-    if (newChoosedTab == choosedTab) return;
-    [activityIndicatorView startAnimating];
-    if (choosedTab < [buttonsIB count]) {
-        [buttonsIB[choosedTab] setSelected:NO];
-    }
-    else {
-        [buttonsIB[MAX_NORMAL_BUTTONS] setSelected:NO];
-    }
-    choosedTab = newChoosedTab;
-    if (choosedTab < [buttonsIB count]) {
-        [buttonsIB[choosedTab] setSelected:YES];
-    }
+//    self.indexView.indexTitles = nil;
+//    self.indexView.hidden = YES;
+//    watchMode = 0;
+//    startTime = 0;
+//    [countExecutionTime invalidate];
+//    countExecutionTime = nil;
+//    if (longTimeout != nil) {
+//        [longTimeout removeFromSuperview];
+//        longTimeout = nil;
+//    }
+    [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:-moreItemsViewController.view.bounds.size.height];
+//    numTabs = [[self.detailItem mainMethod] count];
+//    int newChoosedTab = [sender tag];
+//    if (newChoosedTab >= numTabs) {
+//        newChoosedTab = 0;
+//    }
+//  //  if (newChoosedTab == choosedTab) return;
+
+    choosedTab = tab;
+
     NSDictionary *methods = [self indexKeyedDictionaryFromArray:[self.detailItem mainMethod][choosedTab]];
     NSDictionary *parameters = [self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][choosedTab]];
-    
+//    
     BOOL newEnableCollectionView = [self collectionViewIsEnabled];
     UISearchBarLeftButton *bar = (UISearchBarLeftButton *)self.searchDisplayController.searchBar;
     bar.leftPadding = 0;
@@ -565,20 +525,19 @@
 //    [bar layoutSubviews];
     [self checkDiskCache];
     float animDuration = 0.3f;
-    if (newEnableCollectionView != enableCollectionView) {
-        animDuration = 0.0;
-    }
-    [self AnimTable:(UITableView *)activeLayoutView AnimDuration:animDuration Alpha:1.0 XPos:viewWidth];
+//    if (newEnableCollectionView != enableCollectionView) {
+//        animDuration = 0.0;
+//    }
+[self AnimTable:(UITableView *)activeLayoutView AnimDuration:animDuration Alpha:1.0 XPos:viewWidth];
     enableCollectionView = newEnableCollectionView;
     if ([parameters[@"collectionViewRecentlyAdded"] boolValue] == YES) {
         recentlyAddedView = TRUE;
         currentCollectionViewName = NSLocalizedString(@"View: Fanart", nil);
-    }
-    else {
+    } else {
         recentlyAddedView = FALSE;
         currentCollectionViewName = NSLocalizedString(@"View: Wall", nil);
     }
-    [activeLayoutView setContentOffset:[(UITableView *)activeLayoutView contentOffset] animated:NO];
+//    [activeLayoutView setContentOffset:[(UITableView *)activeLayoutView contentOffset] animated:NO];
     self.navigationItem.title = [self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][choosedTab]][@"label"];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [UIView beginAnimations:nil context:nil];
@@ -612,7 +571,6 @@
         [self retrieveData:methods[@"method"] parameters:mutableParameters sectionMethod:methods[@"extra_section_method"] sectionParameters:parameters[@"extra_section_parameters"] resultStore:self.richResults extraSectionCall:NO refresh:NO];
     }
     else {
-        [activityIndicatorView stopAnimating];
         [self AnimTable:(UITableView *)activeLayoutView AnimDuration:0.3 Alpha:1.0 XPos:0];
     }
 }
@@ -1152,7 +1110,16 @@
 	tV.frame = frame;
     [UIView commitAnimations];
 }
-
+- (void)AnimView:(UIView *)view AnimDuration:(float)seconds Alpha:(float)alphavalue YPos:(int)Y {
+    [UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:seconds];
+	view.alpha = alphavalue;
+	CGRect frame;
+	frame = [view frame];
+	frame.origin.y = Y;
+	view.frame = frame;
+    [UIView commitAnimations];
+}
 - (void)AnimView:(UIView *)view AnimDuration:(float)seconds Alpha:(float)alphavalue XPos:(int)X {
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:seconds];
@@ -2254,7 +2221,7 @@ NSIndexPath *selected;
             [self searchWeb:item indexPath:selected serviceURL:[NSString stringWithFormat:@"http://%@.m.wikipedia.org/wiki?search=%%@", NSLocalizedString(@"WIKI_LANG", nil)]];
         }
         else if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Search last.fm charts", nil)]) {
-            [self searchWeb:item indexPath:selected serviceURL:@"http://m.last.fm/music/%@/+charts?subtype = tracks&rangetype = 6month&go = Go"];
+            [self searchWeb:item indexPath:selected serviceURL:@"http://m.last.fm/music/%@/+charts?subtype=tracks&rangetype=6month&go=Go"];
         }
     }
     else {
@@ -2349,20 +2316,7 @@ NSIndexPath *selected;
             [self.view addSubview:titleView];
         }
         if (![self.detailItem disableNowPlaying]) {
-            UIBarButtonItem *nowPlayingButtonItem = nil;
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-                nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Now Playing", nil) style:UIBarButtonItemStylePlain target:self action:@selector(showNowPlaying)];
-                [nowPlayingButtonItem setTitleTextAttributes:@{ UITextAttributeFont : [UIFont systemFontOfSize:12] }
-                                                     forState:UIControlStateNormal];
-            } else {
-                UIImage* nowPlayingImg = [UIImage imageNamed:@"button_now_playing_empty.png"];
-//                CGRect frameimg = CGRectMake(0, 0, nowPlayingImg.size.width, nowPlayingImg.size.height);
-//                UIButton *nowPlayingButton = [[UIButton alloc] initWithFrame:frameimg];
-//                [nowPlayingButton setBackgroundImage:nowPlayingImg forState:UIControlStateNormal];
-//                [nowPlayingButton addTarget:self action:@selector(showNowPlaying) forControlEvents:UIControlEventTouchUpInside];
-//                nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nowPlayingButton];
-                nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithImage:nowPlayingImg style:UIBarButtonItemStylePlain target:self action:@selector(showNowPlaying)];
-            }
+            UIBarButtonItem *nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"st_more_on"] style:UIBarButtonItemStylePlain target:self action:@selector(showMore:)];
             self.navigationItem.rightBarButtonItem = nowPlayingButtonItem;
             
             UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromLeft:)];
@@ -3854,13 +3808,13 @@ NSIndexPath *selected;
     }
     callBack = FALSE;
     self.view.userInteractionEnabled = YES;
-    choosedTab = 0;
+ //   choosedTab = 0;
     [self buildButtons]; // TEMP ?
     numTabs = [[self.detailItem mainMethod] count];
     if ([self.detailItem chooseTab])
         choosedTab = [self.detailItem chooseTab];
     if (choosedTab >= numTabs) {
-        choosedTab = 0;
+   //     choosedTab = 0;
     }
     watchMode = [self.detailItem currentWatchMode];
     NSDictionary *methods = [self indexKeyedDictionaryFromArray:[self.detailItem mainMethod][choosedTab]];
