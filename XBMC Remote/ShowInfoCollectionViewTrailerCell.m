@@ -10,8 +10,8 @@
 
 @implementation ShowInfoCollectionViewTrailerCell
 
--(CGFloat)heightOfCellForWidth:(CGFloat)width {
-    return 180 + 22;
+-(CGSize)sizeOfCellForWidth:(CGFloat)width {
+    return CGSizeMake(width, 180 + 22);
 }
 -(void)setTitle:(NSString *)title {
     self.titleLabel.text = title;

@@ -107,6 +107,7 @@
     BOOL isViewDidLoad;
     BOOL hideSearchBarActive;
     BOOL enableIpadWA;
+    UIBarButtonItem *moreButtonItem;
 }
 
 - (id)initWithFrame:(CGRect)frame;

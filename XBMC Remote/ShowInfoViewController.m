@@ -22,6 +22,7 @@
 
 #import "ShowInfoCollectionViewCell.h"
 #import "ShowInfoCollectionViewTrailerCell.h"
+#import "ShowInfoCollectionViewPosterCell.h"
 
 @interface ShowInfoViewController ()
 @property (nonatomic, strong) NSArray *collectionViewData;
@@ -87,16 +88,20 @@ NSString *const ContentKey = @"content";
 NSString *const ReuseIdKey = @"reuseid";
 -(void)createCollectionViewData {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 0;
-    layout.minimumLineSpacing = 0;
+    //layout.minimumInteritemSpacing = 0;
+    //layout.minimumLineSpacing = 0;
     self.reuseIdentifierClassMap = @{ @"basicInfoCell" : [ShowInfoCollectionViewCell class],
-                                      @"trailerCell" :  [ShowInfoCollectionViewTrailerCell class] };
+                                      @"trailerCell" :  [ShowInfoCollectionViewTrailerCell class],
+                                      @"posterCell" : [ShowInfoCollectionViewPosterCell class] };
     //Cells must be the same class as the nib name.
     for (NSString *key in [self.reuseIdentifierClassMap allKeys]) {
         [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(self.reuseIdentifierClassMap[key]) bundle:nil] forCellWithReuseIdentifier:key];
     }
     NSDictionary *d = self.detailItem;
     NSMutableArray *array = [NSMutableArray array];
+    [array addObject:@{ TitleKey : LS(@"DD By"),
+                        ContentKey : [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:d[@"thumbnail"]]]],
+                        ReuseIdKey : @"posterCell" }];
     [array addObject:@{ TitleKey : LS(@"Directed By"),
                         ContentKey : [self presentableStringFromObject:d[@"director"]],
                         ReuseIdKey : @"basicInfoCell" }];
@@ -141,13 +146,17 @@ NSString *const ReuseIdKey = @"reuseid";
 - (CGSize)collectionView:(UICollectionView *)cView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
     CGSize isize = [flowLayout itemSize];
+    CGFloat cviewwidth = cView.frame.size.width - flowLayout.sectionInset.left - flowLayout.sectionInset.right;
     ShowInfoCollectionViewBaseCell *cell = (ShowInfoCollectionViewBaseCell *)[cView cellForItemAtIndexPath:indexPath];
+    ShowInfoCollectionViewBaseCell *firstCell = (ShowInfoCollectionViewBaseCell *)[cView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
     if (!!cell) {
-        isize.height = [cell heightOfCellForWidth:collectionView.frame.size.width];
+        isize = [cell sizeOfCellForWidth:cviewwidth];
+       // if ([cView ])
     } else {
         [collectionViewLayout performSelector:@selector(invalidateLayout) withObject:nil afterDelay:0];
+        isize.width = cviewwidth;
     }
-    isize.width = cView.frame.size.width - flowLayout.sectionInset.left - flowLayout.sectionInset.right;
+
     return isize;
 }
 

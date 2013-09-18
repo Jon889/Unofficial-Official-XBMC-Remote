@@ -10,11 +10,11 @@
 
 @implementation ShowInfoCollectionViewCell
 
--(CGFloat)heightOfCellForWidth:(CGFloat)width {
+-(CGSize)sizeOfCellForWidth:(CGFloat)width {
     CGRect frame = self.contentLabel.frame;
     frame.size = [self.contentLabel sizeThatFits:CGSizeMake(self.contentLabel.bounds.size.width, CGFLOAT_MAX)];
     self.contentLabel.frame = frame;
-    return self.titleLabel.bounds.size.height + frame.size.height;
+    return CGSizeMake(width, self.titleLabel.bounds.size.height + frame.size.height);
 }
 
 -(void)setTitle:(NSString *)title {

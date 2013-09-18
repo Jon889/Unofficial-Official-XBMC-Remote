@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ShowInfoCollectionViewBaseCell : UICollectionViewCell
--(CGFloat)heightOfCellForWidth:(CGFloat)width;
+-(CGSize)sizeOfCellForWidth:(CGFloat)width;
 -(void)setTitle:(NSString *)title;
 -(void)setContent:(id)content;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

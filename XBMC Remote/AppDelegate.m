@@ -2540,12 +2540,11 @@ int Wake_on_LAN(char *ip_broadcast,const char *wake_mac) {
     // OLD SDWEBImageCache
     NSString *fullNamespace = @"ImageCache"; 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *diskCachePath = [paths[0] stringByAppendingPathComponent:fullNamespace];
     [[NSFileManager defaultManager] removeItemAtPath:paths[0] error:nil];
     
     // TO BE CHANGED!!!
     fullNamespace = @"com.hackemist.SDWebImageCache.default";
-    diskCachePath = [paths[0] stringByAppendingPathComponent:fullNamespace];
+    NSString *diskCachePath = [paths[0] stringByAppendingPathComponent:fullNamespace];
     [[NSFileManager defaultManager] removeItemAtPath:diskCachePath error:nil];
     [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
                               withIntermediateDirectories:YES

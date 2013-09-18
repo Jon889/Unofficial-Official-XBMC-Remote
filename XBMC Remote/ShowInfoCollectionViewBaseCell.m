@@ -9,9 +9,9 @@
 #import "ShowInfoCollectionViewBaseCell.h"
 
 @implementation ShowInfoCollectionViewBaseCell
--(CGFloat)heightOfCellForWidth:(CGFloat)width {
+-(CGSize)sizeOfCellForWidth:(CGFloat)width {
     NSAssert(NO, @"This [%@ %@] method must be overriden, and super method must NOT be called", [self class], NSStringFromSelector(_cmd));
-    return 0;
+    return CGSizeZero;
 }
 -(void)setTitle:(NSString *)title {
     NSAssert(NO, @"This [%@ %@] method must be overriden, and super method must NOT be called", [self class], NSStringFromSelector(_cmd));

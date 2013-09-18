@@ -330,7 +330,11 @@
 }
 
 #pragma mark - Tabbar management
-
+-(void)hideMore {
+    [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:-moreItemsViewController.view.bounds.size.height];
+    [self.navigationItem setRightBarButtonItem:moreButtonItem animated:YES];
+     self.navigationItem.title = [self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][choosedTab]][@"label"];
+}
 -(IBAction)showMore:(id)sender {
     self.indexView.hidden = YES;
     [self alphaView:noFoundView AnimDuration:0.2 Alpha:0.0];
@@ -365,13 +369,15 @@
     }
 
     [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:0];
-    self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"More (%d)", nil), (count - MAX_NORMAL_BUTTONS)];
+    self.navigationItem.title = NSLocalizedString(@"More", nil);
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(hideMore)]
+                                      animated:YES];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.3];
         topNavigationLabel.alpha = 0;
         [UIView commitAnimations];
-        topNavigationLabel.text = [NSString stringWithFormat:NSLocalizedString(@"More (%d)", nil), (count - MAX_NORMAL_BUTTONS)];
+        topNavigationLabel.text = NSLocalizedString(@"More", nil);
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.1];
         topNavigationLabel.alpha = 1;
@@ -503,7 +509,7 @@
 //        [longTimeout removeFromSuperview];
 //        longTimeout = nil;
 //    }
-    [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:-moreItemsViewController.view.bounds.size.height];
+    [self hideMore];
 //    numTabs = [[self.detailItem mainMethod] count];
 //    int newChoosedTab = [sender tag];
 //    if (newChoosedTab >= numTabs) {
@@ -538,7 +544,7 @@
         currentCollectionViewName = NSLocalizedString(@"View: Wall", nil);
     }
 //    [activeLayoutView setContentOffset:[(UITableView *)activeLayoutView contentOffset] animated:NO];
-    self.navigationItem.title = [self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][choosedTab]][@"label"];
+   
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.3];
@@ -1276,7 +1282,7 @@ int originYear = 0;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {    
-	cell.backgroundColor = [UIColor whiteColor];
+	//cell.backgroundColor = [UIColor whiteColor];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -2315,9 +2321,9 @@ NSIndexPath *selected;
             [titleView setFrame:CGRectMake(320, 373, -16, 40)];
             [self.view addSubview:titleView];
         }
+        moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"st_more_on"] style:UIBarButtonItemStylePlain target:self action:@selector(showMore:)];
+        self.navigationItem.rightBarButtonItem = moreButtonItem;
         if (![self.detailItem disableNowPlaying]) {
-            UIBarButtonItem *nowPlayingButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"st_more_on"] style:UIBarButtonItemStylePlain target:self action:@selector(showMore:)];
-            self.navigationItem.rightBarButtonItem = nowPlayingButtonItem;
             
             UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromLeft:)];
             leftSwipe.numberOfTouchesRequired = 1;
@@ -3478,13 +3484,13 @@ NSIndexPath *selected;
     NSDictionary *parameters = [self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][choosedTab]];
     if ([self.detailItem enableSection]) {
         // CONDIZIONE DEBOLE!!!
-        self.navigationItem.title = [NSString stringWithFormat:@"%@ (%d)", parameters[@"label"], numResults];
+        self.navigationItem.title = parameters[@"label"];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.3];
             topNavigationLabel.alpha = 0;
             [UIView commitAnimations];
-            topNavigationLabel.text = [NSString stringWithFormat:@"%@ (%d)", parameters[@"label"], numResults];
+            topNavigationLabel.text = parameters[@"label"];
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.1];
             topNavigationLabel.alpha = 1;
