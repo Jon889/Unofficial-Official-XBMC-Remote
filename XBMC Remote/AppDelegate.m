@@ -14,6 +14,8 @@
 #import <arpa/inet.h>
 #import "InitialSlidingViewController.h"
 #import "UIImageView+WebCache.h"
+#import "LockscreenMediaControls.h"
+#import "XBMCServer.h"
 
 @implementation AppDelegate
 
@@ -68,10 +70,18 @@ NSMutableArray *hostRightMenuItems;
 	return self;
 	
 }
+-(void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"XBMCRemoteControlReceivedWithEvent" object:event];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    [LockscreenMediaControls sharedInstance];
+    [[UITableViewCell appearance] setSelectionStyle:UITableViewCellSelectionStyleGray];
+    UIView *sbgv = [[UIView alloc] init];
+    [sbgv setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.3]];
+    [[UITableViewCell appearance] setSelectedBackgroundView:sbgv];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
     [userDefaults synchronize];
     if ([[userDefaults objectForKey:@"lang_preference"] length]) {
         [userDefaults setObject:@[[userDefaults objectForKey:@"lang_preference"]] forKey:@"AppleLanguages"];

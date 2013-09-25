@@ -9,9 +9,11 @@
 #import "ShowInfoCollectionViewPosterCell.h"
 
 @implementation ShowInfoCollectionViewPosterCell
-
++(CGSize)initialSizeOfCellForWidth:(CGFloat)width {
+    return CGSizeMake(110, 140);
+}
 -(CGSize)sizeOfCellForWidth:(CGFloat)width {
-    return CGSizeMake(50, 50);
+    return self.frame.size;
 }
 -(void)setTitle:(NSString *)title {
     //do nothing

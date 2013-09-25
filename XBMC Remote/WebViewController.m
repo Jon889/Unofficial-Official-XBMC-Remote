@@ -201,7 +201,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [bottomToolbar setTintColor:TINT_COLOR];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;

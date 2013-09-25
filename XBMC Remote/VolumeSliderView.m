@@ -23,7 +23,7 @@
         CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * -0.5);
         volumeSlider.transform = trans;
         pg_thumb_name = @"pgbar_thumb";
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [volumeSlider setMinimumTrackTintColor:SLIDER_DEFAULT_COLOR];
             [volumeSlider setMaximumTrackTintColor:APP_TINT_COLOR];
             pg_thumb_name = @"pgbar_thumb_iOS7";

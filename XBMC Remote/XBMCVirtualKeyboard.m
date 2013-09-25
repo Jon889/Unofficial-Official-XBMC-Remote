@@ -58,7 +58,7 @@
         [keyboardTitle setFont:[UIFont boldSystemFontOfSize:textSize]];
         
         inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, accessoryHeight)];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             UIToolbar *buttonsToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, accessoryHeight)];
             [buttonsToolbar setBarStyle:UIBarStyleDefault];
             [buttonsToolbar setTranslucent:YES];

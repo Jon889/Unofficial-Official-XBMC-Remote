@@ -29,7 +29,7 @@
 //        }
         
         if (self.frame.size.height > 1) {
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if (IS_IOS7) {
                 //TYPE 1
 //                UIToolbar *buttonsToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 //                [buttonsToolbar setBarStyle:UIBarStyleBlack];

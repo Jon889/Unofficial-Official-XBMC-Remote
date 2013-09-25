@@ -237,7 +237,7 @@
     UINavigationBar *newBar = navController.navigationBar;
     [newBar setTintColor:IOS6_BAR_TINT_COLOR];
     [newBar setBarStyle:UIBarStyleBlack];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [newBar setTintColor:TINT_COLOR];
         if (setBarTintColor) {
             [newBar setBarTintColor:BAR_TINT_COLOR];
@@ -337,7 +337,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         CGRect frame = menuList.frame;
         frame.origin.y = 22;
         frame.size.height = frame.size.height - 22;

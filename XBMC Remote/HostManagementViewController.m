@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "mainMenu.h"
 #import "AppInfoViewController.h"
+#import "XBMCServer.h"
 
 @interface HostManagementViewController ()
 
@@ -80,7 +81,7 @@
     [[NSBundle mainBundle] loadNibNamed:@"serverListCellView" owner:self options:NULL];
     if (cell == nil) {
         cell = serverListCell;
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [(UILabel*) [cell viewWithTag:2] setHighlightedTextColor:[UIColor blackColor]];
             [(UILabel*) [cell viewWithTag:3] setHighlightedTextColor:[UIColor blackColor]];
         }
@@ -140,6 +141,19 @@
     [AppDelegate instance].obj.serverHWAddr = item[@"serverMacAddress"];
     [AppDelegate instance].obj.preferTVPosters = [item[@"preferTVPosters"] boolValue];
     [AppDelegate instance].obj.tcpPort = [item[@"tcpPort"] intValue];
+    
+    XBMCServer *server = [[XBMCServer alloc] initWithDictionary:item];
+//    server.serverDescription = item[@"serverDescription"];
+//    server.username = item[@"serverUser"];
+//    server.password = item[@"serverPass"];
+//    server.ip = item[@"serverIP"];
+//    server.serverPort = item[@"serverPort"];
+//    server.MACAddress = item[@"serverMacAddress"];
+//    server.preferTVPosters = [item[@"preferTVPosters"] boolValue];
+//    server.tcpPort = [item[@"tcpPort"] integerValue];
+    [XBMCServer setCurrentServer:server];
+    
+    
 }
 
 -(void)deselectServerAtIndexPath:(NSIndexPath *)indexPath {
@@ -375,7 +389,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-//    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+//    if (IS_IOS7) {
 //        int barEffectHeight = 1;
 //        if (iOS7navBarEffect == nil && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 //            iOS7navBarEffect = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, barEffectHeight)];
@@ -388,7 +402,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [self.navigationController.navigationBar setBarTintColor:BAR_TINT_COLOR];
 
         [editTableButton setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal];

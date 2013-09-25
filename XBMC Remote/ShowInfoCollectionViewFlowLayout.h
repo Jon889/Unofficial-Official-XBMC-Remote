@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShowInfoCollectionViewFlowLayout : UICollectionViewLayout
-
+@interface ShowInfoCollectionViewFlowLayout : UICollectionViewFlowLayout
+@property (nonatomic) BOOL floatLeft;//default YES
+@property (nonatomic, strong) NSArray *indexPathsToFloat;
 @end

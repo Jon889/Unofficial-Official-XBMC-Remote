@@ -11,6 +11,7 @@
 @interface ShowInfoCollectionViewTrailerCell : ShowInfoCollectionViewBaseCell <UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) NSURL *URLToLoad;
 - (IBAction)playButtonPressed:(UIButton *)sender;
 @end

@@ -23,10 +23,13 @@
 #import "ShowInfoCollectionViewCell.h"
 #import "ShowInfoCollectionViewTrailerCell.h"
 #import "ShowInfoCollectionViewPosterCell.h"
+#import "PosterCell.h"
+#import "ShowInfoCollectionViewFlowLayout.h"
 
 @interface ShowInfoViewController ()
 @property (nonatomic, strong) NSArray *collectionViewData;
 @property (nonatomic, strong) NSDictionary *reuseIdentifierClassMap;
+@property (nonatomic, strong) NSMutableDictionary *cellSizeCache;
 @end
 
 @implementation ShowInfoViewController
@@ -44,9 +47,15 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil withItem:(NSDictionary *)item withFrame:(CGRect)frame bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         self.detailItem = item;
-        [self.view setFrame:frame]; 
+        [self.view setFrame:frame];
     }
     return self;
+}
+-(NSMutableDictionary *)cellSizeCache {
+    if (!_cellSizeCache) {
+        _cellSizeCache = [[NSMutableDictionary alloc] init];
+    }
+    return _cellSizeCache;
 }
 -(NSString *)presentableStringFromObject:(id)stringOrArray {
     if ([stringOrArray isKindOfClass:[NSArray class]]) {
@@ -60,24 +69,24 @@
     if (!input || [input length] == 0) {
         return nil;
     }
-     if ([input rangeOfString:@"plugin://plugin.video.youtube"].location != NSNotFound) {
-         NSRange videoidRange = [input rangeOfString:@"videoid="];
-         if (videoidRange.location != NSNotFound) {
-             input = [input stringByReplacingCharactersInRange:NSMakeRange(0, videoidRange.location + videoidRange.length) withString:@""];
-             NSRange nextParamRange = [input rangeOfString:@"&"];
-             NSString *videoID = nil;
-             if (nextParamRange.location != NSNotFound) {
-                 videoID = [input substringToIndex:nextParamRange.location];
-             } else if (!!input && [input length] > 0) {
-                 videoID = input;
-             }
-             if (!!videoID) {
-                 return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", videoID];
-             }
-         }
-     } else if ([NSURLConnection canHandleRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:input]]]) {
-         return input;
-     }
+    if ([input rangeOfString:@"plugin://plugin.video.youtube"].location != NSNotFound) {
+        NSRange videoidRange = [input rangeOfString:@"videoid="];
+        if (videoidRange.location != NSNotFound) {
+            input = [input stringByReplacingCharactersInRange:NSMakeRange(0, videoidRange.location + videoidRange.length) withString:@""];
+            NSRange nextParamRange = [input rangeOfString:@"&"];
+            NSString *videoID = nil;
+            if (nextParamRange.location != NSNotFound) {
+                videoID = [input substringToIndex:nextParamRange.location];
+            } else if (!!input && [input length] > 0) {
+                videoID = input;
+            }
+            if (!!videoID) {
+                return [NSString stringWithFormat:@"http://www.youtube.com/embed/%@?&hd=1&showinfo=0&autohide=1&rel=0", videoID];
+            }
+        }
+    } else if ([NSURLConnection canHandleRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:input]]]) {
+        return input;
+    }
     return nil;
 }
 
@@ -87,9 +96,10 @@ NSString *const TitleKey = @"title";
 NSString *const ContentKey = @"content";
 NSString *const ReuseIdKey = @"reuseid";
 -(void)createCollectionViewData {
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
-    //layout.minimumInteritemSpacing = 0;
-    //layout.minimumLineSpacing = 0;
+    ShowInfoCollectionViewFlowLayout *layout = (ShowInfoCollectionViewFlowLayout *)collectionView.collectionViewLayout;
+    layout.indexPathsToFloat = @[ [NSIndexPath indexPathForItem:0 inSection:0] ];
+    layout.floatLeft = YES;
+    layout.minimumInteritemSpacing = 0;
     self.reuseIdentifierClassMap = @{ @"basicInfoCell" : [ShowInfoCollectionViewCell class],
                                       @"trailerCell" :  [ShowInfoCollectionViewTrailerCell class],
                                       @"posterCell" : [ShowInfoCollectionViewPosterCell class] };
@@ -97,6 +107,7 @@ NSString *const ReuseIdKey = @"reuseid";
     for (NSString *key in [self.reuseIdentifierClassMap allKeys]) {
         [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(self.reuseIdentifierClassMap[key]) bundle:nil] forCellWithReuseIdentifier:key];
     }
+    [collectionView registerClass:[PosterCell class] forCellWithReuseIdentifier:@"castCell"];
     NSDictionary *d = self.detailItem;
     NSMutableArray *array = [NSMutableArray array];
     [array addObject:@{ TitleKey : LS(@"DD By"),
@@ -132,34 +143,83 @@ NSString *const ReuseIdKey = @"reuseid";
 }
 
 #pragma mark - Collection View
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return section == 0 ? 2 : 0;
+}
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
+}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.collectionViewData.count;
+    if (section == 0) {
+        return self.collectionViewData.count;
+    } else {
+        return [cast count]+1;
+    }
 }
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *data = self.collectionViewData[indexPath.row];
-    ShowInfoCollectionViewCell *cell = (ShowInfoCollectionViewCell *)[cView dequeueReusableCellWithReuseIdentifier:data[ReuseIdKey] forIndexPath:indexPath];
-    [cell setTitle:data[TitleKey]];
-    [cell setContent:data[ContentKey]];
-    return cell;
-}
-- (CGSize)collectionView:(UICollectionView *)cView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-    CGSize isize = [flowLayout itemSize];
-    CGFloat cviewwidth = cView.frame.size.width - flowLayout.sectionInset.left - flowLayout.sectionInset.right;
-    ShowInfoCollectionViewBaseCell *cell = (ShowInfoCollectionViewBaseCell *)[cView cellForItemAtIndexPath:indexPath];
-    ShowInfoCollectionViewBaseCell *firstCell = (ShowInfoCollectionViewBaseCell *)[cView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-    if (!!cell) {
-        isize = [cell sizeOfCellForWidth:cviewwidth];
-       // if ([cView ])
+    if (indexPath.section == 0) {
+        NSDictionary *data = self.collectionViewData[indexPath.row];
+        ShowInfoCollectionViewCell *cell = (ShowInfoCollectionViewCell *)[cView dequeueReusableCellWithReuseIdentifier:data[ReuseIdKey] forIndexPath:indexPath];
+        [cell setTitle:data[TitleKey]];
+        [cell setContent:data[ContentKey]];
+        return cell;
     } else {
-        [collectionViewLayout performSelector:@selector(invalidateLayout) withObject:nil afterDelay:0];
-        isize.width = cviewwidth;
+        if (indexPath.row == 0) {
+            ShowInfoCollectionViewCell *cell = (ShowInfoCollectionViewCell *)[cView dequeueReusableCellWithReuseIdentifier:@"basicInfoCell" forIndexPath:indexPath];
+            [cell setTitle:LS(@"Cast")];
+            return cell;
+        }
+        PosterCell *cell = (PosterCell *)[cView dequeueReusableCellWithReuseIdentifier:@"castCell" forIndexPath:indexPath];
+        NSDictionary *actor = cast[indexPath.row-1];
+        cell.posterLabel.text = actor[@"name"];
+        GlobalData *obj = [GlobalData getInstance];
+        NSString *serverURL = [NSString stringWithFormat:@"%@:%@/vfs/", obj.serverIP, obj.serverPort];
+        if ([AppDelegate instance].serverVersion > 11) {
+            serverURL = [NSString stringWithFormat:@"%@:%@/image/", obj.serverIP, obj.serverPort];
+        }
+        NSString *stringURL = [NSString stringWithFormat:@"http://%@%@", serverURL, [actor[@"thumbnail"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+        [cell.posterThumbnail setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:[UIImage imageNamed:@"person.png"] andResize:CGSizeMake(cView.bounds.size.width/(IS_IPAD ? 4 : 3), 150)];
+        return cell;
     }
-
-    return isize;
 }
 
+- (CGSize)collectionView:(UICollectionView *)cView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
+        CGSize isize = [flowLayout itemSize];
+        CGFloat cviewwidth = cView.frame.size.width - flowLayout.sectionInset.left - flowLayout.sectionInset.right;
+        ShowInfoCollectionViewBaseCell *cell = (ShowInfoCollectionViewBaseCell *)[cView cellForItemAtIndexPath:indexPath];
+        if (!!cell) {
+            NSString *indexPathKey = [NSString stringWithFormat:@"%i%i", indexPath.section, indexPath.item];
+            NSValue *cachedSize = self.cellSizeCache[indexPathKey];
+            if (!cachedSize) {
+                isize = [cell sizeOfCellForWidth:cviewwidth];
+                self.cellSizeCache[indexPathKey] = [NSValue valueWithCGSize:isize];
+            } else {
+                isize = [cachedSize CGSizeValue];
+            }
+        } else {
+            NSString *reuseID = self.collectionViewData[indexPath.row][ReuseIdKey];
+            isize = [self.reuseIdentifierClassMap[reuseID] initialSizeOfCellForWidth:cviewwidth];
+            [collectionViewLayout performSelector:@selector(invalidateLayout) withObject:nil afterDelay:0];
+        }
+        return isize;
+    } else {
+        //nh = oh/ow * nw
+        if (indexPath.row == 0) {
+            return CGSizeMake(cView.bounds.size.width, 20);
+        } else {
+            CGFloat width = cView.bounds.size.width/(IS_IPAD ? 4 : 3);
+            return CGSizeMake(width, 150);
+        }
+    }
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 && [AppDelegate instance].serverVersion > 11) {
+        [self showContent:cast[indexPath.row-1][@"name"]];
+    }
+}
 
 double round(double d) {
     return floor(d + 0.5);
@@ -229,12 +289,12 @@ int count = 0;
         else {
             titleWidth = 400;
         }
-
+        
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             toolbar = [UIToolbar new];
             toolbar.alpha = .8f;
             toolbar.barStyle = UIBarStyleBlackTranslucent;
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if (IS_IOS7) {
                 toolbar.tintColor = TINT_COLOR;
                 toolbar.alpha = 1.0f;
             }
@@ -258,13 +318,13 @@ int count = 0;
                 extraButton = spacer;
             }
             NSArray *items = @[title,
-                              spacer,
-                              extraButton,
-                              spacer,
-                              actionSheetButtonItemIpad];
+                               spacer,
+                               extraButton,
+                               spacer,
+                               actionSheetButtonItemIpad];
             toolbar.items = items;
             toolbar.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
-            toolbar.contentMode = UIViewContentModeScaleAspectFill;            
+            toolbar.contentMode = UIViewContentModeScaleAspectFill;
             [toolbar sizeToFit];
             CGFloat toolbarHeight = [toolbar frame].size.height;
             CGRect mainViewBounds = self.view.bounds;
@@ -273,7 +333,7 @@ int count = 0;
                                          CGRectGetWidth(mainViewBounds),
                                          toolbarHeight)];
             
-            if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if (!IS_IOS7) {
                 CGRect toolbarShadowFrame = CGRectMake(0.0f, 43, 320, 8);
                 UIImageView *toolbarShadow = [[UIImageView alloc] initWithFrame:toolbarShadowFrame];
                 [toolbarShadow setImage:[UIImage imageNamed:@"tableUp.png"]];
@@ -289,7 +349,7 @@ int count = 0;
             scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         }
         else {
-//            self.navigationItem.titleView = viewTitle;
+            //            self.navigationItem.titleView = viewTitle;
             self.navigationItem.title = item[@"label"];
             UIBarButtonItem *actionSheetButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showActionSheet)];
             if (extraButton == nil) {
@@ -297,7 +357,7 @@ int count = 0;
             }
             else {
                 self.navigationItem.rightBarButtonItems = @[actionSheetButtonItem,
-                                                           extraButton];
+                                                            extraButton];
             }
             UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromRight:)];
             rightSwipe.numberOfTouchesRequired = 1;
@@ -315,7 +375,7 @@ int count = 0;
     }
 }
 
-#pragma mark - Utility 
+#pragma mark - Utility
 
 -(void)goBack:(id)sender {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -392,14 +452,14 @@ int count = 0;
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
         choosedMenuItem = MenuItem.subItem;
         choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
-
+        
     }
     else if ([item[@"family"] isEqualToString:@"tvshowid"] && ![sender isKindOfClass:[NSString class]]) {
         notificationName = @"UIApplicationEnableTvShowSection";
         MenuItem = [[AppDelegate instance].playlistTvShows copy];
         choosedMenuItem = MenuItem.subItem;
         choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
-
+        
     }
     else if ([item[@"family"] isEqualToString:@"artistid"]) {
         notificationName = @"UIApplicationEnableMusicSection";
@@ -407,7 +467,7 @@ int count = 0;
         MenuItem = [[AppDelegate instance].playlistArtistAlbums copy];
         choosedMenuItem = MenuItem.subItem;
         choosedMenuItem.mainLabel = [NSString stringWithFormat:@"%@", item[@"label"]];
-
+        
     }
     else if ([item[@"family"] isEqualToString:@"movieid"] && [AppDelegate instance].serverVersion > 11) {
         if ([sender isKindOfClass:[NSString class]]) {
@@ -471,22 +531,22 @@ int count = 0;
                                     nil];
         }
         NSMutableArray *newParameters = [NSMutableArray arrayWithObjects:
-                                       [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                        obj,objKey,
-                                        parameters[@"parameters"][@"properties"], @"properties",
-                                        parameters[@"parameters"][@"sort"],@"sort",
-                                        nil], @"parameters",
-                                       blackTableSeparator, @"blackTableSeparator",
-                                       parameters[@"label"], @"label",
-                                       @YES, @"fromShowInfo",
-                                       [NSString stringWithFormat:@"%d",[parameters[@"enableCollectionView"] boolValue]], @"enableCollectionView",
-                                       [NSDictionary dictionaryWithDictionary:parameters[@"itemSizes"]], @"itemSizes",
-                                       parameters[@"extra_info_parameters"], @"extra_info_parameters",
-                                       [NSString stringWithFormat:@"%d",[parameters[@"FrodoExtraArt"] boolValue]], @"FrodoExtraArt",
-                                       [NSString stringWithFormat:@"%d",[parameters[@"enableLibraryCache"] boolValue]], @"enableLibraryCache",
-                                       [NSString stringWithFormat:@"%d",[parameters[@"collectionViewRecentlyAdded"] boolValue]], @"collectionViewRecentlyAdded",
-                                       newSectionParameters, @"extra_section_parameters",
-                                       nil];
+                                         [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                          obj,objKey,
+                                          parameters[@"parameters"][@"properties"], @"properties",
+                                          parameters[@"parameters"][@"sort"],@"sort",
+                                          nil], @"parameters",
+                                         blackTableSeparator, @"blackTableSeparator",
+                                         parameters[@"label"], @"label",
+                                         @YES, @"fromShowInfo",
+                                         [NSString stringWithFormat:@"%d",[parameters[@"enableCollectionView"] boolValue]], @"enableCollectionView",
+                                         [NSDictionary dictionaryWithDictionary:parameters[@"itemSizes"]], @"itemSizes",
+                                         parameters[@"extra_info_parameters"], @"extra_info_parameters",
+                                         [NSString stringWithFormat:@"%d",[parameters[@"FrodoExtraArt"] boolValue]], @"FrodoExtraArt",
+                                         [NSString stringWithFormat:@"%d",[parameters[@"enableLibraryCache"] boolValue]], @"enableLibraryCache",
+                                         [NSString stringWithFormat:@"%d",[parameters[@"collectionViewRecentlyAdded"] boolValue]], @"collectionViewRecentlyAdded",
+                                         newSectionParameters, @"extra_section_parameters",
+                                         nil];
         [choosedMenuItem mainParameters][choosedTab] = newParameters;
         choosedMenuItem.chooseTab = choosedTab;
         if (![item[@"disableNowPlaying"] boolValue]) {
@@ -539,10 +599,10 @@ int count = 0;
     if (numActions) {
         NSDictionary *item = self.detailItem;
         actionSheetView = [[UIActionSheet alloc] initWithTitle:item[@"label"]
-                                                            delegate:self
-                                                   cancelButtonTitle:nil
-                                              destructiveButtonTitle:nil
-                                                   otherButtonTitles:nil];
+                                                      delegate:self
+                                             cancelButtonTitle:nil
+                                        destructiveButtonTitle:nil
+                                             otherButtonTitles:nil];
         actionSheetView.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
         for (int i = 0; i < numActions; i++) {
             [actionSheetView addButtonWithTitle:sheetActions[i]];
@@ -561,7 +621,7 @@ int count = 0;
     if (buttonIndex != actionSheet.cancelButtonIndex) {
         if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Queue after current", nil)]) {
             [self addQueueAfterCurrent:YES];
-
+            
         }
         else if ([sheetActions[buttonIndex] isEqualToString:NSLocalizedString(@"Queue", nil)]) {
             [self addQueueAfterCurrent:NO];
@@ -591,7 +651,7 @@ int count = 0;
             self.nowPlaying = [[NowPlaying alloc] initWithNibName:@"NowPlaying" bundle:nil];
         }
         self.nowPlaying.detailItem = self.detailItem;
-//        self.nowPlaying.presentedFromNavigation = YES;
+        //        self.nowPlaying.presentedFromNavigation = YES;
         [self.navigationController pushViewController:self.nowPlaying animated:YES];
         self.navigationItem.rightBarButtonItem.enabled = YES;
         alreadyPush = YES;
@@ -620,15 +680,15 @@ int count = 0;
 
 -(void)setAndMoveLabels:(NSArray *)arrayLabels size:(int)moveSize {
     UIFont *fontFace = [UIFont systemFontOfSize:16];
-
+    
     int offset = moveSize;
     for (UILabel *label in arrayLabels) {
         [label setFont:fontFace];
         [label setFrame:
          CGRectMake(
-                    label.frame.origin.x, 
-                    label.frame.origin.y + offset, 
-                    label.frame.size.width, 
+                    label.frame.origin.x,
+                    label.frame.origin.y + offset,
+                    label.frame.size.width,
                     label.frame.size.height + moveSize
                     )
          ];
@@ -677,7 +737,7 @@ int h = 0;
     [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0); 
+    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
     CGFloat borderWidth = 2.0;
 	CGContextSetLineWidth(context, borderWidth);
     CGContextStrokeRect(context, rect);
@@ -696,7 +756,7 @@ int h = 0;
 -(void)elaborateImage:(UIImage *)image {
     [activityIndicatorView startAnimating];
     UIImage *elabImage = [self imageWithBorderFromImage:image];
-    [self performSelectorOnMainThread:@selector(showImage:) withObject:elabImage waitUntilDone:YES];    
+    [self performSelectorOnMainThread:@selector(showImage:) withObject:elabImage waitUntilDone:YES];
 }
 
 -(void)showImage:(UIImage *)image {
@@ -711,16 +771,28 @@ int h = 0;
     toolbar.tintColor = tintColor;
 }
 
+-(void)handleShakeNotification {
+    scrollView.hidden = !scrollView.hidden;
+    collectionView.hidden = !collectionView.hidden;
+}
+
 -(void)createInfo {
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleShakeNotification)
+                                                 name: @"UIApplicationShakeNotification"
+                                               object: nil];
+    
+    
     // NEED TO BE OPTIMIZED. IT WORKS BUT THERE ARE TOO MANY IFS!
     NSDictionary *item = self.detailItem;
     NSString *placeHolderImage = @"coverbox_back.png";
-//    NSLog(@"ITEM %@", item);
+    //    NSLog(@"ITEM %@", item);
     int scrollViewDefaultHeight = 1660;
     castFontSize = 14;
     size = 0;
-    castWidth = 50;
-    castHeight = 70;
+    castWidth = collectionView.frame.size.width/3;
+    castHeight = 150;
     int pageSize = 297;
     int labelSpace = 20;
     bool enableJewel = [self enableJewelCases];
@@ -745,29 +817,29 @@ int h = 0;
         castWidth = 75;
         castHeight = 105;
         pageSize = 447;
-        [starsView setFrame: 
+        [starsView setFrame:
          CGRectMake(
-                    starsView.frame.origin.x, 
-                    starsView.frame.origin.y - size, 
-                    starsView.frame.size.width, 
+                    starsView.frame.origin.x,
+                    starsView.frame.origin.y - size,
+                    starsView.frame.size.width,
                     starsView.frame.size.height + size*2
                     )];
         [voteLabel setFont:[UIFont systemFontOfSize:26]];
         [numVotesLabel setFont:[UIFont systemFontOfSize:18]];
-
+        
         NSArray *arrayLabels = @[label1,
-                              directorLabel, 
-                              label2,
-                              genreLabel,
-                              label3,
-                              runtimeLabel,
-                              label4,
-                              studioLabel,
-                              label5,
-                              summaryLabel,
-                              parentalRatingLabelUp,
-                              parentalRatingLabel,
-                              label6];
+                                 directorLabel,
+                                 label2,
+                                 genreLabel,
+                                 label3,
+                                 runtimeLabel,
+                                 label4,
+                                 studioLabel,
+                                 label5,
+                                 summaryLabel,
+                                 parentalRatingLabelUp,
+                                 parentalRatingLabel,
+                                 label6];
         [self setAndMoveLabels:arrayLabels size:size];
     }
     else if (!enableJewel) {
@@ -906,7 +978,7 @@ int h = 0;
             jewelView.frame = frame;
             directorLabel.text = [item[@"showtitle"] length] == 0 ? @"-" : item[@"showtitle"];
             
-
+            
             NSString *aired = @"-";
             if ([item[@"firstaired"] length] > 0) {
                 [format setDateFormat:@"yyyy-MM-dd"];
@@ -968,7 +1040,7 @@ int h = 0;
         starsView.hidden = YES;
         voteLabel.hidden = YES;
         numVotesLabel.hidden = YES;
-
+        
         parentalRatingLabelUp.hidden = YES;
         parentalRatingLabel.hidden = YES;
         
@@ -992,7 +1064,7 @@ int h = 0;
             frame.origin.y = 22;
             frame.size.width = 256;
             frame.size.height = 256;
-
+            
         }
         coverView.frame = frame;
         if ([item[@"artist"] isKindOfClass:NSClassFromString(@"JKArray")] ||
@@ -1090,17 +1162,17 @@ int h = 0;
             studioLabel.text = [item[@"formed"] length] == 0 ? studioLabel.text : item[@"formed"];
         }
         
-//        if ([directorLabel.text isEqualToString:@"-"]) {
-//            directorLabel.hidden = YES;
-//            label1.hidden = YES;
-//            [self moveLabel:[NSArray arrayWithObjects: label2, label4, label5, label6, genreLabel, studioLabel, summaryLabel, parentalRatingLabelUp, parentalRatingLabel, nil] posY:53];
-//        }
-//        
-//        if ([genreLabel.text isEqualToString:@"-"]) {
-//            genreLabel.hidden = YES;
-//            label2.hidden = YES;
-//            [self moveLabel:[NSArray arrayWithObjects: label4, label5, label6, studioLabel, summaryLabel, parentalRatingLabelUp, parentalRatingLabel, nil] posY:53];
-//        }
+        //        if ([directorLabel.text isEqualToString:@"-"]) {
+        //            directorLabel.hidden = YES;
+        //            label1.hidden = YES;
+        //            [self moveLabel:[NSArray arrayWithObjects: label2, label4, label5, label6, genreLabel, studioLabel, summaryLabel, parentalRatingLabelUp, parentalRatingLabel, nil] posY:53];
+        //        }
+        //
+        //        if ([genreLabel.text isEqualToString:@"-"]) {
+        //            genreLabel.hidden = YES;
+        //            label2.hidden = YES;
+        //            [self moveLabel:[NSArray arrayWithObjects: label4, label5, label6, studioLabel, summaryLabel, parentalRatingLabelUp, parentalRatingLabel, nil] posY:53];
+        //        }
         if ([studioLabel.text isEqualToString:@"-"]) {
             studioLabel.hidden = YES;
             label4.hidden = YES;
@@ -1166,7 +1238,7 @@ int h = 0;
     }
     [[SDImageCache sharedImageCache] queryDiskCacheForKey:thumbnailPath done:^(UIImage *image, SDImageCacheType cacheType) {
         if (image != nil) {
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if (IS_IOS7) {
                 Utilities *utils = [[Utilities alloc] init];
                 foundTintColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
                 self.navigationController.navigationBar.tintColor = foundTintColor;
@@ -1187,15 +1259,15 @@ int h = 0;
             if (enableJewel) {
                 [coverView setImageWithURL:[NSURL URLWithString:thumbnailPath]
                           placeholderImage:[UIImage imageNamed:placeHolderImage]
-                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && error == nil) {
-                         if (image != nil) {
-                             Utilities *utils = [[Utilities alloc] init];
-                             newColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
-                             [sf setIOS7barTintColor:newColor];
-                         }
-                     }
-                 }];
+                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                     if (IS_IOS7 && error == nil) {
+                                         if (image != nil) {
+                                             Utilities *utils = [[Utilities alloc] init];
+                                             newColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
+                                             [sf setIOS7barTintColor:newColor];
+                                         }
+                                     }
+                                 }];
                 foundTintColor = newColor;
                 [activityIndicatorView stopAnimating];
                 jewelView.alpha = 1;
@@ -1205,7 +1277,7 @@ int h = 0;
                           placeholderImage:[UIImage imageNamed:placeHolderImage]
                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                                      if (image != nil) {
-                                         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && error == nil) {
+                                         if (IS_IOS7 && error == nil) {
                                              Utilities *utils = [[Utilities alloc] init];
                                              newColor = [utils slightLighterColorForColor:[utils averageColor:image inverse:NO]];
                                              [sf setIOS7barTintColor:newColor];
@@ -1242,7 +1314,7 @@ int h = 0;
         }
         
     }];
-
+    
     [fanartView setClipsToBounds:YES];
     
     voteLabel.text = [item[@"rating"] length] == 0 ? @"N.A." : item[@"rating"];
@@ -1260,15 +1332,15 @@ int h = 0;
         summaryLabel.text = [item[@"description"] length] == 0 ? @"-" : item[@"description"];
     }
     CGSize maximunLabelSize = CGSizeMake(pageSize, 9999);
-    CGSize expectedLabelSize = [summaryLabel.text 
+    CGSize expectedLabelSize = [summaryLabel.text
                                 sizeWithFont:summaryLabel.font
-                                constrainedToSize:maximunLabelSize 
-                                lineBreakMode:summaryLabel.lineBreakMode]; 
+                                constrainedToSize:maximunLabelSize
+                                lineBreakMode:summaryLabel.lineBreakMode];
     
     CGRect newFrame = summaryLabel.frame;
     newFrame.size.height = expectedLabelSize.height + size;
     summaryLabel.frame = newFrame;
-
+    
     if ([item[@"mpaa"] length] == 0) {
         parentalRatingLabel.hidden = YES;
         parentalRatingLabelUp.hidden = YES;
@@ -1292,7 +1364,7 @@ int h = 0;
                              lineBreakMode:parentalRatingLabel.lineBreakMode];
         newFrame = parentalRatingLabel.frame;
         newFrame.size.height = expectedLabelSize.height + size;
-        parentalRatingLabel.frame = newFrame;        
+        parentalRatingLabel.frame = newFrame;
         shiftParentalRating = parentalRatingLabel.frame.size.height;
     }
     
@@ -1372,17 +1444,17 @@ int h = 0;
                 [trailerView.layer setBorderWidth:1];
                 [trailerView.layer setBorderColor:[[UIColor blackColor] CGColor]];
                 embedVideo = [NSString stringWithFormat:@"\
-                                          <html>\
-                                          <head>\
-                                          <style type=\"text/css\">\
-                                          iframe {position:absolute; top:50%%; margin-top:-%dpx;}\
-                                          body {background-color:#000; margin:0;}\
-                                          </style>\
-                                          </head>\
-                                          <body>\
-                                          <iframe width=\"100%%\" height=\"%dpx\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
-                                          </body>\
-                                          </html>", videoHeight/2, videoHeight, embedVideoURL];
+                              <html>\
+                              <head>\
+                              <style type=\"text/css\">\
+                              iframe {position:absolute; top:50%%; margin-top:-%dpx;}\
+                              body {background-color:#000; margin:0;}\
+                              </style>\
+                              </head>\
+                              <body>\
+                              <iframe width=\"100%%\" height=\"%dpx\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
+                              </body>\
+                              </html>", videoHeight/2, videoHeight, embedVideoURL];
                 if (isYoutubeVideoLink) {
                     [trailerView loadHTMLString:embedVideo baseURL:nil];
                 }
@@ -1460,6 +1532,7 @@ int h = 0;
     startY = startY + clearLogoHeight + 20;
     scrollView.contentSize = CGSizeMake(320, startY);
     [self createCollectionViewData];
+    
 }
 
 -(void)buildTrailerView {
@@ -1485,7 +1558,7 @@ int h = 0;
         else {
             [self alphaView:self.kenView AnimDuration:1.5 Alpha:0.2];// cool
         }
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [self.navigationController setNavigationBarHidden:NO animated:YES];
         }
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -1494,15 +1567,15 @@ int h = 0;
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseInOut
                              animations:^ {
-                [[NSNotificationCenter defaultCenter] postNotificationName: @"StackScrollFullScreenDisabled" object: self.view];
-                [toolbar setAlpha:1.0];
-            }
+                                 [[NSNotificationCenter defaultCenter] postNotificationName: @"StackScrollFullScreenDisabled" object: self.view];
+                                 [toolbar setAlpha:1.0];
+                             }
                              completion:^(BOOL finished) {}
              ];
         }
     }
     else {
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [self.navigationController setNavigationBarHidden:YES animated:YES];
             self.view.clipsToBounds = YES;
         }
@@ -1669,7 +1742,7 @@ int h = 0;
         [jsonRPC
          callMethod:@"Player.GetProperties"
          withParameters:@{@"playerid": item[@"playlistid"],
-                         @"properties": @[@"percentage", @"time", @"totaltime", @"partymode", @"position"]}
+                          @"properties": @[@"percentage", @"time", @"totaltime", @"partymode", @"position"]}
          onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
              if (error == nil && methodError == nil) {
                  if ( [NSJSONSerialization isValidJSONObject:methodResult]) {
@@ -1678,8 +1751,8 @@ int h = 0;
                          int newPos = [methodResult[@"position"] intValue] + 1;
                          NSString *action2=@"Playlist.Insert";
                          NSDictionary *params2=@{@"playlistid": item[@"playlistid"],
-                                                @"item": @{item[@"family"]: item[item[@"family"]]},
-                                                @"position": @(newPos)};
+                                                 @"item": @{item[@"family"]: item[item[@"family"]]},
+                                                 @"position": @(newPos)};
                          [jsonRPC callMethod:action2 withParameters:params2 onCompletion:^(NSString *methodName, NSInteger callId, id methodResult, DSJSONRPCError *methodError, NSError* error) {
                              if (error == nil && methodError == nil) {
                                  [[NSNotificationCenter defaultCenter] postNotificationName: @"XBMCPlaylistHasChanged" object: nil];
@@ -1815,12 +1888,15 @@ int h = 0;
     self.slidingViewController.anchorLeftPeekAmount     = 0;
     self.slidingViewController.anchorLeftRevealAmount   = 0;
     // TRICK WHEN CHILDREN WAS FORCED TO PORTRAIT
-//    if (![[self.detailItem objectForKey:@"disableNowPlaying"] boolValue]) {
-//        UIViewController *c = [[UIViewController alloc]init];
-//        [self presentViewController:c animated:NO completion:nil];
-//        [self dismissViewControllerAnimated:NO completion:nil];
-//    }
-        [actorsTable deselectRowAtIndexPath:[actorsTable indexPathForSelectedRow] animated:YES];
+    //    if (![[self.detailItem objectForKey:@"disableNowPlaying"] boolValue]) {
+    //        UIViewController *c = [[UIViewController alloc]init];
+    //        [self presentViewController:c animated:NO completion:nil];
+    //        [self dismissViewControllerAnimated:NO completion:nil];
+    //    }
+    [actorsTable deselectRowAtIndexPath:[actorsTable indexPathForSelectedRow] animated:YES];
+    if ([collectionView indexPathsForSelectedItems].count > 0) {
+        [collectionView deselectItemAtIndexPath:[collectionView indexPathsForSelectedItems][0] animated:YES];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -1835,7 +1911,7 @@ int h = 0;
     float alphaValue = 0.2;
     if (closeButton.alpha == 1) {
         alphaValue = 1;
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [self.navigationController setNavigationBarHidden:YES animated:YES];
         }
     }
@@ -1849,12 +1925,12 @@ int h = 0;
         }
         [self alphaView:self.kenView AnimDuration:1.5 Alpha:alphaValue];// cool
     }
-
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [self.navigationController.navigationBar setTintColor:TINT_COLOR];
         toolbar.tintColor = TINT_COLOR;
     }
@@ -1887,15 +1963,16 @@ int h = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     fanartView.tag = 1;
     fanartView.userInteractionEnabled = YES;
     UITapGestureRecognizer *touchOnKenView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showBackground:)];
     [touchOnKenView setNumberOfTapsRequired:1];
     [touchOnKenView setNumberOfTouchesRequired:1];
     [fanartView addGestureRecognizer:touchOnKenView];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        float topOffset = 44 + [[UIApplication sharedApplication] statusBarFrame].size.height;
+    if (IS_IOS7) {
+        CGSize statusbarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+        float topOffset = 44 + (UIInterfaceOrientationIsPortrait([self interfaceOrientation]) ? statusbarSize.height : statusbarSize.width);
         UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
         tableViewInsets.top = topOffset;
         for (UIView *view in self.view.subviews) {

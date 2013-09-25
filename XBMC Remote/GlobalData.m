@@ -10,15 +10,6 @@
 
 @implementation GlobalData
 
-@synthesize serverDescription;
-@synthesize serverUser;    
-@synthesize serverPass;    
-@synthesize serverIP;    
-@synthesize serverPort;
-@synthesize tcpPort;
-@synthesize serverHWAddr;
-@synthesize preferTVPosters;    
-
 static GlobalData *instance = nil;    
 +(GlobalData *)getInstance    {    
     @synchronized(self) {    
@@ -27,5 +18,6 @@ static GlobalData *instance = nil;
         }    
     }    
     return instance;    
-}    
+}
+
 @end

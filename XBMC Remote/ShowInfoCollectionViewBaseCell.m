@@ -9,6 +9,9 @@
 #import "ShowInfoCollectionViewBaseCell.h"
 
 @implementation ShowInfoCollectionViewBaseCell
++(CGSize)initialSizeOfCellForWidth:(CGFloat)width {
+    return CGSizeMake(width, 50);
+}
 -(CGSize)sizeOfCellForWidth:(CGFloat)width {
     NSAssert(NO, @"This [%@ %@] method must be overriden, and super method must NOT be called", [self class], NSStringFromSelector(_cmd));
     return CGSizeZero;
@@ -38,6 +41,8 @@
         [_titleLabel removeObserver:self forKeyPath:@"text"];
         self.titleLabel.text = [self.titleLabel.text uppercaseString];
         [_titleLabel addObserver:self forKeyPath:@"text" options:0 context:nil];
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 

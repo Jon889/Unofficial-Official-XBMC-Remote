@@ -126,7 +126,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
             originalFrame = subview.frame;
             CGRect frame = subview.frame;
             frame.origin.x = 0 - 300;
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if (IS_IOS7) {
                 frame.origin.y = frame.origin.y - 20;
                 frame.size.height = frame.size.height + 20;
             }
@@ -142,7 +142,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
             frame = [[slideViews subviews][j] frame];
             [stackViewsFrames addObject:[NSValue valueWithCGRect:frame]];
             frame.origin.x = self.view.frame.size.width;
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if (IS_IOS7) {
                 frame.origin.y = frame.origin.y - 20;
                 frame.size.height = frame.size.height + 20;
             }

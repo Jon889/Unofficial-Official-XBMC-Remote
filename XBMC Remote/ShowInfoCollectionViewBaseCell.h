@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ShowInfoCollectionViewBaseCell : UICollectionViewCell
++(CGSize)initialSizeOfCellForWidth:(CGFloat)width;
 -(CGSize)sizeOfCellForWidth:(CGFloat)width;
 -(void)setTitle:(NSString *)title;
 -(void)setContent:(id)content;

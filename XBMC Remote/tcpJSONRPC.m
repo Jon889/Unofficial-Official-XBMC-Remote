@@ -64,7 +64,7 @@ NSOutputStream	*outStream;
 	[inStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 //	[outStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 	[inStream open];
-//	[outStream open];
+//	[outStream open];  
 }
 
 -(NSStreamStatus)currentSocketInStatus {

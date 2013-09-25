@@ -10,30 +10,34 @@
 
 @implementation ShowInfoCollectionViewFlowLayout
 
+-(UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attr = [super layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect frm = attr.frame;
+    if ([indexPath isEqual:self.indexPathsToFloat[0]]) {
+        frm.origin.x = 0;
+    } else {
+        UICollectionViewLayoutAttributes *first = [self layoutAttributesForItemAtIndexPath:self.indexPathsToFloat[0]];
+        frm.origin.y -= first.frame.size.height;
+        if (frm.origin.y < first.frame.size.height) {
+            frm.origin.x = first.frame.size.width - 5;
+            frm.size.width -= (first.frame.size.width - 5) ;
+        }
+    }
+    attr.frame = frm;
+    return attr;
+}
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    rect.size.height += [self layoutAttributesForItemAtIndexPath:self.indexPathsToFloat[0]].frame.size.height;
     NSArray *original = [super layoutAttributesForElementsInRect:rect];
-//
-//        CGFloat currentHeight = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]].frame.size.height;
-//    CGFloat firstHeight = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]].frame.size.height;
-//    int i = 2;
-//        while (firstHeight > currentHeight) {
-//            UICollectionViewLayoutAttributes *thisAttr = nil;
-//            for (UICollectionViewLayoutAttributes *attr in original) {
-//                if (attr.indexPath.row == i) {
-//                    thisAttr = attr;
-//                    break;
-//                }
-//            }
-//            i++;
-//            if (!thisAttr) break;
-//            currentHeight += thisAttr.frame.size.height;
-//            CGRect frame = thisAttr.frame;
-//            frame.origin.x = 100;
-//            frame.size.width = [self collectionViewContentSize].width - 100;
-//            thisAttr.frame = frame;
-//
-//        }
-    
+    NSMutableArray *collector = [NSMutableArray array];
+    for (UICollectionViewLayoutAttributes *attr in original) {
+        [collector addObject:[self layoutAttributesForItemAtIndexPath:attr.indexPath]];
+    }
+    return collector;
+}
+-(CGSize)collectionViewContentSize {
+    CGSize original = [super collectionViewContentSize];
+    original.height -= [self layoutAttributesForItemAtIndexPath:self.indexPathsToFloat[0]].frame.size.height;
     return original;
 }
 @end

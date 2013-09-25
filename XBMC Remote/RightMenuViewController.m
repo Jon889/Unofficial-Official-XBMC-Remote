@@ -302,7 +302,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     int deltaY = 0;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         deltaY = 22;
     }
     torchIsOn = NO;

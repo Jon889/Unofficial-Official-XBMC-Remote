@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import <objc/runtime.h>
 
-
+#import "BlurredView.h"
 
 @implementation MoreItemsViewController
 
@@ -27,7 +27,9 @@
         mainMenuItems = menu;
         UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
 		_tableView.tableFooterView = footerView;
-//        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        BlurredView *background = [[BlurredView alloc] initWithFrame:_tableView.frame];
+        [self.view addSubview:background];
+//        if (IS_IOS7) {
 //            [_tableView setSeparatorInset:UIEdgeInsetsMake(0, cellLabelOffset, 0, 0)];
 //        }
 		[self.view addSubview:_tableView];
@@ -74,7 +76,7 @@
     [cell setBackgroundColor:[UIColor clearColor]];
     if (![item[@"icon"] isEqualToString:@""]) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_off", item[@"icon"]]];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             [cell.imageView setTintColor:[UIColor colorWithWhite:0.8 alpha:0.9]];
         }
@@ -96,10 +98,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.view.bounds];
-    [toolbar setBarStyle:UIBarStyleBlack];
-    [self.tableView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:toolbar];
 }
 
 - (void)viewDidUnload {

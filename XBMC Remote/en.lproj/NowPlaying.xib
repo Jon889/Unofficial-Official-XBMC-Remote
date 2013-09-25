@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1280" identifier="iOS"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
@@ -140,11 +140,11 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </imageView>
                                 <view alpha="0.0" contentMode="scaleToFill" id="104" userLabel="Song Details View">
-                                    <rect key="frame" x="50" y="42" width="237" height="240"/>
+                                    <rect key="frame" x="50" y="42" width="237" height="238"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="codec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="106">
-                                            <rect key="frame" x="0.0" y="72" width="109" height="21"/>
+                                            <rect key="frame" x="0.0" y="71" width="109" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -153,7 +153,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="bit rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="107">
-                                            <rect key="frame" x="0.0" y="110" width="109" height="21"/>
+                                            <rect key="frame" x="0.0" y="109" width="109" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -162,7 +162,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sample rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="109">
-                                            <rect key="frame" x="0.0" y="149" width="109" height="21"/>
+                                            <rect key="frame" x="0.0" y="148" width="109" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -171,7 +171,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="110">
-                                            <rect key="frame" x="123" y="72" width="114" height="21"/>
+                                            <rect key="frame" x="123" y="71" width="114" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -180,7 +180,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="111">
-                                            <rect key="frame" x="123" y="110" width="114" height="21"/>
+                                            <rect key="frame" x="123" y="109" width="114" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -189,7 +189,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="112">
-                                            <rect key="frame" x="123" y="149" width="114" height="21"/>
+                                            <rect key="frame" x="123" y="148" width="114" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -262,7 +262,7 @@ albums</string>
                                             </state>
                                         </button>
                                         <button hidden="YES" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="179" userLabel="Button Repeat">
-                                            <rect key="frame" x="66" y="188" width="41" height="41"/>
+                                            <rect key="frame" x="66" y="186" width="41" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" backgroundImage="button_repeat.png">
@@ -277,7 +277,7 @@ albums</string>
                                             </connections>
                                         </button>
                                         <button hidden="YES" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="176" userLabel="Button Shuffle">
-                                            <rect key="frame" x="130" y="188" width="41" height="41"/>
+                                            <rect key="frame" x="130" y="186" width="41" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" backgroundImage="button_shuffle.png">
@@ -295,7 +295,7 @@ albums</string>
                                     <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                 </view>
                                 <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" id="4" userLabel="Image View - jewel case or thumb">
-                                    <rect key="frame" x="10" y="31" width="303" height="266"/>
+                                    <rect key="frame" x="8" y="0.0" width="305" height="266"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="6" userLabel="Label Title">
@@ -317,7 +317,7 @@ albums</string>
                                     <size key="shadowOffset" width="1" height="1"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="30" userLabel="Label Current Time">
-                                    <rect key="frame" x="4" y="310" width="47" height="18"/>
+                                    <rect key="frame" x="0.0" y="298" width="47" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -326,7 +326,7 @@ albums</string>
                                     <size key="shadowOffset" width="1" height="1"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="31" userLabel="Label Total Time">
-                                    <rect key="frame" x="269" y="310" width="47" height="18"/>
+                                    <rect key="frame" x="266" y="297" width="47" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -346,8 +346,8 @@ albums</string>
                                     <rect key="frame" x="14" y="298" width="15" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </imageView>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" id="171" userLabel="Horizontal progress bar" customClass="OBSlider">
-                                    <rect key="frame" x="19" y="289" width="284" height="29"/>
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" id="171" userLabel="Horizontal progress bar" customClass="OBSlider">
+                                    <rect key="frame" x="18" y="273" width="284" height="29"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <color key="minimumTrackTintColor" cyan="0.57082572990000002" magenta="0.1166094542" yellow="0.084519743920000001" black="0.00065612792969999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                     <color key="maximumTrackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -587,30 +587,9 @@ albums</string>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="81"/>
-                        <barButtonItem style="plain" id="17">
-                            <button key="customView" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="18">
-                                <rect key="frame" x="141" y="6" width="38" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="now_playing_stop.png" backgroundImage="now_playing_empty_up.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" image="now_playing_stop.png" backgroundImage="now_playing_empty_down.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="startVibrate:" destination="-1" eventType="touchUpInside" id="40"/>
-                                </connections>
-                            </button>
-                            <connections>
-                                <action selector="startVibrate:" destination="-1" id="34"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="82"/>
                         <barButtonItem style="plain" id="71">
                             <button key="customView" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="72">
-                                <rect key="frame" x="184" y="6" width="38" height="33"/>
+                                <rect key="frame" x="141" y="6" width="38" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -633,7 +612,7 @@ albums</string>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="83"/>
                         <barButtonItem style="plain" id="19">
                             <button key="customView" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="20">
-                                <rect key="frame" x="228" y="6" width="38" height="33"/>
+                                <rect key="frame" x="184" y="6" width="38" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="now_playing_next.png" backgroundImage="now_playing_empty_up.png">
@@ -652,6 +631,27 @@ albums</string>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="26"/>
+                        <barButtonItem style="plain" id="17">
+                            <button key="customView" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="18">
+                                <rect key="frame" x="228" y="6" width="38" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="now_playing_stop.png" backgroundImage="now_playing_empty_up.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="now_playing_stop.png" backgroundImage="now_playing_empty_down.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startVibrate:" destination="-1" eventType="touchUpInside" id="40"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="startVibrate:" destination="-1" id="34"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="82"/>
                         <barButtonItem style="plain" id="23">
                             <button key="customView" opaque="NO" tag="5" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="24">
                                 <rect key="frame" x="271" y="6" width="38" height="33"/>

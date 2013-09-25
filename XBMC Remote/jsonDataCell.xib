@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" white="0.80000000000000004" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Action / Drama / Crime / Thriller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" id="6">

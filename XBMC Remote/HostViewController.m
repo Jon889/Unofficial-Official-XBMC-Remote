@@ -87,8 +87,9 @@
 //        textField.layer.borderWidth = 1;
         UIColor *color = [UIColor colorWithWhite:0.5 alpha:1];
         textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName: color}];
-
-        [textField setTintColor:[UIColor whiteColor]];
+        if (IS_IOS7) {
+            [textField setTintColor:[UIColor whiteColor]];
+        }
         CALayer *bottomBorder = [CALayer layer];
         
         bottomBorder.frame = CGRectMake(0, textField.bounds.size.height-1, textField.bounds.size.width, 1);
@@ -357,7 +358,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         self.edgesForExtendedLayout = 0;
     }
     services = [[NSMutableArray alloc] init];

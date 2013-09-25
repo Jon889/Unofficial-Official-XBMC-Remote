@@ -7,7 +7,9 @@
 //
 
 #import "PosterCell.h"
-
+@interface PosterCell ()
+@property (nonatomic) CAGradientLayer *gradient;
+@end
 @implementation PosterCell
 
 @synthesize posterThumbnail = _posterThumbnail;
@@ -30,10 +32,10 @@
         UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(borderWidth, frame.size.height - labelHeight - labelTop, frame.size.width - borderWidth * 2, labelHeight + labelTop - borderWidth)];
         [labelView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
 
-        CAGradientLayer *gradient = [CAGradientLayer layer];
-        gradient.frame = labelView.bounds;
-        gradient.colors = @[(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor]];
-        [labelView.layer addSublayer:gradient];
+        _gradient = [CAGradientLayer layer];
+        _gradient.frame = labelView.bounds;
+        _gradient.colors = @[(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor]];
+        [labelView.layer addSublayer:_gradient];
         
         CGRect posterFrame = labelView.bounds;
         posterFrame.origin.y = labelTop;
@@ -72,7 +74,21 @@
     size = isRetina ? size / 2 : size;
     return size;
 }
-
+-(void)applyHighlight:(BOOL)highlighted {
+    if (highlighted) {
+        _gradient.colors = @[(id)[[UIColor clearColor] CGColor], (id)[[UIColor colorWithRed:0.0f green:132.0f/255.0f blue:1.0f alpha:1] CGColor]];
+    } else {
+        _gradient.colors = @[(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor]];
+    }
+}
+-(void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    [self applyHighlight:selected];
+}
+-(void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    [self applyHighlight:highlighted];
+}
 -(void)setOverlayWatched:(BOOL)enable {
     if (enable == YES) {
         if (overlayWatched == nil) {

@@ -31,6 +31,7 @@
 #import "UIScrollView+SVPullToRefresh.h"
 #import "UISearchBar+LeftButton.h"
 
+
 @interface DetailViewController ()
 - (void)configureView;
 @end
@@ -281,53 +282,53 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UIApplicationEnableStackPan" object: nil];
     }
 }
-
-- (UIImage*)imageWithShadow:(UIImage *)source shadowRadius:(int)shadowRadius {
-    CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef shadowContext = CGBitmapContextCreate(NULL, source.size.width + shadowRadius * 2, source.size.height + shadowRadius * 2, CGImageGetBitsPerComponent(source.CGImage), 0, colourSpace, kCGBitmapAlphaInfoMask & kCGImageAlphaPremultipliedLast);
-    CGColorSpaceRelease(colourSpace);
-    
-    CGContextSetShadowWithColor(shadowContext, CGSizeMake(0, 0), shadowRadius, [UIColor blackColor].CGColor);
-    CGContextDrawImage(shadowContext, CGRectMake(shadowRadius, shadowRadius, source.size.width, source.size.height), source.CGImage);
-    
-    CGImageRef shadowedCGImage = CGBitmapContextCreateImage(shadowContext);
-    CGContextRelease(shadowContext);
-    
-    UIImage * shadowedImage = [UIImage imageWithCGImage:shadowedCGImage];
-    CGImageRelease(shadowedCGImage);
-    
-    return shadowedImage;
-}
-
-- (UIImage*)imageWithBorderFromImage:(UIImage*)source shadowRadius:(int)shadowRadius {
-    CGSize size = [source size];
-    UIGraphicsBeginImageContext(size);
-    CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
-    CGFloat borderWidth = 2.0f;
-	CGContextSetLineWidth(context, borderWidth);
-    CGContextStrokeRect(context, rect);
-    
-    UIImage *Img =  UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return [self imageWithShadow:Img shadowRadius:shadowRadius];
-}
-
--(void)elaborateImage:(UIImage *)image shadowRadius:(int)shadowRadius destination:(UIImageView *)imageViewDestination {
-    UIImage *elabImage = [self imageWithBorderFromImage:image shadowRadius:shadowRadius];
-    NSDictionary *params = @{@"image": elabImage, @"destinationView": imageViewDestination};
-    [self performSelectorOnMainThread:@selector(showImage:) withObject:params waitUntilDone:YES];
-}
-
--(void)showImage:(NSDictionary *)params {
-    UIImage *image = params[@"image"];
-    UIImageView *destinationView = params[@"destinationView"];
-    destinationView.image = image;
-    [self alphaView:destinationView AnimDuration:0.1 Alpha:1.0f];
-}
+//
+//- (UIImage*)imageWithShadow:(UIImage *)source shadowRadius:(int)shadowRadius {
+//    CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
+//    CGContextRef shadowContext = CGBitmapContextCreate(NULL, source.size.width + shadowRadius * 2, source.size.height + shadowRadius * 2, CGImageGetBitsPerComponent(source.CGImage), 0, colourSpace, kCGBitmapAlphaInfoMask & kCGImageAlphaPremultipliedLast);
+//    CGColorSpaceRelease(colourSpace);
+//    
+//    CGContextSetShadowWithColor(shadowContext, CGSizeMake(0, 0), shadowRadius, [UIColor blackColor].CGColor);
+//    CGContextDrawImage(shadowContext, CGRectMake(shadowRadius, shadowRadius, source.size.width, source.size.height), source.CGImage);
+//    
+//    CGImageRef shadowedCGImage = CGBitmapContextCreateImage(shadowContext);
+//    CGContextRelease(shadowContext);
+//    
+//    UIImage * shadowedImage = [UIImage imageWithCGImage:shadowedCGImage];
+//    CGImageRelease(shadowedCGImage);
+//    
+//    return shadowedImage;
+//}
+//
+//- (UIImage*)imageWithBorderFromImage:(UIImage*)source shadowRadius:(int)shadowRadius {
+//    CGSize size = [source size];
+//    UIGraphicsBeginImageContext(size);
+//    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+//    [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+//    
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+//    CGFloat borderWidth = 2.0f;
+//	CGContextSetLineWidth(context, borderWidth);
+//    CGContextStrokeRect(context, rect);
+//    
+//    UIImage *Img =  UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    return [self imageWithShadow:Img shadowRadius:shadowRadius];
+//}
+//
+//-(void)elaborateImage:(UIImage *)image shadowRadius:(int)shadowRadius destination:(UIImageView *)imageViewDestination {
+//    UIImage *elabImage = [self imageWithBorderFromImage:image shadowRadius:shadowRadius];
+//    NSDictionary *params = @{@"image": elabImage, @"destinationView": imageViewDestination};
+//    [self performSelectorOnMainThread:@selector(showImage:) withObject:params waitUntilDone:YES];
+//}
+//
+//-(void)showImage:(NSDictionary *)params {
+//    UIImage *image = params[@"image"];
+//    UIImageView *destinationView = params[@"destinationView"];
+//    destinationView.image = image;
+//    [self alphaView:destinationView AnimDuration:0.1 Alpha:1.0f];
+//}
 
 #pragma mark - Tabbar management
 -(void)hideMore {
@@ -357,7 +358,7 @@
         [moreItemsViewController.view setBackgroundColor:[UIColor clearColor]];
         [moreItemsViewController viewWillAppear:FALSE];
         [moreItemsViewController viewDidAppear:FALSE];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
             tableViewInsets.bottom = 44;
             tableViewInsets.top = CGRectGetMaxY(self.navigationController.navigationBar.frame);
@@ -458,7 +459,7 @@
         }
         self.searchDisplayController.searchBar.tintColor = collectionViewSearchBarColor;
         [self.searchDisplayController.searchBar setBackgroundColor:collectionViewSearchBarColor];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             self.searchDisplayController.searchBar.tintColor = [utils lighterColorForColor:collectionViewSearchBarColor];
             [bar.viewLabel setTextColor:[UIColor colorWithRed:0.4f green:0.4f blue:0.4f alpha:0.65f]];
             [bar.viewLabel setShadowColor:[UIColor colorWithRed:0.3f green:0.3f blue:0.3f alpha:0.3f]];
@@ -478,7 +479,7 @@
         self.indexView.hidden = YES;
         self.searchDisplayController.searchBar.tintColor = tableViewSearchBarColor;
         [self.searchDisplayController.searchBar setBackgroundColor:tableViewSearchBarColor];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             UISearchBar *hackSearchBar = [[UISearchBar alloc] initWithFrame:self.searchDisplayController.searchBar.frame];
             hackSearchBar.hidden = YES;
             dataList.tableHeaderView = hackSearchBar;
@@ -1171,7 +1172,7 @@ int originYear = 0;
     if (albumView) {
         thumbWidth = 0;
         labelPosition = thumbWidth + albumViewPadding + trackCountLabelWidth;
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [dataList setSeparatorInset:UIEdgeInsetsMake(0, 8, 0, 0)];
         }
     }
@@ -1188,7 +1189,7 @@ int originYear = 0;
     // CHECK IF THERE ARE SECTIONS
     
     int iOS7offset = 0;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         iOS7offset = 12;
     }
     if ([self.richResults count] <= SECTIONS_START_AT || ![self.detailItem enableSection]) {
@@ -1301,7 +1302,7 @@ int originYear = 0;
             [trackNumberLabel setHighlightedTextColor:[UIColor whiteColor]];
             [cell addSubview:trackNumberLabel];
         }
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [(UILabel*) [cell viewWithTag:1] setHighlightedTextColor:[UIColor blackColor]];
             [(UILabel*) [cell viewWithTag:2] setHighlightedTextColor:[UIColor blackColor]];
             [(UILabel*) [cell viewWithTag:3] setHighlightedTextColor:[UIColor blackColor]];
@@ -1411,7 +1412,7 @@ int originYear = 0;
             }
             [cell.urlImageView setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:[UIImage imageNamed:displayThumb]andResize:CGSizeMake(thumbWidth, cellHeight) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                 if (blackTableSeparator == YES && [AppDelegate instance].obj.preferTVPosters == NO && [indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:0]]) {
-                    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                    if (IS_IOS7) {
                         UIColor *barColor = [utils averageColor:image inverse:NO];
                         [self.searchDisplayController.searchBar setBackgroundColor:barColor];
                         [self.searchDisplayController.searchBar setTintColor:[utils slightLighterColorForColor:barColor]];
@@ -1534,7 +1535,7 @@ int originYear = 0;
                                       if (enableBarColor == YES) {
                                           albumColor = [utils averageColor:image inverse:NO];
                                           UIColor *slightLightAlbumColor = [utils slightLighterColorForColor:albumColor];
-                                          if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                                          if (IS_IOS7) {
                                               self.navigationController.navigationBar.tintColor = slightLightAlbumColor;
                                               self.searchDisplayController.searchBar.tintColor = slightLightAlbumColor;
                                           }
@@ -1907,7 +1908,7 @@ int originYear = 0;
 -(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
     UISearchBarLeftButton *bar = (UISearchBarLeftButton *)self.searchDisplayController.searchBar;
     bar.isVisible = YES;
-    if (enableCollectionView == YES  && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) { // temp hack to avoid the iOS7 search bar disappearing!!!
+    if (enableCollectionView == YES  && IS_IOS7) { // temp hack to avoid the iOS7 search bar disappearing!!!
         [self.searchDisplayController.searchBar removeFromSuperview];
         [activeLayoutView addSubview:self.searchDisplayController.searchBar];
     }
@@ -1930,7 +1931,6 @@ int originYear = 0;
 // iOS7 scrolling performance boost for a UITableView/UICollectionView with a custom UISearchBar header
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
-    
     if (!hideSearchBarActive || [scrollView isEqual:self.searchDisplayController.searchResultsTableView]) return;
     NSArray *paths;
     NSIndexPath *searchBarPath;
@@ -1947,7 +1947,7 @@ int originYear = 0;
         }
         if ([paths containsObject:searchBarPath]) {
             bar.isVisible = YES;
-            if (enableCollectionView == YES && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) { // temp hack to avoid the iOS7 search bar disappearing!!!
+            if (enableCollectionView == YES && IS_IOS7) { // temp hack to avoid the iOS7 search bar disappearing!!!
                 [self.searchDisplayController.searchBar removeFromSuperview];
                 [activeLayoutView addSubview:self.searchDisplayController.searchBar];
             }
@@ -1993,7 +1993,7 @@ int originYear = 0;
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
     ((UITableView *)activeLayoutView).pullToRefreshView.alpha = 0;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && enableCollectionView) {
+    if (IS_IOS7 && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && enableCollectionView) {
         enableIpadWA = YES;
     }
     UISearchBarLeftButton *bar = (UISearchBarLeftButton *)self.searchDisplayController.searchBar;
@@ -2011,7 +2011,7 @@ int originYear = 0;
     if (enableCollectionView) {
         self.indexView.hidden = YES;
     }
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [activeLayoutView setFrame:CGRectMake(((UITableView *)activeLayoutView).frame.origin.x, ((UITableView *)activeLayoutView).frame.origin.y - 44, ((UITableView *)activeLayoutView).frame.size.width, ((UITableView *)activeLayoutView).frame.size.height)];
         }
@@ -2031,7 +2031,7 @@ int originYear = 0;
         }
         [collectionView addGestureRecognizer:longPressGesture];
     }
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         if (enableIpadWA == YES) {
             [activeLayoutView addSubview:self.searchDisplayController.searchBar];
         }
@@ -2040,7 +2040,7 @@ int originYear = 0;
 }
 
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if (IS_IOS7 && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationDuration:0.3];
@@ -2321,7 +2321,7 @@ NSIndexPath *selected;
             [titleView setFrame:CGRectMake(320, 373, -16, 40)];
             [self.view addSubview:titleView];
         }
-        moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"st_more_on"] style:UIBarButtonItemStylePlain target:self action:@selector(showMore:)];
+        moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"st_more_off"] style:UIBarButtonItemStylePlain target:self action:@selector(showMore:)];
         self.navigationItem.rightBarButtonItem = moreButtonItem;
         if (![self.detailItem disableNowPlaying]) {
             
@@ -3547,7 +3547,7 @@ NSIndexPath *selected;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] removeObserver: self name:@"ECSLidingSwipeLeft" object:nil];
     [self.navigationController.navigationBar setTintColor:IOS6_BAR_TINT_COLOR];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [self.navigationController.navigationBar setTintColor:TINT_COLOR];
 //        self.searchDisplayController.searchBar.barTintColor = searchBarColor;
         self.searchDisplayController.searchBar.tintColor = [utils lighterColorForColor:searchBarColor];
@@ -3602,7 +3602,7 @@ NSIndexPath *selected;
     [activeLayoutView setScrollsToTop:YES];
     if (albumColor != nil) {
         [self.navigationController.navigationBar setTintColor:albumColor];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [self.navigationController.navigationBar setTintColor:[utils slightLighterColorForColor:albumColor]];
 //            self.searchDisplayController.searchBar.barTintColor = albumColor;
         }
@@ -3775,7 +3775,7 @@ NSIndexPath *selected;
     iOSYDelta = 44;
     dataList.tableFooterView = [UIView new];
     self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             iOSYDelta = - [[UIApplication sharedApplication] statusBarFrame].size.height;
             UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
@@ -3833,7 +3833,7 @@ NSIndexPath *selected;
     searchBarColor = [UIColor colorWithRed:.35 green:.35 blue:.35 alpha:1];
     collectionViewSearchBarColor = [UIColor blackColor];
 
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         searchBarColor = [UIColor colorWithRed:.572f green:.572f blue:.572f alpha:1];
         collectionViewSearchBarColor = [UIColor colorWithRed:30.0f/255.0f green:30.0f/255.0f blue:30.0f/255.0f alpha:.95];
     }
@@ -3844,7 +3844,7 @@ NSIndexPath *selected;
     else if ([methods[@"episodesView"] boolValue] == YES) {
         episodesView = TRUE;
         searchBarColor = [UIColor colorWithRed:.95 green:.95 blue:.95 alpha:1];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             searchBarColor = [UIColor colorWithRed:229.0f/255.0f green:229.0f/255.0f blue:229.0f/255.0f alpha:1];
             [dataList setSeparatorInset:UIEdgeInsetsMake(0, 18, 0, 0)];
         }
@@ -3855,7 +3855,7 @@ NSIndexPath *selected;
     tableViewSearchBarColor = searchBarColor;
     if ([parameters[@"blackTableSeparator"] boolValue] == YES && [AppDelegate instance].obj.preferTVPosters == NO) {
         blackTableSeparator = YES;
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (IS_IOS7) {
             [dataList setSeparatorInset:UIEdgeInsetsZero];
         }
         dataList.separatorColor = [UIColor colorWithRed:.15 green:.15 blue:.15 alpha:1];

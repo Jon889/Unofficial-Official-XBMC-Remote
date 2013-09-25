@@ -201,7 +201,7 @@
     self.serverPickerPopover = [[UIPopoverController alloc]
                                 initWithContentViewController:[AppDelegate instance].navigationController];
     self.serverPickerPopover.delegate = self;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [self.serverPickerPopover setBackgroundColor:[UIColor clearColor]];
     }
     [self.serverPickerPopover setPopoverContentSize:CGSizeMake(320, 436)];
@@ -376,7 +376,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     int deltaY = 0;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [self setNeedsStatusBarAppearanceUpdate];
         deltaY = 22;
         self.view.tintColor = APP_TINT_COLOR;
@@ -491,7 +491,7 @@
     [xbmcInfo addTarget:self action:@selector(toggleSetup) forControlEvents:UIControlEventTouchUpInside];
     
     powerButton = [[UIButton alloc] initWithFrame:CGRectMake(620, 966, 42, 33)]; //225
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         xbmcInfo.titleLabel.font = [UIFont systemFontOfSize:13];
         xbmcInfo.titleEdgeInsets = UIEdgeInsetsZero;
         xbmcInfo.titleLabel.shadowOffset = CGSizeZero;

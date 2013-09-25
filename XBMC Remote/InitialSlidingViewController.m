@@ -36,7 +36,7 @@
     UINavigationBar *newBar = navController.navigationBar;
     [newBar setTintColor:IOS6_BAR_TINT_COLOR];
     [newBar setBarStyle:UIBarStyleBlackTranslucent];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if (IS_IOS7) {
         [self setNeedsStatusBarAppearanceUpdate];
         [newBar setTintColor:TINT_COLOR];
         self.view.tintColor = APP_TINT_COLOR;
