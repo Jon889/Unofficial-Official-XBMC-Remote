@@ -17,10 +17,11 @@
 #import "StackScrollViewController.h"
 #import "RightMenuViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "DirectionalPadView.h"
 
 #define ROTATION_TRIGGER 0.015f 
 
-@interface RemoteController ()
+@interface RemoteController () <DirectionalPadViewDelegate>
 
 @end
 
@@ -688,7 +689,30 @@
 #pragma mark - Buttons 
 
 NSInteger buttonAction;
-
+-(void)directionalPadView:(DirectionalPadView *)view firedHoldingInDirection:(DirectionalPadViewDirection)direction {
+    switch (direction) {
+        case DirectionalPadViewDirectionUp:
+            [self GUIAction:@"Input.Up" params:@{} httpAPIcallback:nil];
+            [self playerStep:@"bigforward" musicPlayerGo:nil];
+            break;
+        case DirectionalPadViewDirectionLeft:
+            [self GUIAction:@"Input.Left" params:@{} httpAPIcallback:nil];
+            [self playerStep:@"smallbackward" musicPlayerGo:@"previous"];
+            break;
+        case DirectionalPadViewDirectionDown:
+            [self GUIAction:@"Input.Down" params:@{} httpAPIcallback:nil];
+            [self playerStep:@"bigbackward" musicPlayerGo:nil];
+            break;
+        case DirectionalPadViewDirectionRight:
+            [self GUIAction:@"Input.Right" params:@{} httpAPIcallback:nil];
+            [self playerStep:@"smallforward" musicPlayerGo:@"next"];
+            break;
+        case DirectionalPadViewDirectionCenter:
+            [self GUIAction:@"Input.Select" params:@{} httpAPIcallback:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
+            break;
+    }
+}
 -(IBAction)holdKey:(id)sender {
     buttonAction = [sender tag];
     [self sendAction];
@@ -943,6 +967,7 @@ NSInteger buttonAction;
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Input.OnInputFinished" object:nil userInfo:nil];
+   // [[(UIView *)sender superview] bringSubviewToFront:sender];
 }
 
 # pragma  mark - Gestures

@@ -108,6 +108,7 @@
     BOOL hideSearchBarActive;
     BOOL enableIpadWA;
     UIBarButtonItem *moreButtonItem;
+    UIToolbar *toolbar;
 }
 
 - (id)initWithFrame:(CGRect)frame;

@@ -335,6 +335,7 @@
     [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:-moreItemsViewController.view.bounds.size.height];
     [self.navigationItem setRightBarButtonItem:moreButtonItem animated:YES];
      self.navigationItem.title = [self indexKeyedDictionaryFromArray:[self.detailItem mainParameters][choosedTab]][@"label"];
+    toolbar.items = @[ [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], moreButtonItem ];
 }
 -(IBAction)showMore:(id)sender {
     self.indexView.hidden = YES;
@@ -360,8 +361,7 @@
         [moreItemsViewController viewDidAppear:FALSE];
         if (IS_IOS7) {
             UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
-            tableViewInsets.bottom = 44;
-            tableViewInsets.top = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+            tableViewInsets.top = IS_IPAD ? 44 : CGRectGetMaxY(self.navigationController.navigationBar.frame);
             moreItemsViewController.tableView.contentInset = tableViewInsets;
             moreItemsViewController.tableView.scrollIndicatorInsets = tableViewInsets;
             [moreItemsViewController.tableView setContentOffset:CGPointMake(0, - tableViewInsets.top) animated:NO];
@@ -371,8 +371,9 @@
 
     [self AnimView:moreItemsViewController.view AnimDuration:0.3 Alpha:1.0 YPos:0];
     self.navigationItem.title = NSLocalizedString(@"More", nil);
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(hideMore)]
-                                      animated:YES];
+    UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(hideMore)];
+    [self.navigationItem setRightBarButtonItem:cancelButtonItem animated:YES];
+    toolbar.items = @[ [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], cancelButtonItem ];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.3];
@@ -1280,10 +1281,6 @@ int originYear = 0;
             return nil;
         }
     }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {    
-	//cell.backgroundColor = [UIColor whiteColor];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -2323,6 +2320,19 @@ NSIndexPath *selected;
         }
         moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"st_more_off"] style:UIBarButtonItemStylePlain target:self action:@selector(showMore:)];
         self.navigationItem.rightBarButtonItem = moreButtonItem;
+        if (IS_IPAD) {
+            toolbar = [[UIToolbar alloc] init];
+            [toolbar setItems:@[ [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], moreButtonItem ]];
+            [toolbar setFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+            [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+            toolbar.alpha = .8f;
+            toolbar.barStyle = UIBarStyleBlackTranslucent;
+            if (IS_IOS7) {
+                toolbar.tintColor = TINT_COLOR;
+                toolbar.alpha = 1.0f;
+            }
+            [self.view addSubview:toolbar];
+        }
         if (![self.detailItem disableNowPlaying]) {
             
             UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFromLeft:)];
@@ -3516,9 +3526,9 @@ NSIndexPath *selected;
     [activityIndicatorView stopAnimating];
     [activeLayoutView reloadData];
     [self AnimTable:(UITableView *)activeLayoutView AnimDuration:0.3 Alpha:1.0 XPos:0];
-    [dataList setContentOffset:CGPointMake(0, iOSYDelta) animated:NO];
+    [dataList setContentOffset:CGPointMake(0, IS_IPHONE ? -20 : 0) animated:NO];
     [collectionView layoutSubviews];
-    [collectionView setContentOffset:CGPointMake(0, iOSYDelta) animated:NO];
+    [collectionView setContentOffset:dataList.contentOffset animated:NO];
     if (collectionView != nil) {
         if (enableCollectionView) {
             self.indexView.hidden = NO;
@@ -3771,27 +3781,23 @@ NSIndexPath *selected;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+
     isViewDidLoad = YES;
     iOSYDelta = 44;
     dataList.tableFooterView = [UIView new];
     self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
     if (IS_IOS7) {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            iOSYDelta = - [[UIApplication sharedApplication] statusBarFrame].size.height;
-            UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
-            tableViewInsets.top = 44 + fabs(iOSYDelta);
-            dataList.contentInset = tableViewInsets;
-            dataList.scrollIndicatorInsets = tableViewInsets;
-        }
+        UIEdgeInsets tableViewInsets = UIEdgeInsetsZero;
+        tableViewInsets.top = 44 + (IS_IPHONE ? [[UIApplication sharedApplication] statusBarFrame].size.height : 0);
+        tableViewInsets.bottom = 44;
+        dataList.contentInset = tableViewInsets;
+        dataList.scrollIndicatorInsets = tableViewInsets;
         //[self.searchDisplayController.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
         [dataList setSectionIndexBackgroundColor:[UIColor clearColor]];
         [dataList setSectionIndexTrackingBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.3]];
         [dataList setSeparatorInset:UIEdgeInsetsMake(0, 53, 0, 0)];
         
-        UIEdgeInsets tableViewInsets = dataList.contentInset;
-        tableViewInsets.bottom = 44;
-        dataList.contentInset = tableViewInsets;
-        dataList.scrollIndicatorInsets = tableViewInsets;
         CGRect frame = dataList.frame;
         frame.size.height = self.view.bounds.size.height;
         dataList.frame = frame;
@@ -4003,7 +4009,7 @@ NSIndexPath *selected;
                          completion:^(BOOL finished) {
                              [self configureLibraryView];
                              [self AnimTable:(UITableView *)activeLayoutView AnimDuration:0.3 Alpha:1.0 XPos:0];
-                             [activeLayoutView setContentOffset:CGPointMake(0, iOSYDelta) animated:NO];
+                             [activeLayoutView setContentOffset:CGPointMake(0, IS_IPHONE ? -20 : 0) animated:NO];
                          }];
     }
 }

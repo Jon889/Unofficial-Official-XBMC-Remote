@@ -77,6 +77,7 @@ NSMutableArray *hostRightMenuItems;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LockscreenMediaControls sharedInstance];
     [[UITableViewCell appearance] setSelectionStyle:UITableViewCellSelectionStyleGray];
+    [[UITableViewCell appearance] setBackgroundColor:[UIColor clearColor]];
     UIView *sbgv = [[UIView alloc] init];
     [sbgv setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.3]];
     [[UITableViewCell appearance] setSelectedBackgroundView:sbgv];

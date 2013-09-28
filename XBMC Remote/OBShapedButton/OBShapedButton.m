@@ -93,10 +93,6 @@
     }
     return alpha >= kAlphaVisibleThreshold;
 }
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.superview sendSubviewToBack:self];
-    [super touchesBegan:touches withEvent:event];
-}
 
 // UIView uses this method in hitTest:withEvent: to determine which subview should receive a touch event.
 // If pointInside:withEvent: returns YES, then the subview’s hierarchy is traversed; otherwise, its branch
